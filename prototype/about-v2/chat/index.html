@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><title>Обо&nbsp;мне&nbsp;— переписка</title></head>
+<body><main>
+<!-- Вариант «Переписка» v2: разговор уже начат, ответы приходят сразу, есть «Рассказать всё».
+     Слева чаты: Марго (основной) и Редактор (ссылка на сайт редактуры) -->
+<section class="ab-chat" data-ab-chat>
+  <nav class="ab-chats" aria-label="Чаты">
+    <button type="button" class="ab-chats__item is-on" data-chat="me"><img src="/product-design/prototype/about-scenes/photo.jpg" alt="" width="40" height="40"><span><b>Марго</b><i>Спрашивайте, что&nbsp;интересно</i></span></button>
+    <button type="button" class="ab-chats__item" data-chat="cow"><span class="ab-ava ab-ava--cow" aria-hidden="true">🐄</span><span><b>Редактор</b><i>Тексты, базы знаний, коммуникация</i></span></button>
+  </nav>
+
+  <div class="ab-room is-on" data-room="me">
+    <header class="ab-room__head"><img src="/product-design/prototype/about-scenes/photo.jpg" alt="" width="36" height="36"><div><b>Марго</b><span>продуктовый дизайнер</span></div></header>
+    <div class="ab-room__log" data-chat-log aria-live="polite">
+      <p class="ab-msg ab-msg--in">Привет! Я&nbsp;Марго</p>
+      <p class="ab-msg ab-msg--in">Люблю докапываться до&nbsp;сути, искать связи и&nbsp;раскладывать всё&nbsp;по&nbsp;полочкам. Если меня что-то заинтересовало, могу часами разбираться в&nbsp;теме и&nbsp;даже не&nbsp;заметить, как&nbsp;пролетело время</p>
+      <p class="ab-msg ab-msg--in">Спрашивайте, что&nbsp;интересно 👇</p>
+    </div>
+    <div class="ab-room__chips" data-chat-chips>
+      <button type="button" data-q="path">Как&nbsp;пришла в&nbsp;дизайн?</button>
+      <button type="button" data-q="how">Как&nbsp;работаешь?</button>
+      <button type="button" data-q="check">Как&nbsp;проверяешь решения?</button>
+      <button type="button" data-q="jobs">Где&nbsp;работала?</button>
+      <button type="button" data-q="off">Что&nbsp;вне&nbsp;работы?</button>
+      <button type="button" data-q="ref">Что&nbsp;говорят коллеги?</button>
+      <button type="button" data-q="fact">Какой-то факт</button>
+      <button type="button" class="ab-all" data-q="all">Рассказать всё</button>
+    </div>
+  </div>
+
+  <div class="ab-room" data-room="cow">
+    <header class="ab-room__head"><span class="ab-ava ab-ava--cow" aria-hidden="true">🐄</span><div><b>Редактор</b><span>продуктовая редактура</span></div></header>
+    <div class="ab-room__log">
+            <p class="ab-msg ab-msg--in">Редактура у&nbsp;меня на&nbsp;отдельном сайте: тексты интерфейсов, базы знаний и&nbsp;коммуникация продуктов</p>
+      <a class="ab-msg ab-msg--in ab-msg--link" href="https://tmskrr.github.io/" target="_blank" rel="noopener"><b>Портфолио по&nbsp;продуктовой редактуре</b><span>tmskrr.github.io</span></a>
+    </div>
+  </div>
+
+  <template data-a="path"><p>Начинала с&nbsp;продуктовой редактуры: UX-тексты, базы знаний, документация, контент-процессы</p><p>Но&nbsp;мне&nbsp;всегда было мало своей части работы. Хотелось глубже погружаться в&nbsp;продукт, понимать, как&nbsp;всё&nbsp;устроено и&nbsp;почему принимаются те&nbsp;или&nbsp;иные решения. Постепенно захотелось самой проектировать интерфейсы, продумывать сценарии и&nbsp;работать с&nbsp;визуалом</p><p>А&nbsp;ещё&nbsp;совершенно случайно начала изучать разработку. До&nbsp;этого писать код&nbsp;казалось какой-то магией</p><p>В&nbsp;итоге к&nbsp;редактуре добавились продуктовый дизайн и&nbsp;фронтенд. Теперь могу сама пройти путь от&nbsp;идеи до&nbsp;работающего прототипа</p></template>
+  <template data-a="how"><p>У&nbsp;меня есть принцип&nbsp;— ленивый продуктивизм. Лучше один раз&nbsp;разобраться в&nbsp;задаче и&nbsp;продумать систему, чем&nbsp;потом бесконечно исправлять и&nbsp;переделывать</p><p>К&nbsp;сложным задачам стараюсь подходить как&nbsp;к&nbsp;игре: разбиваю их&nbsp;на&nbsp;маленькие миссии и&nbsp;постепенно прохожу одну за&nbsp;другой. Так&nbsp;проще справляться с&nbsp;большим объёмом информации и&nbsp;меньше поводов для&nbsp;стресса</p><p>Анализирую всё, что&nbsp;можно проанализировать. Тоже рекомендую. Можно удивиться, насколько это&nbsp;облегчает жизнь со&nbsp;временем</p></template>
+  <template data-a="jobs"><p><b>2014–2021</b><br>Продажи, администрирование, офис-менеджмент, работа личным ассистентом. Разные роли, люди и&nbsp;задачи</p><p><b>2021–2023&nbsp;· iConText</b><br>Внутренние коммуникации, запуск направления с&nbsp;нуля, организация процессов и&nbsp;работы команды</p><p><b>2024&nbsp;· Uzum Technologies</b><br>Продуктовая редактура, цифровые сервисы для&nbsp;бизнеса, UX-тексты и&nbsp;информационная архитектура</p><p><b>2024–2025&nbsp;· Comand Studio</b><br>Руководство контент-направлением, продуктовые и&nbsp;редакторские проекты</p><p><b>2024–2025&nbsp;· YourGoods / Widget</b><br>Продуктовая редактура, база знаний и&nbsp;документация</p><p><b>2025–2026&nbsp;· Дизайн-проекты</b><br>FlowUp, портал Технониколь, Converteron и&nbsp;другие работы. Их&nbsp;можно посмотреть в&nbsp;папке «Проекты»</p></template>
+  <template data-a="off"><p>Читаю, гуляю, готовлю, фотографирую, путешествую. В&nbsp;общем, какой-то стандартный человеческий набор</p><p>Люблю движение. Чем&nbsp;больше двигаюсь, тем&nbsp;лучше работает голова. Одна из&nbsp;моих целей&nbsp;— пройти 100&nbsp;тысяч шагов за&nbsp;день</p><p>Давно интересуюсь психологией, особенно тем, как&nbsp;устроены мышление, привычки и&nbsp;реакции. К&nbsp;своему мозгу вообще отношусь как&nbsp;к&nbsp;третьему лицу. Иногда приходится с&nbsp;ним&nbsp;договариваться</p><p>Мне&nbsp;нравится, что&nbsp;в&nbsp;мире столько всего, о&nbsp;чём&nbsp;я&nbsp;пока понятия не&nbsp;имею. И&nbsp;что&nbsp;даже за&nbsp;всю&nbsp;жизнь не&nbsp;получится разобраться во&nbsp;всём. Удивительно, конечно</p></template>
+  <template data-a="ref"><p>«Могу рекомендовать Маргариту на&nbsp;позицию продуктового дизайнера»<small class="ab-from">Новые люди</small></p><p><a class="ab-doc" href="/product-design/assets/docs/recommendation-newmen.pdf" target="_blank" rel="noopener"><img src="/product-design/assets/docs/recommendation-newmen-thumb.jpg" alt="" width="56" height="79"><span><b>Рекомендательное письмо</b><small>«Новые люди», с&nbsp;печатью&nbsp;· PDF</small></span></a></p></template>
+  <template data-a="ref"><p>«Мне хотелось человека, который сможет самостоятельно разобраться в&nbsp;продукте, задавать вопросы и&nbsp;предлагать решения. Но&nbsp;я&nbsp;даже не&nbsp;представляла, что&nbsp;у&nbsp;нас&nbsp;получится такое взаимодействие! Ты&nbsp;не&nbsp;просто разобралась в&nbsp;продукте, а&nbsp;собрала нам&nbsp;целую базу знаний, ещё&nbsp;и&nbsp;сделала для&nbsp;неё&nbsp;дизайн. Это&nbsp;очень помогло команде. Спасибо тебе за&nbsp;тебя ❤️»<small class="ab-from">YourGoods / Widget</small></p></template>
+  <template data-a="ref"><p>«Ты молодец и&nbsp;очень облегчаешь работу. Точно знаю, что&nbsp;могу на&nbsp;тебя положиться и&nbsp;не&nbsp;нужно следить»<small class="ab-from">Comand Studio</small></p></template>
+  <template data-a="ref"><p>«Надеюсь, что&nbsp;придёт по&nbsp;адаптации такая же&nbsp;крутая кошка, как&nbsp;ты&nbsp;ахахха. Ты&nbsp;была крутым редактором! Удачи и&nbsp;успехов на&nbsp;новой должности! ☘️»<small class="ab-from">Uzum Technologies</small></p></template>
+  <template data-a="ref"><p>«Рита, сердце Регистратуры разбито( Ты&nbsp;такая волшебница! Желаю тебе, чтобы всё&nbsp;складывалось наилучшим образом, будем скучать ❤️😍»<small class="ab-from">iConText</small></p></template>
+  <template data-a="fact" data-many><p>В&nbsp;детстве мечтала стать дизайнером и&nbsp;психологом. В&nbsp;итоге к&nbsp;обоим направлениям пришла, просто окольными путями</p></template>
+  <template data-a="fact" data-many><p>Поступила в&nbsp;университет, вытянув фантик. Спасибо, фантик</p></template>
+  <template data-a="fact" data-many><p>Однажды была история из&nbsp;серии: вышла за&nbsp;хлебом и&nbsp;уехала в&nbsp;Питер</p></template>
+  <template data-a="fact" data-many><p>Пришла работать на&nbsp;кассу без&nbsp;опыта, а&nbsp;через неделю стала старшим кассиром</p></template>
+  <template data-a="fact" data-many><p>Давняя мечта&nbsp;— покататься на&nbsp;тракторе и&nbsp;увидеть, как&nbsp;плюётся лама</p></template>
+  <template data-a="fact" data-many><p>Обожаю мозговые штурмы. Одна идея цепляется за&nbsp;другую, появляются новые вопросы, неожиданные связи и&nbsp;решения, до&nbsp;которых в&nbsp;одиночку можно вообще не&nbsp;додуматься</p></template>
+  <template data-a="check"><p>Сначала проверяю, сходится ли&nbsp;логика: куда человек попадёт, что&nbsp;произойдёт после действия, где&nbsp;может ошибиться и&nbsp;как&nbsp;вернётся обратно</p><p>Потом смотрю на&nbsp;интерфейс целиком: состояния, тексты, адаптив, мелкие детали. Иногда открываю прототип или&nbsp;браузер и&nbsp;нахожу то, что&nbsp;в&nbsp;макете выглядело совершенно нормально</p></template>
+</section>
+<style>
+.ab-chat { display: grid; grid-template-columns: 240px minmax(0, 1fr); height: min(620px, calc(100vh - 340px)); min-height: 400px; margin: 0 calc(-1 * clamp(28px, 4vw, 48px)) -40px; border-top: 1px solid rgba(0,0,0,.08); }
+.ab-chats { display: flex; flex-direction: column; padding: 8px; border-right: 1px solid rgba(0,0,0,.08); background: #fff; }
+.ab-chats__item { display: flex; align-items: center; gap: 10px; padding: 8px; border: 0; border-radius: 10px; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.ab-chats__item:hover { background: #f3f4f5; }
+.ab-chats__item.is-on { background: #fde4f8; color: #1f2427; }
+.ab-chats__item img, .ab-ava { flex: none; width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.ab-ava { display: grid; place-items: center; background: #fff3d6; font-size: 22px; }
+.ab-ava--cow { background: #f2e9ff; }
+.ab-chats__item span { min-width: 0; }
+.ab-chats__item b { display: block; font-size: 14px; }
+.ab-chats__item i { display: block; overflow: hidden; color: #8b9094; font-size: 12px; font-style: normal; white-space: nowrap; text-overflow: ellipsis; }
+.ab-chats__item.is-on i { color: #8f4a82; }
+.ab-room { display: none; grid-template-rows: auto 1fr auto; min-height: 0; background: #eef1f4; }
+.ab-room.is-on { display: grid; }
+.ab-room__head { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid rgba(0,0,0,.06); background: rgba(255,255,255,.9); }
+.ab-room__head img, .ab-room__head .ab-ava { width: 36px; height: 36px; font-size: 19px; }
+.ab-room__head img { border-radius: 50%; object-fit: cover; }
+.ab-room__head b { display: block; font-size: 15px; }
+.ab-room__head span { color: #8b9094; font-size: 12px; }
+.ab-room__log { display: flex; flex-direction: column; gap: 6px; min-height: 0; padding: 16px; overflow-y: auto; }
+.ab-msg { max-width: min(78%, 520px); margin: 0; padding: 9px 13px; border-radius: 18px; font-size: 15px; line-height: 1.4; animation: ab-pop .22s cubic-bezier(.2,.7,.2,1) both; }
+.ab-msg--in { align-self: flex-start; border-bottom-left-radius: 6px; background: #fff; color: #1f2427; }
+.ab-msg--out { align-self: flex-end; border-bottom-right-radius: 6px; background: #feb0f0; color: #1f2427; }
+.ab-msg--link { display: flex; flex-direction: column; gap: 4px; color: #1f2427; text-decoration: none; transition: background-color .15s ease; }
+.ab-msg--link b { font-weight: 600; }
+.ab-msg--link span { color: #b23ea0; font-size: 14px; text-decoration: underline; text-decoration-color: rgba(178,62,160,.35); text-underline-offset: 3px; }
+.ab-msg--link:hover { background: #fff6fc; }
+.ab-msg--link:hover span { text-decoration-color: currentColor; }
+@keyframes ab-pop { from { opacity: 0; transform: translateY(6px) scale(.98); } }
+.ab-fact { display: flex; flex-direction: column; gap: 6px; align-self: stretch; }
+.ab-fact__bar { display: flex; align-items: center; justify-content: space-between; max-width: min(78%, 520px); padding: 0 2px; color: #8b9094; font-size: 12px; }
+.ab-fact__bar button { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border: 1px solid rgba(31,36,39,.16); border-radius: 999px; background: #fff; color: #1f2427; font: inherit; font-size: 13px; cursor: pointer; }
+.ab-fact__bar button:hover { border-color: #f39fe3; background: #fff3fc; }
+.ab-fact__bar svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ab-doc { display: flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; }
+.ab-doc img { flex: none; width: 56px; height: auto; border: 1px solid rgba(31,36,39,.12); border-radius: 4px; box-shadow: 0 2px 6px rgba(31,36,39,.08); }
+.ab-doc b { display: block; font-weight: 600; }
+.ab-doc small { display: block; margin-top: 2px; color: #b23ea0; font-size: 13px; text-decoration: underline; text-decoration-color: rgba(178,62,160,.35); text-underline-offset: 3px; }
+.ab-doc:hover small { text-decoration-color: currentColor; }
+.ab-from { display: block; margin-top: 4px; color: #8b9094; font-size: 12px; }
+.ab-fact__msgs { display: flex; flex-direction: column; gap: 6px; }
+.ab-room__chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 14px 14px; border-top: 1px solid rgba(0,0,0,.06); background: rgba(255,255,255,.9); }
+.ab-room__chips button { padding: 7px 12px; border: 1px solid rgba(31,36,39,.16); border-radius: 999px; background: #fff; color: #1f2427; font: inherit; font-size: 13px; cursor: pointer; }
+.ab-room__chips button:hover { border-color: #f39fe3; background: #fff3fc; }
+.ab-room__chips button.is-asked { border-color: rgba(0,0,0,.1); color: #8b9094; }
+.ab-room__chips .ab-all { border-color: #1f2427; background: #1f2427; color: #fff; }
+.ab-room__chips .ab-all:hover { border-color: #383f43; background: #383f43; }
+@media (max-width: 760px) {
+  .ab-chat { grid-template-columns: 1fr; grid-template-rows: auto 1fr; height: calc(100svh - 330px); min-height: 360px; margin: 0 -18px -28px; }
+  .ab-chats { flex-direction: row; gap: 4px; padding: 6px; border-right: 0; border-bottom: 1px solid rgba(0,0,0,.08); overflow-x: auto; }
+  .ab-chats__item { flex: none; padding: 6px 10px 6px 6px; }
+  .ab-chats__item i { display: none; }
+  .ab-chats__item img, .ab-chats__item .ab-ava { width: 30px; height: 30px; font-size: 16px; }
+  /* вопросы одной строкой с прокруткой вбок: иначе на телефоне они съедают место переписки */
+  .ab-room__chips { padding: 8px 12px 10px; }
+  .ab-room__chips button { white-space: nowrap; }
+}
+@media (prefers-reduced-motion: reduce) { .ab-msg { animation: none; } }
+</style>
+</main></body></html>

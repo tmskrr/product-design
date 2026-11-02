@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Widget&nbsp;— Маргарита Терешенкова</title>
+  <link rel="stylesheet" href="/product-design/css/portfolio-prototype.css?v=desktop-27-dz1">
+  <link rel="stylesheet" href="/product-design/prototype/projects-lab/widget-case/widget-case.css?v=13">
+  <style>body{background:#fff} .wc-standalone{padding:48px 24px 80px}</style>
+</head>
+<body>
+  <main class="wc-standalone">
+    <article class="wc wf" data-case aria-label="Widget: база знаний">
+
+      <header class="wf-hero">
+        <p class="wc-kicker">Widget&nbsp;· B2B SaaS</p>
+        <h1 class="wf-h1">База знаний для&nbsp;Widget и&nbsp;сквозной аналитики</h1>
+        <p class="wf-lead">Готовой документации не&nbsp;было. Я&nbsp;разобралась, как&nbsp;Widget связан с&nbsp;мессенджерами, CRM&nbsp;и&nbsp;аналитикой, собрала знания команды в&nbsp;единую систему помощи и&nbsp;за&nbsp;месяц довела её&nbsp;до&nbsp;запуска.</p>
+        <dl class="wf-facts">
+          <div><dt>Роль</dt><dd>Ведущий продуктовый редактор</dd></div>
+          <div><dt>Срок</dt><dd>1&nbsp;месяц на&nbsp;сборку базы<small class="wf-facts__note">В&nbsp;YourGoods&nbsp;— с&nbsp;ноября 2024 по&nbsp;апрель 2025</small></dd></div>
+          <div class="wf-facts__result"><dt>Результат</dt><dd><b>60&nbsp;материалов в&nbsp;4&nbsp;разделах</b> База вышла на&nbsp;сайте&nbsp;· <a href="https://widgetsite.pro/help/" target="_blank" rel="noopener">widgetsite.pro/help ↗</a></dd></div>
+        </dl>
+      </header>
+
+      <nav class="wf-nav" data-case-nav aria-label="Разделы страницы">
+        <span class="wf-nav__time">≈ 9&nbsp;мин</span>
+        <div class="wf-nav__links"><a href="#product">Продукт</a><a href="#mechanics">Механика</a><a href="#research">Источники</a><a href="#architecture">Архитектура</a><a href="#examples">Примеры</a><a href="#support">Поддержка</a><a href="#role">Роль</a><a href="#result">Результат</a></div>
+        <span class="wf-progress" aria-hidden="true"><i data-case-progress></i></span>
+      </nav>
+
+      <section class="wf-section" id="product">
+        <h2 class="wf-h2">Один бренд&nbsp;— два&nbsp;продукта с&nbsp;разными задачами</h2>
+        <div class="wf-tracks">
+          <div class="wf-track">
+            <div class="wf-track__head"><h3>Widget</h3><span class="wf-tag">Free&nbsp;· бесплатно и&nbsp;навсегда</span></div>
+            <p>Переводит посетителя сайта в&nbsp;диалог в&nbsp;удобном мессенджере</p>
+            <div class="wf-flow" aria-label="Как работает Widget"><span>Посетитель сайта</span><i>→</i><span>Кнопка или&nbsp;окно виджета</span><i>→</i><span class="is-end">Диалог в&nbsp;WhatsApp, Telegram, Viber или&nbsp;Max</span></div>
+          </div>
+          <div class="wf-track wf-track--dark">
+            <div class="wf-track__head"><h3>Сквозная аналитика</h3><span class="wf-tag">Pro&nbsp;· 7&nbsp;дней бесплатно</span></div>
+            <p>Связывает визит на&nbsp;сайт, первое сообщение и&nbsp;лид&nbsp;в&nbsp;CRM, чтобы определить источник заявки</p>
+            <div class="wf-flow" aria-label="Как работает сквозная аналитика"><span>Визит на&nbsp;сайт</span><i>→</i><span>Первое сообщение</span><i>→</i><span>Лид&nbsp;в&nbsp;CRM</span><i>→</i><span class="is-end">Источник заявки</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="wf-section" id="mechanics">
+        <h2 class="wf-h2">Данные проходят через пять систем</h2>
+        <p class="wf-text">Чтобы объяснить пользователю, почему заявка пришла без&nbsp;источника, нужно было понять, что&nbsp;делает каждая из&nbsp;них.</p>
+        <ol class="wf-chain">
+          <li><b>Widget</b><span>Запоминает визит: UTM-метки, источник, устройство&nbsp;— и&nbsp;выдаёт Widget-ID</span></li>
+          <li><b>Мессенджер</b><span>Человек пишет первое сообщение, и&nbsp;здесь рекламные системы теряют данные визита</span></li>
+          <li><b>Wazzup</b><span>Читает первое сообщение, находит Widget-ID и&nbsp;создаёт лид</span></li>
+          <li><b>CRM</b><span>Хранит в&nbsp;карточке лида Widget-ID, UTM-метки, источник, канал и&nbsp;телефон</span></li>
+          <li><b>Сервисы аналитики</b><span>Забирают данные из&nbsp;CRM&nbsp;и&nbsp;связывают заявки с&nbsp;рекламой</span></li>
+        </ol>
+        <div class="wf-breaks">
+          <div class="wf-break">
+            <p class="wf-break__where">Разрыв между мессенджером и&nbsp;Wazzup</p>
+            <p>Человек написал в&nbsp;WhatsApp вручную, а&nbsp;не&nbsp;через кнопку виджета. В&nbsp;сообщении нет&nbsp;Widget-ID&nbsp;— лид&nbsp;появится без&nbsp;источника</p>
+          </div>
+          <div class="wf-break">
+            <p class="wf-break__where">Разрыв в&nbsp;CRM</p>
+            <p>Номер уже&nbsp;есть в&nbsp;CRM. Сообщение считается продолжением старого диалога: новый лид&nbsp;не&nbsp;создаётся, цель WP_dialog не&nbsp;фиксируется</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="wf-section" id="research">
+        <h2 class="wf-h2">Собирала устройство продукта из&nbsp;разных источников</h2>
+        <div class="wf-sources">
+          <div>
+            <h3>В&nbsp;продукте</h3>
+            <p>Настраивала Widget и&nbsp;проверяла разные сценарии</p>
+          </div>
+          <div>
+            <h3>У&nbsp;команды</h3>
+            <p>Как&nbsp;работает связка Widget&nbsp;→ Wazzup&nbsp;→ CRM&nbsp;→ аналитика</p>
+            <p>Какие есть технические ограничения</p>
+            <p>Где&nbsp;пользователи чаще всего ошибаются и&nbsp;обращаются в&nbsp;поддержку</p>
+          </div>
+          <div>
+            <h3>В&nbsp;материалах</h3>
+            <p>Разобрала существующие материалы и&nbsp;макеты</p>
+            <p>Посмотрела базы знаний других продуктов</p>
+          </div>
+        </div>
+
+        <h3 class="wf-h3">Что&nbsp;нужно было выяснить</h3>
+        <ul class="wf-qa">
+          <li><p class="wf-qa__q">Почему окно показывается через 30&nbsp;секунд или&nbsp;после 30% прокрутки</p><p class="wf-qa__a">Настройка показа</p></li>
+          <li><p class="wf-qa__q">Какой размер логотипа и&nbsp;изображения подходит</p><p class="wf-qa__a">Внешний вид</p></li>
+          <li><p class="wf-qa__q">Когда фиксируются цели WP_dialog</p><p class="wf-qa__a">FAQ&nbsp;сквозной аналитики</p></li>
+          <li><p class="wf-qa__q">Что&nbsp;входит в&nbsp;бесплатный Widget</p><p class="wf-qa__a">Тарифы</p></li>
+        </ul>
+      </section>
+
+      <section class="wf-section" id="architecture">
+        <h2 class="wf-h2">Из&nbsp;разрозненных знаний&nbsp;— в&nbsp;понятный путь настройки</h2>
+
+        <article class="wf-dec">
+          <h3 class="wf-dec__title"><span>1</span>Разделила Widget и&nbsp;сквозную аналитику на&nbsp;самостоятельные разделы</h3>
+          <div class="wf-split">
+            <div class="wf-split__col">
+              <p class="wf-split__name">Widget на&nbsp;сайт</p>
+              <p class="wf-split__num">35 <small>материалов</small></p>
+              <p class="wf-split__parts">Обзор&nbsp;· установка&nbsp;· внешний вид&nbsp;· сценарии показа&nbsp;· дополнительные настройки&nbsp;· полезные материалы</p>
+            </div>
+            <div class="wf-split__col is-dark">
+              <p class="wf-split__name">Сквозная аналитика</p>
+              <p class="wf-split__num">20 <small>материалов</small></p>
+              <p class="wf-split__parts">Как&nbsp;работает&nbsp;· настройка&nbsp;· данные о&nbsp;лидах&nbsp;· FAQ&nbsp;· работа с&nbsp;данными</p>
+            </div>
+          </div>
+          <div class="wf-free">
+            <p>Widget&nbsp;— самостоятельный бесплатный продукт, а&nbsp;не&nbsp;урезанная версия аналитики. Поэтому в&nbsp;его&nbsp;разделе описаны возможности, сценарий настройки и&nbsp;границы Free</p>
+            <blockquote class="wf-quote">«Это&nbsp;не&nbsp;какой-то урезанный функционал, а&nbsp;просто виджет на&nbsp;сайт без&nbsp;сквозной аналитики»</blockquote>
+          </div>
+        </article>
+
+        <article class="wf-dec">
+          <h3 class="wf-dec__title"><span>2</span>Выстроила материалы в&nbsp;порядке реальной настройки продукта</h3>
+          <p class="wf-dec__why">В&nbsp;аналитике шаги зависят друг от&nbsp;друга: без&nbsp;Wazzup первое сообщение не&nbsp;станет лидом. Каждый путь заканчивается проверкой, что&nbsp;всё&nbsp;работает</p>
+          <div class="wf-paths">
+            <div><p class="wf-paths__name">Установить Widget</p><ol class="wf-path"><li><span>1</span>Зарегистрироваться</li><li><span>2</span>Добавить способы связи</li><li><span>3</span>Установить скрипт на&nbsp;сайт</li><li class=is-check><span>4</span>Проверить, что&nbsp;всё&nbsp;работает</li></ol></div>
+            <div><p class="wf-paths__name">Настроить сквозную аналитику</p><ol class="wf-path"><li><span>1</span>Подключите Wazzup</li><li><span>2</span>Добавьте Widget на&nbsp;сайт</li><li><span>3</span>Подключите сервисы аналитики</li><li class=is-check><span>4</span>Проверьте, что&nbsp;всё&nbsp;работает</li></ol></div>
+          </div>
+        </article>
+
+      </section>
+
+      <section class="wf-section" id="examples">
+        <h2 class="wf-h2">Как&nbsp;база объясняет не&nbsp;только шаги, но&nbsp;и&nbsp;логику продукта</h2>
+        <div class="wf-tabs" data-tabs>
+          <div class="wf-tabs__list" role="tablist" aria-label="Примеры"><button type="button" role="tab" id="tab-ex-text" aria-controls="ex-text" aria-selected="true" tabindex="0"><span>1</span>Текст окна</button><button type="button" role="tab" id="tab-ex-logo" aria-controls="ex-logo" aria-selected="false" tabindex="-1"><span>2</span>Логотип и&nbsp;изображение</button><button type="button" role="tab" id="tab-ex-logic" aria-controls="ex-logic" aria-selected="false" tabindex="-1"><span>3</span>30&nbsp;секунд и&nbsp;30%</button><button type="button" role="tab" id="tab-ex-mobile" aria-controls="ex-mobile" aria-selected="false" tabindex="-1"><span>4</span>Компьютер и&nbsp;телефон</button><button type="button" role="tab" id="tab-ex-states" aria-controls="ex-states" aria-selected="false" tabindex="-1"><span>5</span>Норма и&nbsp;ошибка</button></div>
+
+          <article class="wf-ex" role="tabpanel" id="ex-text" aria-labelledby="tab-ex-text" tabindex="0">
+            <h3 class="wf-ex__title">Объяснение рядом с&nbsp;полем, которое нужно заполнить</h3>
+            <dl class="wf-ex3"><div><dt>Что&nbsp;было непонятно</dt><dd>Чем&nbsp;заголовок окна отличается от&nbsp;описания и&nbsp;что&nbsp;писать в&nbsp;каждом из&nbsp;них</dd></div><div><dt>Что&nbsp;выяснила</dt><dd>Окно прерывает человека и&nbsp;требует реакции, поэтому его&nbsp;цель должна быть понятной. Формулировки зависят от&nbsp;этой цели: просто сообщить, что&nbsp;вы&nbsp;на&nbsp;связи, или&nbsp;предложить скидку или&nbsp;бонус</dd></div><div><dt>Как&nbsp;объяснено в&nbsp;базе знаний</dt><dd>Пояснение стоит рядом с&nbsp;каждым полем. Перед настройкой статья предлагает решить, зачем нужно окно</dd></div></dl>
+            <div class="wf-frag">
+              <div class="wf-frag__head"><p>База знаний › Widget на&nbsp;сайт › Как&nbsp;изменить внешний вид</p></div>
+              <div class="wf-frag__body">
+                <div class="wf-frag__img"><img src="/product-design/prototype/projects-lab/media/widget-image8.webp" alt="Поля «Заголовок» и «Описание» в настройках окна" loading="lazy" decoding="async"></div>
+                <ul class="wf-frag__notes">
+                  <li><b>Заголовок</b>Куда человек попадёт, зачем туда идти и&nbsp;что&nbsp;произойдёт после клика</li>
+                  <li><b>Описание</b>Почему стоит написать прямо сейчас и&nbsp;чего ждать в&nbsp;переписке</li>
+                  <li><b>Зачем различать</b>Заголовок говорит, что&nbsp;происходит, описание&nbsp;— зачем</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="wf-ex" role="tabpanel" id="ex-logo" aria-labelledby="tab-ex-logo" tabindex="0" hidden>
+            <h3 class="wf-ex__title">Ограничение размера, которое обнаружилось при&nbsp;собственной настройке</h3>
+            <dl class="wf-ex3"><div><dt>Что&nbsp;было непонятно</dt><dd>При&nbsp;настройке Widget слишком большой логотип не&nbsp;поместился в&nbsp;окно. Какой размер подходит, было неясно</dd></div><div><dt>Что&nbsp;выяснила</dt><dd>Допустимые параметры: логотип&nbsp;— PNG&nbsp;или&nbsp;JPG, 100×56&nbsp;px, тогда он&nbsp;встаёт без&nbsp;обрезки. Изображение&nbsp;— 264×90&nbsp;px. Можно и&nbsp;больше, тогда при&nbsp;настройке выбирается область обрезки</dd></div><div><dt>Как&nbsp;объяснено в&nbsp;базе знаний</dt><dd>Параметры стоят рядом с&nbsp;загрузкой файла, а&nbsp;два&nbsp;примера показывают разницу: логотип, который не&nbsp;помещается, и&nbsp;логотип нужного размера</dd></div></dl>
+            <div class="wf-frag">
+              <div class="wf-frag__head"><p>База знаний › Widget на&nbsp;сайт › Как&nbsp;изменить внешний вид</p></div>
+              <div class="wf-pair">
+                <figure class="is-bad"><div class="wf-pair__img"><img src="/product-design/prototype/projects-lab/media/widget-image15.webp" alt="Слишком большой логотип в окне виджета" loading="lazy" decoding="async"></div><figcaption>Слишком большой&nbsp;— не&nbsp;помещается</figcaption></figure>
+                <figure class="is-good"><div class="wf-pair__img"><img src="/product-design/prototype/projects-lab/media/widget-image13.webp" alt="Логотип 100×56 px в окне виджета" loading="lazy" decoding="async"></div><figcaption>100×56&nbsp;px&nbsp;— встаёт без&nbsp;обрезки</figcaption></figure>
+              </div>
+              <dl class="wf-specs">
+                <div><dt>Логотип</dt><dd>PNG&nbsp;или&nbsp;JPG&nbsp;· 100×56&nbsp;px</dd></div>
+                <div><dt>Изображение</dt><dd>PNG&nbsp;или&nbsp;JPG&nbsp;· 264×90&nbsp;px, можно больше с&nbsp;обрезкой</dd></div>
+                <div><dt>Кнопка на&nbsp;телефоне</dt><dd>Отступ снизу&nbsp;— до&nbsp;60&nbsp;px</dd></div>
+              </dl>
+            </div>
+          </article>
+
+          <article class="wf-ex" role="tabpanel" id="ex-logic" aria-labelledby="tab-ex-logic" tabindex="0" hidden>
+            <h3 class="wf-ex__title">Почему по&nbsp;умолчанию 30&nbsp;секунд и&nbsp;30% прокрутки</h3>
+            <dl class="wf-ex3"><div><dt>Что&nbsp;было непонятно</dt><dd>В&nbsp;настройках стоят «Время на&nbsp;сайте»&nbsp;— 30&nbsp;секунд и&nbsp;«Процент прокрутки сайта»&nbsp;— 30%. Почему такие числа и&nbsp;нужно ли&nbsp;их&nbsp;менять</dd></div><div><dt>Что&nbsp;выяснила</dt><dd>За&nbsp;30&nbsp;секунд человек понимает, куда попал, а&nbsp;окно в&nbsp;первые 10&nbsp;секунд раздражает. К&nbsp;30% прокрутки он&nbsp;уже&nbsp;видел основные блоки. Условия независимы: окно откроется по&nbsp;тому, что&nbsp;наступит раньше</dd></div><div><dt>Как&nbsp;объяснено в&nbsp;базе знаний</dt><dd>У&nbsp;каждого порога&nbsp;— причина, а&nbsp;рядом способ подобрать свой: посмотреть в&nbsp;Яндекс Метрике или&nbsp;Google Analytics, сколько посетители проводят на&nbsp;сайте. Уходят через 15&nbsp;секунд&nbsp;— ставить 12–15</dd></div></dl>
+            <figure class="wf-shot "><div class="wf-shot__frame"><img src="/product-design/prototype/projects-lab/media/widget-notion-16.webp" alt="Фрагмент опубликованной базы знаний" loading="lazy" decoding="async"></div><figcaption>Фрагмент опубликованной базы знаний</figcaption></figure>
+          </article>
+
+          <article class="wf-ex" role="tabpanel" id="ex-mobile" aria-labelledby="tab-ex-mobile" tabindex="0" hidden>
+            <h3 class="wf-ex__title">Одна настройка «Уходит с&nbsp;сайта»&nbsp;— два&nbsp;разных поведения</h3>
+            <dl class="wf-ex3"><div><dt>Что&nbsp;было непонятно</dt><dd>Настройка одна, а&nbsp;окно появляется в&nbsp;разные моменты&nbsp;— легко решить, что&nbsp;это&nbsp;ошибка</dd></div><div><dt>Что&nbsp;выяснила</dt><dd>Браузер по-разному понимает, что&nbsp;человек уходит: на&nbsp;компьютере есть курсор, на&nbsp;телефоне&nbsp;— только косвенные признаки</dd></div><div><dt>Как&nbsp;объяснено в&nbsp;базе знаний</dt><dd>В&nbsp;статье описаны сигналы для&nbsp;каждого устройства и&nbsp;общий принцип</dd></div></dl>
+            <div class="wf-compare">
+              <div>
+                <p class="wf-compare__name">Компьютер</p>
+                <p>Курсор движется вверх&nbsp;— к&nbsp;вкладкам, кнопке «Назад» или&nbsp;закрытию. Это&nbsp;предсказуемый жест, окно появляется сразу</p>
+              </div>
+              <div>
+                <p class="wf-compare__name">Телефон</p>
+                <p>Курсора нет, прямого жеста «ухожу» тоже. Браузер ориентируется на&nbsp;резкую прокрутку вверх, смену вкладки, бездействие</p>
+              </div>
+              <p class="wf-compare__rule">Окно появляется, когда человек перестаёт взаимодействовать со&nbsp;страницей</p>
+            </div>
+            <figure class="wf-shot "><div class="wf-shot__frame"><img src="/product-design/prototype/projects-lab/media/widget-notion-18.webp" alt="Фрагмент опубликованной базы знаний" loading="lazy" decoding="async"></div><figcaption>Фрагмент опубликованной базы знаний</figcaption></figure>
+          </article>
+
+          <article class="wf-ex" role="tabpanel" id="ex-states" aria-labelledby="tab-ex-states" tabindex="0" hidden>
+            <h3 class="wf-ex__title">Как&nbsp;понять, что&nbsp;аналитика работает</h3>
+            <dl class="wf-ex3"><div><dt>Что&nbsp;было непонятно</dt><dd>Данные проходят через пять систем. Как&nbsp;убедиться, что&nbsp;вся&nbsp;цепочка настроена, и&nbsp;что&nbsp;делать, если нет</dd></div><div><dt>Что&nbsp;выяснила</dt><dd>В&nbsp;личном кабинете у&nbsp;каждого подключённого канала есть статус, а&nbsp;при&nbsp;наведении&nbsp;— подсказка, на&nbsp;каком этапе проблема</dd></div><div><dt>Как&nbsp;объяснено в&nbsp;базе знаний</dt><dd>Проверка&nbsp;— последний шаг&nbsp;настройки. Статья объясняет, как&nbsp;читать статусы и&nbsp;что&nbsp;делать при&nbsp;ошибке</dd></div></dl>
+            <div class="wf-ex--side">
+              <ul class="wf-states">
+                <li class="is-ok"><b>Зелёный&nbsp;— норма</b>Настройка верная, данные передаются</li>
+                <li class="is-err"><b>Красный&nbsp;— ошибка</b>На&nbsp;одном из&nbsp;этапов что-то не&nbsp;так. Это&nbsp;исправимо</li>
+                <li class="is-next"><b>Что&nbsp;делать дальше</b>Навести курсор на&nbsp;канал и&nbsp;исправить то, что&nbsp;покажет подсказка. Не&nbsp;помогло&nbsp;— написать в&nbsp;поддержку</li>
+              </ul>
+              <figure class="wf-shot wf-shot--tall"><div class="wf-shot__frame"><img src="/product-design/prototype/projects-lab/media/widget-image1-4.webp" alt="Статья «Проверьте, что всё работает»" loading="lazy" decoding="async"></div><figcaption>Статья «Проверьте, что&nbsp;всё&nbsp;работает»</figcaption></figure>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="wf-section" id="support">
+        <h2 class="wf-h2">Частые вопросы вынесла из&nbsp;поддержки в&nbsp;базу знаний</h2>
+        <div class="wf-support">
+          <div>
+            <p class="wf-text">Частые вопросы собраны в&nbsp;FAQ, часть ответов встроена прямо в&nbsp;инструкции, а&nbsp;термины&nbsp;— в&nbsp;словарь.</p>
+            <p class="wf-label">Словарь</p>
+            <div class="wf-terms"><span>Widget-ID</span><span>UTM-метки</span><span>CRM</span><span>Бенчмарки</span></div>
+          </div>
+          <div class="wf-faq">
+            <p class="wf-faq__label">FAQ&nbsp;сквозной аналитики</p>
+            <p class="wf-faq__q">Почему в&nbsp;amoCRM или&nbsp;Битрикс24 не&nbsp;создаётся лид, не&nbsp;появились UTM-метки, источник или&nbsp;Widget-ID?</p>
+            <ol>
+              <li>Человек написал в&nbsp;мессенджер вручную, а&nbsp;не&nbsp;через виджет</li>
+              <li>Widget-ID передаётся только на&nbsp;тарифе Pro</li>
+              <li>Передача Widget-ID выключена в&nbsp;настройках</li>
+              <li>Контакт уже&nbsp;есть в&nbsp;CRM</li>
+              <li>Не&nbsp;активна интеграция Wazzup с&nbsp;Битрикс24</li>
+              <li>Лид&nbsp;попал в&nbsp;«Неразобранное» в&nbsp;amoCRM</li>
+            </ol>
+            <p class="wf-faq__note">У&nbsp;каждой причины&nbsp;— что&nbsp;проверить и&nbsp;как&nbsp;исправить</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="wf-section" id="role">
+        <h2 class="wf-h2">Моя&nbsp;зона ответственности&nbsp;— от&nbsp;погружения в&nbsp;продукт до&nbsp;выпуска</h2>
+        <ol class="wf-role">
+          <li><b>Погружение в&nbsp;продукт</b>Механика и&nbsp;связи с&nbsp;другими системами</li>
+          <li><b>Архитектура и&nbsp;сценарий</b>Разделы, порядок шагов, FAQ&nbsp;и&nbsp;словарь</li>
+          <li><b>Существующие материалы</b>Переработка старых материалов</li>
+          <li><b>Задачи редактору</b>Постановка задач на&nbsp;новые материалы</li>
+          <li class="is-editor"><b>Новые материалы</b><span class="wf-role__who">Редактор</span>По&nbsp;поставленным задачам</li>
+          <li><b>Доработка</b>Правки в&nbsp;текстах редактора, когда это&nbsp;было нужно</li>
+          <li><b>Качество и&nbsp;выпуск</b>Публикация на&nbsp;сайте</li>
+        </ol>
+        <div class="wf-role__note"><b>Фактчекинг</b>Проверяла техническую фактуру: например, заметила ошибку в&nbsp;формуле одной из&nbsp;статей и&nbsp;уточнила корректный вариант с&nbsp;командой</div>
+        <div class="wf-role__note"><b>Иллюстрации</b>Визуальную часть базы готовила сама: снимала интерфейс, размечала скриншоты, добавляла стрелки и&nbsp;подсказки</div>
+      </section>
+
+      <section class="wf-section" id="result">
+        <h2 class="wf-h2">База знаний вышла на&nbsp;сайте</h2>
+        <div class="wf-result">
+          <p class="wf-result__num">60<span>материалов<br>в&nbsp;4&nbsp;разделах</span></p>
+          <div class="wf-bars">
+            <div class="wf-bar" style="--n:35"><span>Widget на&nbsp;сайт</span><b>35</b><i></i></div><div class="wf-bar" style="--n:20"><span>Сквозная аналитика</span><b>20</b><i></i></div><div class="wf-bar" style="--n:1"><span>Тарифы</span><b>1</b><i></i></div><div class="wf-bar" style="--n:4"><span>Словарь</span><b>4</b><i></i></div>
+          </div>
+        </div>
+        <a class="wf-live" href="https://widgetsite.pro/help/" target="_blank" rel="noopener">Открыть базу знаний на&nbsp;widgetsite.pro ↗</a>
+        <p class="wf-text wf-after">Количественных метрик не&nbsp;было, но&nbsp;после запуска база стала рабочим инструментом: снизила нагрузку на&nbsp;поддержку и&nbsp;помогла новым сотрудникам быстрее разобраться в&nbsp;продукте.</p>
+        <aside class="wf-next">
+          <p class="wf-next__label">Предложения по&nbsp;развитию</p>
+          <div class="wf-next__items">
+            <div><b>Подсказки к&nbsp;терминам прямо в&nbsp;интерфейсе</b><p>Чтобы Widget-ID, UTM-метки и&nbsp;другие термины объяснялись в&nbsp;момент вопроса, а&nbsp;пользователю не&nbsp;приходилось уходить в&nbsp;базу знаний</p></div>
+            <div><b>Упростить навигацию по&nbsp;базе знаний</b><p>Сейчас для&nbsp;перехода между материалами приходится возвращаться в&nbsp;меню слева. Можно добавить навигацию внутри раздела: предыдущий / следующий материал, связанные материалы или&nbsp;локальное оглавление</p></div>
+          </div>
+        </aside>
+        <h3 class="wf-h3" id="figma">Посмотреть базу знаний</h3>
+        <p class="wf-text">В&nbsp;Figma можно подробнее изучить структуру разделов, навигацию и&nbsp;оформление статей.</p>
+        <a class="wf-live" href="https://www.figma.com/design/vWsg0iUDh7YKkaZF6RPEXy/Widget-%E2%80%94-%D0%B1%D0%B0%D0%B7%D0%B0-%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D0%B9?node-id=3-3" target="_blank" rel="noopener">Открыть базу знаний в&nbsp;Figma&nbsp;→</a>
+      </section>
+
+      <a class="wc-back" href="/product-design/projects/">← Все&nbsp;проекты</a>
+    </article>
+  </main>
+  <script>
+/* Отдельная страница: прогресс чтения и активный пункт меню. В окне портфолио то же делает finder-app.js */
+(() => {
+  if (document.getElementById('window')) return;
+  const bar = document.querySelector('[data-case-progress]');
+  const nav = document.querySelector('[data-case-nav]');
+  if (!bar || !nav) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const links = [...nav.querySelectorAll('a[href^="#"]')];
+  const sections = links.map((a) => document.querySelector(a.getAttribute('href')));
+  let frame = 0; let shown = null;
+  const update = () => {
+    frame = 0;
+    const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    bar.style.transform = `scaleX(${Math.min(1, Math.max(0, scrollY / max))})`;
+    const line = nav.getBoundingClientRect().bottom + 24;
+    let active = -1;
+    sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top <= line) active = i; });
+    if (scrollY >= max - 2) active = sections.length - 1;
+    links.forEach((a, i) => a.toggleAttribute('aria-current', i === active));
+    const box = links[0]?.parentElement; const on = links[active];
+    if (box && on && box.scrollWidth > box.clientWidth && on !== shown) {
+      shown = on;
+      box.scrollTo({ left: Math.max(0, on.offsetLeft - box.offsetLeft - 16), behavior: reduce.matches ? 'auto' : 'smooth' });
+    }
+  };
+  const request = () => { if (!frame) frame = requestAnimationFrame(update); };
+  addEventListener('scroll', request, { passive: true });
+  addEventListener('resize', request);
+  update();
+})();
+(() => {
+  if (document.getElementById('window')) return;
+  document.querySelectorAll('[data-tabs]').forEach((box) => {
+    const tabs = [...box.querySelectorAll('[role="tab"]')];
+    const select = (tab, focus) => {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1;
+        const panel = box.querySelector('#' + t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !on;
+      });
+      if (focus) tab.focus();
+      const list = tab.parentElement;
+      if (list.scrollWidth > list.clientWidth) list.scrollTo({ left: Math.max(0, tab.offsetLeft - list.offsetLeft - 24), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (e) => {
+        const j = { ArrowRight: (i + 1) % tabs.length, ArrowLeft: (i - 1 + tabs.length) % tabs.length, Home: 0, End: tabs.length - 1 }[e.key];
+        if (j !== undefined) { e.preventDefault(); select(tabs[j], true); }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

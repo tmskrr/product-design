@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Обо&nbsp;мне&nbsp;— прототип листов</title>
+  <link rel="stylesheet" href="/product-design/css/portfolio-prototype.css?v=desktop-27-dz1">
+  <link rel="stylesheet" href="/product-design/css/portfolio-workspace-directions.css?v=desktop-38">
+  <link rel="stylesheet" href="/product-design/css/workspace-scene.css?v=scene-5">
+  <link rel="stylesheet" href="/product-design/prototype/shell-lab/finder-window.css?v=9-dz1">
+  <link rel="stylesheet" href="/product-design/prototype/about-scenes/scenes.css?v=3">
+  <script src="/product-design/prototype/about-scenes/scenes.js?v=4" defer></script>
+</head>
+<!-- Прототип «Обо мне», вторая итерация. Отдельная страница: окно Finder нарисовано статично,
+     основной сайт и finder-app.js не используются. Тексты черновые. -->
+<body class="workspace-page has-window is-window-open">
+  <header class="site-header workspace-header">
+    <nav class="site-nav container" aria-label="Системная панель">
+      <a class="site-brand" href="/" aria-label="Маргарита Терешенкова, портфолио: на главную">Портфолио</a>
+      <span class="proto-badge">прототип листов</span>
+    </nav>
+  </header>
+  <div class="workspace-home workspace-home--immersive" aria-hidden="true">
+    <img class="workspace-home__background" src="/product-design/assets/images/portfolio/cow-workspace.png" alt="" draggable="false">
+  </div>
+
+  <section class="win" id="window" tabindex="-1" aria-labelledby="win-title">
+    <aside class="win__sidebar">
+      <div class="win__lights">
+        <a class="light light--close" href="/" aria-label="Закрыть окно и вернуться на рабочий стол"></a>
+        <button class="light light--minimize" type="button" aria-label="Свернуть (в прототипе не работает)" disabled></button>
+        <button class="light light--zoom" type="button" data-zoom aria-label="Развернуть окно" aria-pressed="false"></button>
+      </div>
+      <nav class="win-nav" aria-label="Разделы">
+        <a class="win-nav__desktop" href="/">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="10" rx="2"/><path d="M7 17h6M10 13.5V17"/></svg>
+          <span>Рабочий стол</span>
+        </a>
+        <p class="win-nav__label">Избранное</p>
+        <a href="/product-design/projects/"><span class="icon-folder" aria-hidden="true"></span><span>Проекты</span></a>
+        <a href="/product-design/prototype/about-scenes/" aria-current="page" class="proto-current"><span class="icon-folder" aria-hidden="true"></span><span>Обо&nbsp;мне</span></a>
+        <a href="/product-design/books/"><span class="icon-folder" aria-hidden="true"></span><span>Книжная полка</span></a>
+        <a href="/product-design/design/"><span class="icon-folder" aria-hidden="true"></span><span>Дизайн-проекты</span></a>
+      </nav>
+    </aside>
+
+    <header class="win__toolbar">
+      <div class="win__history">
+        <button class="tool-button" type="button" aria-label="Назад: предыдущий раздел" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5"/></svg></button>
+        <button class="tool-button" type="button" aria-label="Вперёд: следующий раздел" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5"/></svg></button>
+      </div>
+      <h2 class="win__title" id="win-title">Обо&nbsp;мне</h2>
+    </header>
+
+    <main class="win__content sc-scroller" id="main" tabindex="-1" data-sc-scroller>
+      <div class="sc" data-sc>
+
+        <!-- Строка разделов: как меню разделов в кейсах -->
+        <nav class="sc-bar" aria-label="Листы «Обо мне»">
+          <div class="sc-bar__links">
+            <a href="?scene=hello" data-go="hello">Знакомство</a>
+            <a href="?scene=path" data-go="path">Путь</a>
+            <a href="?scene=approach" data-go="approach">Подход</a>
+            <a href="?scene=life" data-go="life">Вне&nbsp;работы</a>
+            <a href="?scene=facts" data-go="facts">Факты</a>
+          </div>
+          <div class="sc-bar__step">
+            <button type="button" data-step="-1" aria-label="Предыдущий лист"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 12.5 10 7.5l5 5"/></svg></button>
+            <button type="button" data-step="1" aria-label="Следующий лист"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5 10 12.5l5-5"/></svg></button>
+          </div>
+          <span class="sc-bar__progress" aria-hidden="true"><i data-progress></i></span>
+          <p class="sc-hint" data-hint hidden>Листайте колесом или&nbsp;выбирайте раздел сверху</p>
+        </nav>
+
+        <!-- 01 Знакомство -->
+        <section class="sc-scene" id="hello" data-scene="hello" aria-labelledby="h-hello">
+          <div class="sc-sheet sc-sheet--hello">
+            <div class="sc-body sc-hello">
+              <p class="sc-kicker">Обо&nbsp;мне</p>
+              <h1 id="h-hello">Привет, я&nbsp;Маргарита</h1>
+              <p class="sc-lead">Продуктовый редактор. Пишу тексты для&nbsp;интерфейсов, собираю базы знаний и&nbsp;выстраиваю коммуникации, а&nbsp;последний год&nbsp;всё&nbsp;больше проектирую сами интерфейсы.</p>
+              <p class="sc-text">Мне&nbsp;важно, чтобы работа была интересна прежде всего мне&nbsp;самой. Тогда я&nbsp;погружаюсь в&nbsp;неё&nbsp;целиком.</p>
+            </div>
+            <img class="sc-portrait" src="/product-design/prototype/about-scenes/portrait.webp" alt="Маргарита" width="620" height="738">
+          </div>
+        </section>
+
+        <!-- 02 Путь -->
+        <section class="sc-scene" id="path" data-scene="path" aria-labelledby="h-path">
+          <div class="sc-sheet"><div class="sc-body">
+            <h2 class="sc-h2" id="h-path">Путь</h2>
+            <p class="sc-note">Нажмите на&nbsp;этап, чтобы прочитать подробнее</p>
+            <div class="tl" data-tl>
+              <div class="tl__scroll">
+                <div class="tl__inner">
+                  <div class="tl__lanes" role="tablist" aria-label="Этапы" data-tl-lanes></div>
+                  <div class="tl__axis" aria-hidden="true" data-tl-axis></div>
+                </div>
+              </div>
+              <div class="tl__card" role="tabpanel" aria-live="polite" data-tl-card></div>
+            </div>
+          </div></div>
+        </section>
+
+        <!-- 03 Подход -->
+        <section class="sc-scene" id="approach" data-scene="approach" aria-labelledby="h-approach">
+          <div class="sc-sheet"><div class="sc-body sc-approach">
+            <h2 class="sc-h2" id="h-approach">Как&nbsp;я&nbsp;работаю</h2>
+            <div class="sc-approach__grid">
+              <ol class="sc-rules">
+                <li><b>Сначала разобраться, потом делать</b>Контекст, ограничения и&nbsp;причина проблемы&nbsp;— до&nbsp;первого черновика</li>
+                <li><b>Проверять логику, а&nbsp;не&nbsp;только вид</b>Красивая формулировка ничего не&nbsp;стоит, если она&nbsp;не&nbsp;объясняет продукт</li>
+                <li><b>Выстраивать систему</b>Один раз&nbsp;потратить время на&nbsp;структуру вместо бесконечных разовых исправлений</li>
+              </ol>
+              <div class="sc-idea">
+                <h3>Ленивый продуктивизм</h3>
+                <p>Лучше сначала потратить время на&nbsp;анализ и&nbsp;понятную систему, чем&nbsp;сразу бросаться делать, а&nbsp;потом постоянно переделывать.</p>
+                <div class="sc-example"><span class="sc-tag">Пример</span><p>База знаний Widget: сначала разобралась, как&nbsp;связаны Widget и&nbsp;сквозная аналитика, потом выстроила материалы в&nbsp;порядке настройки. База стала инструментом поддержки и&nbsp;онбординга.</p></div>
+              </div>
+            </div>
+            <p class="sc-ai"><span class="sc-tag">AI</span>Рабочий инструмент: помогает быстрее исследовать варианты и&nbsp;проверять идеи. Постановка задачи и&nbsp;оценка качества остаются за&nbsp;мной. Пример: 2+2, код&nbsp;по&nbsp;моему макету писал Codex&nbsp;· <a href="/product-design/design/converteron/">2+2 →</a></p>
+          </div></div>
+        </section>
+
+        <!-- 04 Вне работы -->
+        <section class="sc-scene" id="life" data-scene="life" aria-labelledby="h-life">
+          <div class="sc-sheet"><div class="sc-body">
+            <h2 class="sc-h2" id="h-life">Вне&nbsp;работы</h2>
+            <p class="sc-text sc-text--short">Здесь будут мои&nbsp;фотографии. Подписи короткие, порядок любой</p>
+            <ol class="sc-contact">
+              <li><i></i><span>01</span>подпись</li><li><i></i><span>02</span>подпись</li><li><i></i><span>03</span>подпись</li><li><i></i><span>04</span>подпись</li>
+              <li><i></i><span>05</span>подпись</li><li><i></i><span>06</span>подпись</li><li><i></i><span>07</span>подпись</li><li><i></i><span>08</span>подпись</li>
+            </ol>
+          </div></div>
+        </section>
+
+        <!-- 05 Факты: печатаются на листе в машинке -->
+        <section class="sc-scene sc-scene--facts" id="facts" data-scene="facts" aria-labelledby="h-facts">
+          <div class="sc-sheet sc-sheet--facts">
+            <div class="sc-facts__head">
+              <h2 class="sc-kicker" id="h-facts">Случайные факты</h2>
+              <span class="sc-count" data-fact-count>1 / 8</span>
+              <button class="sc-btn" type="button" data-fact-next>Ещё&nbsp;факт</button>
+            </div>
+            <div class="sc-roll" data-roll aria-hidden="true"></div>
+            <p class="visually-hidden" aria-live="polite" data-fact-sr></p>
+          </div>
+        </section>
+
+        <!-- Машинка: два слоя. Сзади корпус и каретка, спереди низ корпуса, прижимная планка и направляющая.
+             Листы лежат между ними, поэтому уходят под планку и в машинку. -->
+        <div class="sc-mach sc-mach--back" aria-hidden="true">
+          <img src="/product-design/assets/images/portfolio/tw3-body.webp" alt="">
+          <img src="/product-design/assets/images/portfolio/tw3-car.webp" alt="">
+        </div>
+        <div class="sc-mach sc-mach--front" aria-hidden="true">
+          <img class="cut" src="/product-design/assets/images/portfolio/tw3-body.webp" alt="">
+          <img class="cut" src="/product-design/assets/images/portfolio/tw3-car.webp" alt="">
+          <img src="/product-design/assets/images/portfolio/tw3-rod.webp" alt="">
+          <img src="/product-design/assets/images/portfolio/tw3-front.webp" alt="">
+        </div>
+      </div>
+    </main>
+
+    <footer class="win__status">Сайт собирала вместе с&nbsp;Claude</footer>
+  </section>
+</body>
+</html>

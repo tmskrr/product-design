@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Обо&nbsp;мне&nbsp;— машинка</title>
+  <link rel="stylesheet" href="/product-design/css/portfolio-prototype.css?v=desktop-27-dz1">
+  <link rel="stylesheet" href="/product-design/css/portfolio-workspace-directions.css?v=desktop-38">
+  <link rel="stylesheet" href="/product-design/prototype/shell-lab/finder-window.css?v=9-dz1">
+  <link rel="stylesheet" href="/product-design/prototype/about-typewriter/tw.css?v=18">
+  <script src="/product-design/prototype/about-typewriter/tw.js?v=11" defer></script>
+</head>
+<!-- «Обо мне», машинка. Отдельная страница: окно Finder нарисовано статично. На главной этот же 'main' подгружает finder-app.js.
+     Тексты историй пока взяты из прежних версий, это заготовка для проверки композиции. -->
+<body class="workspace-page has-window is-window-open">
+  <header class="site-header workspace-header">
+    <nav class="site-nav container" aria-label="Системная панель">
+      <a class="site-brand" href="/" aria-label="Маргарита Терешенкова, портфолио: на главную">Портфолио</a>
+    </nav>
+  </header>
+  <div class="workspace-home workspace-home--immersive" aria-hidden="true">
+    <img class="workspace-home__background" src="/product-design/assets/images/portfolio/cow-workspace.png" alt="" draggable="false">
+  </div>
+  <section class="win" id="window" tabindex="-1" aria-labelledby="win-title">
+    <aside class="win__sidebar">
+      <div class="win__lights">
+        <a class="light light--close" href="/" aria-label="Закрыть окно и вернуться на рабочий стол"></a>
+        <button class="light light--minimize" type="button" aria-label="Свернуть (в прототипе не работает)" disabled></button>
+        <button class="light light--zoom" type="button" data-zoom aria-label="Развернуть окно" aria-pressed="false"></button>
+      </div>
+      <nav class="win-nav" aria-label="Разделы">
+        <a class="win-nav__desktop" href="/"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="10" rx="2"/><path d="M7 17h6M10 13.5V17"/></svg><span>Рабочий стол</span></a>
+        <p class="win-nav__label">Избранное</p>
+        <a href="/product-design/projects/"><span class="icon-folder" aria-hidden="true"></span><span>Проекты</span></a>
+        <a href="/product-design/prototype/about-typewriter/" aria-current="page"><span class="icon-folder" aria-hidden="true"></span><span>Обо&nbsp;мне</span></a>
+        <a href="/product-design/books/"><span class="icon-folder" aria-hidden="true"></span><span>Книжная полка</span></a>
+        <a href="/product-design/design/"><span class="icon-folder" aria-hidden="true"></span><span>Дизайн-проекты</span></a>
+      </nav>
+    </aside>
+    <header class="win__toolbar">
+      <div class="win__history">
+        <button class="tool-button" type="button" aria-label="Назад" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5"/></svg></button>
+        <button class="tool-button" type="button" aria-label="Вперёд" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5"/></svg></button>
+      </div>
+      <h2 class="win__title" id="win-title">Обо&nbsp;мне</h2>
+    </header>
+    <main class="win__content" id="main" tabindex="-1">
+      <div class="tw-page">
+      <!-- типовая шапка папки. В окне Finder её рисует finder-app.js, эта — только для отдельной страницы -->
+      <header class="win-head tw-page__head"><h1>Обо&nbsp;мне</h1><p>Всё, что&nbsp;не&nbsp;поместилось в&nbsp;проекты и&nbsp;резюме</p></header>
+      <div class="tw" data-tw>
+        <div class="tw__left">
+          <div class="tw__intro">
+            <figure class="tw__photo"><img src="/product-design/prototype/about-scenes/photo.jpg" alt="Маргарита" width="800" height="1000"></figure>
+            <div class="tw__who">
+              <p class="tw__name">Маргарита Терешенкова</p>
+              <p>Продуктовый редактор</p>
+              <p class="tw__also">Ещё&nbsp;проектирую интерфейсы: <a href="https://tmskrr.github.io/product-design/" target="_blank" rel="noopener">дизайн-портфолио&nbsp;→</a></p>
+            </div>
+          </div>
+          <!-- Листы лежат стопкой у нижнего края. Лист тянут вверх (или нажимают на заголовок) — он выезжает целиком -->
+          <div class="tw__tray" data-tray>
+            <article class="tw-card" data-card style="--i:0; --r:-1.6deg">
+              <button class="tw-card__head" type="button" aria-expanded="false" aria-controls="tw-c0"><span>01</span>Кто&nbsp;я</button>
+              <div class="tw-card__body" id="tw-c0"><p>Привет, я&nbsp;Марго.</p><p>Работаю с&nbsp;цифровыми продуктами: начинала с&nbsp;текстов и&nbsp;коммуникаций, со&nbsp;временем добралась до&nbsp;проектирования интерфейсов и&nbsp;разработки.</p><p>Мне&nbsp;интересно разбираться, как&nbsp;устроен продукт целиком, как&nbsp;связаны его&nbsp;части и&nbsp;что&nbsp;вообще происходит.</p></div>
+            </article>
+            <article class="tw-card" data-card style="--i:1; --r:1.2deg">
+              <button class="tw-card__head" type="button" aria-expanded="false" aria-controls="tw-c1"><span>02</span>Как&nbsp;всё&nbsp;закрутилось</button>
+              <div class="tw-card__body" id="tw-c1"><p>Начинала с&nbsp;работы с&nbsp;людьми и&nbsp;внутренними коммуникациями. Потом пришла в&nbsp;продуктовую редактуру: тексты интерфейсов, базы знаний, сложные цифровые сервисы.</p><p>Со&nbsp;временем захотелось самой проектировать интерфейсы. Пошла изучать фронтенд и&nbsp;продуктовый дизайн. Теперь работаю со&nbsp;сценариями, структурой, визуалом и&nbsp;могу проверить собственные идеи в&nbsp;коде.</p></div>
+            </article>
+            <article class="tw-card" data-card style="--i:2; --r:-.8deg">
+              <button class="tw-card__head" type="button" aria-expanded="false" aria-controls="tw-c2"><span>03</span>Из&nbsp;чего состою</button>
+              <div class="tw-card__body" id="tw-c2"><h3>Ленивый продуктивизм</h3><p>Лучше один раз&nbsp;разобраться в&nbsp;задаче и&nbsp;продумать систему, чем&nbsp;потом бесконечно исправлять и&nbsp;переделывать.</p><h3>Структура и&nbsp;лёгкость</h3><p>Во&nbsp;мне&nbsp;уживаются любовь к&nbsp;структуре и&nbsp;лёгкости. Люблю раскладывать сложное по&nbsp;полочкам (да, я&nbsp;полочница&nbsp;— это&nbsp;удобно), но&nbsp;при&nbsp;этом оставлять место для&nbsp;спонтанности, свободы и&nbsp;новых идей.</p><h3>Замечать красоту</h3><p>Когда-то специально училась замечать жизнь. Теперь обращаю внимание на&nbsp;маленькие детали, мимо которых раньше могла пройти. Поэтому и&nbsp;фотографировать люблю.</p><h3>Любознательность и&nbsp;пытливость</h3><p>Если что-то заинтересовало, начинаю копать. Нравится доходить до&nbsp;сути, пробовать самой и&nbsp;разбираться, как&nbsp;всё&nbsp;работает.</p></div>
+            </article>
+            <article class="tw-card" data-card style="--i:3; --r:1.5deg">
+              <button class="tw-card__head" type="button" aria-expanded="false" aria-controls="tw-c3"><span>04</span>Вне&nbsp;работы</button>
+              <div class="tw-card__body" id="tw-c3"><p>Читаю, гуляю, готовлю, творю, путешествую, изучаю новое. В&nbsp;общем, какой-то стандартный человеческий набор.</p><p>Люблю движение. Заметила, что&nbsp;чем&nbsp;больше двигаюсь, тем&nbsp;лучше работает голова. Поэтому долгие прогулки и&nbsp;спорт&nbsp;— удовольствие с&nbsp;пользой.</p><p>Могу увлечься новой темой и&nbsp;надолго в&nbsp;неё&nbsp;провалиться. Люблю матушку психологию&nbsp;— особенно то, как&nbsp;устроены наше мышление, привычки и&nbsp;реакции.</p><p>Мне&nbsp;нравится, что&nbsp;в&nbsp;мире столько всего, о&nbsp;чём&nbsp;я&nbsp;пока понятия не&nbsp;имею. И&nbsp;что&nbsp;даже за&nbsp;всю&nbsp;жизнь не&nbsp;получится разобраться во&nbsp;всём. Удивительно, конечно.</p></div>
+            </article>
+            <article class="tw-card" data-card style="--i:4; --r:-1.1deg">
+              <button class="tw-card__head" type="button" aria-expanded="false" aria-controls="tw-c4"><span>05</span>Где&nbsp;работала</button>
+              <div class="tw-card__body" id="tw-c4"><ol class="tw-jobs"><li><span>2014–2021</span><b>До&nbsp;цифровых продуктов</b><em>Продажи, администрирование, офис-менеджмент, работа личным ассистентом. Разные роли, люди и&nbsp;задачи.</em></li><li><span>2021–2023</span><b>iConText</b><em>Внутренние коммуникации&nbsp;· Запуск с&nbsp;нуля</em></li><li><span>2024</span><b>Uzum Technologies</b><em>Продуктовая редактура&nbsp;· Цифровые сервисы для&nbsp;бизнеса</em></li><li><span>2024–2025</span><b>Comand Studio</b><em>Руководитель контент-направления&nbsp;· Проектная деятельность&nbsp;· Продуктовые и&nbsp;редакторские проекты</em></li><li><span>2024–2025</span><b>YourGoods / Widget</b><em>Ведущий продуктовый редактор&nbsp;· База знаний, структура и&nbsp;контент</em></li><li><span>2025–2026</span><b>Новые люди</b><em>Продуктовый редактор&nbsp;· Проектная деятельность&nbsp;· Информационная архитектура и&nbsp;UX-тексты для&nbsp;B2B</em></li></ol><p class="tw-jobs__more">Подробнее о&nbsp;задачах и&nbsp;результатах&nbsp;— в&nbsp;<a href="/product-design/prototype/resume/tereshenkova-cv.pdf?v=c620cb23" target="_blank" rel="noopener">резюме</a> и&nbsp;<a href="/product-design/projects/">проектах</a></p></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="tw__right">
+          <div class="tw__stage">
+            <div class="tw__mach" aria-hidden="true"><img src="/product-design/assets/images/portfolio/tw3-body.webp" alt=""><img src="/product-design/assets/images/portfolio/tw3-car.webp" alt=""></div>
+            <div class="tw__paper" data-fact-paper role="button" tabindex="0" aria-label="Напечатать ещё один случайный факт"><div class="tw__roll" data-fact-roll></div></div>
+            <div class="tw__mach tw__mach--front" aria-hidden="true"><div class="tw__keys" data-keys='[[224,536,36,44,37,135],[253,455,57,62,66,54],[322,455,57,61,135,54],[459,455,57,61,272,54],[563,521,57,62,376,120],[390,455,58,61,203,54],[528,455,58,61,341,54],[599,455,58,61,412,54],[669,455,58,61,482,54],[741,455,58,60,554,54],[812,455,58,61,625,54],[883,455,58,60,696,54],[1027,455,58,61,840,54],[1098,455,58,61,911,54],[423,520,58,62,236,119],[492,521,58,61,305,120],[634,521,58,61,447,120],[777,521,58,60,590,120],[848,521,58,62,661,120],[920,521,58,61,733,120],[991,521,58,62,804,120],[1062,521,58,61,875,120],[378,586,58,64,191,185],[808,586,58,60,621,185],[955,455,59,61,768,54],[281,520,59,63,94,119],[352,520,59,64,165,119],[705,521,59,59,518,120],[231,591,59,60,44,190],[447,586,59,60,260,185],[518,586,59,64,331,185],[590,586,59,62,403,185],[662,586,59,60,475,185],[735,586,59,59,548,185],[880,586,59,58,693,185],[950,586,59,56,763,185],[1021,586,59,55,834,185],[1091,587,59,56,904,186],[845,648,59,64,658,247],[917,648,59,58,730,247],[989,648,59,64,802,247],[1135,520,60,62,948,119],[305,587,60,61,118,186],[406,648,60,64,219,247],[479,648,60,60,292,247],[552,648,60,63,365,247],[625,648,60,61,438,247],[698,648,60,55,511,247],[772,648,60,59,585,247],[1060,648,60,59,873,247],[333,648,61,65,146,247],[1130,645,79,65,943,244],[229,646,82,65,42,245],[350,712,725,63,163,311]]'></div><img src="/product-design/assets/images/portfolio/tw3-rod.webp" alt=""><img src="/product-design/assets/images/portfolio/tw3-front.webp" alt=""></div>
+          </div>
+          <p class="visually-hidden" aria-live="polite" data-fact-sr></p>
+        </div>
+        <ul hidden data-facts><li>Анализирую всё, что&nbsp;можно проанализировать. Тоже рекомендую. Можно удивиться, насколько облегчает это&nbsp;жизнь со&nbsp;временем</li><li>Случайно начала учиться разработке. До&nbsp;этого всегда казалось, что&nbsp;писать код&nbsp;— какая-то магия, и&nbsp;я&nbsp;не&nbsp;планировала притрагиваться</li><li>Однажды была история из&nbsp;серии: вышла за&nbsp;хлебом и&nbsp;уехала в&nbsp;Питер</li><li>Забавно, но&nbsp;меня крестили два&nbsp;раза. Перевыполнили план</li><li>Когда-то сняли квартиру, в&nbsp;которой стояла урна с&nbsp;прахом. Позже выяснилось, что&nbsp;раньше там&nbsp;был&nbsp;притон</li><li>Давняя мечта&nbsp;— покататься на&nbsp;тракторе и&nbsp;увидеть, как&nbsp;плюётся лама. Вообще просто рекомендую оставлять место для&nbsp;самых странных желаний. У&nbsp;нас&nbsp;и&nbsp;так&nbsp;много рутины</li><li>Поступила в&nbsp;университет, вытянув фантик. Спасибо, фантик</li><li>Пришла работать на&nbsp;кассу без&nbsp;опыта, а&nbsp;через неделю меня поставили старшим кассиром. Прекрасный опыт</li><li>Хочу пройти 100&nbsp;тысяч шагов</li><li>Отношусь к&nbsp;своему мозгу как&nbsp;к&nbsp;третьему лицу. Иногда приходится с&nbsp;ним&nbsp;договариваться</li></ul>
+      </div>
+      </div>
+    </main>
+    <footer class="win__status">Сайт собирала вместе с&nbsp;Claude</footer>
+  </section>
+</body>
+</html>

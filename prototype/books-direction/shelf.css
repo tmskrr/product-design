@@ -1,0 +1,160 @@
+/* «Книжная полка» — прототип. Шапка папки, шрифт, синие метки и меню — как в остальных разделах и кейсах. */
+.proto-badge { margin-left: 12px; padding: 2px 8px; border-radius: 999px; background: #111; color: #fff; font-size: 11px; }
+.win-nav a.proto-current { background: var(--accent-soft); }
+
+.lib { --ink: #1f2427; --muted: #5d6467; --soft: #8a9195; --line: rgba(31, 36, 39, .12);
+  --blue: #1c7ef1; --blue-soft: #e8f2fe; --blue-ink: #1463c4; --wood: #e9e3d6; --wood-edge: #d9d0bd;
+  --serif: Georgia, "Times New Roman", "DejaVu Serif", serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color: var(--ink); }
+/* сброс без веса: собственные отступы элементов карточки не перебиваются */
+:where(.lib) :where(p, h2, blockquote) { margin: 0; }
+/* Вступление стоит в конце раздела, после полки */
+.lib__lead { max-width: 640px; margin: 0 0 12px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.lib__intro { max-width: 700px; margin: 22px 0 6px; padding-top: 16px; border-top: 1px solid rgba(31, 36, 39, .12); color: #5d6467; font-size: 15px; line-height: 1.5; }
+.win__page[data-route="books"] .win-head { margin-bottom: 18px; }
+
+/* ---------- Вкладки жанров: как меню разделов в кейсах ---------- */
+.lib__tabs { display: flex; flex-wrap: wrap; gap: 0; margin: 0 0 8px; padding: 2px 0; font-size: 13px; }
+.lib__tabs::-webkit-scrollbar { display: none; }
+.lib__tabs button { transition: color .25s var(--ease), background-color .25s var(--ease); display: inline-flex; align-items: center; gap: 4px; flex: none; padding: 4px 7px; border: 0; border-radius: 8px; background: none; color: var(--muted); font: inherit; white-space: nowrap; cursor: pointer; transition: color .15s, background-color .15s; }
+.lib__tabs button span { color: var(--soft); font-size: 12px; }
+.lib__tabs button:hover { color: var(--ink); }
+.lib__tabs button[aria-selected="true"] { background: var(--blue-soft); color: var(--blue-ink); font-weight: 500; }
+.lib__tabs button[aria-selected="true"] span { color: var(--blue-ink); }
+.lib__tabs button:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
+
+/* ---------- Полка ---------- */
+.lib__case { position: relative; }
+.lib__shelf { position: relative; display: flex; align-items: flex-end; gap: 14px; min-height: 228px; padding: 18px 18px 0; overflow-x: auto; scrollbar-width: none; }
+.lib__shelf::-webkit-scrollbar { display: none; }
+/* подпись к полке жанра: на компьютере — в свободном месте справа на полке, на телефоне — над полкой */
+.lib__shelfnote { align-self: center; flex: 0 1 340px; margin: 0 0 0 auto; padding: 0 6px 18px 24px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.lib__shelfnote--top { display: none; }
+.lib__shelfnote--top[hidden] { display: none !important; }
+.lib__grp { display: flex; align-items: flex-end; gap: 2px; flex: none; }
+.lib__board { height: 12px; margin: 0 4px; border-radius: 2px; background: var(--wood); box-shadow: inset 0 -3px 0 var(--wood-edge), 0 6px 14px rgba(55, 43, 18, .10); }
+.lib__labels { position: relative; min-height: 26px; margin: 0 18px 10px; }
+.lib__labels span { position: absolute; top: 8px; overflow: hidden; color: var(--soft); font-size: 11px; line-height: 1.25; }
+.lib__labels span::before { content: ""; display: block; height: 1px; margin-bottom: 4px; background: var(--line); }
+.lib__labels span.is-marked { color: var(--blue-ink); font-weight: 600; }
+.lib__labels span.is-marked::before { height: 2px; background: var(--blue); }
+/* смена жанра: корешки встают на полку по очереди, слева направо */
+.lib { --ease: cubic-bezier(.22, .61, .36, 1); }
+.lib__shelf.is-in .bk { animation: lib-in .42s var(--ease) backwards; animation-delay: calc(var(--i) * 18ms); }
+@keyframes lib-in { from { opacity: 0; transform: translateY(10px); } }
+.lib__labels span { transition: opacity .3s var(--ease); }
+
+/* Корешок: цвет, толщина и высота у каждой книги свои, шрифт — по характеру издания */
+.bk { --tx: #f6f2ea; position: relative; flex: none; display: flex; flex-direction: column; align-items: center; width: calc(var(--w) * var(--wk, 1)); height: calc(var(--h) * .9); padding: 11px 0 9px; border: 0; border-radius: 2px 2px 1px 1px; background: var(--c); color: var(--tx); cursor: pointer;
+  box-shadow: inset 2px 0 0 rgba(255, 255, 255, .12), inset -2px 0 0 rgba(0, 0, 0, .14), 0 1px 0 rgba(0, 0, 0, .12);
+  transition: transform .38s var(--ease), box-shadow .38s var(--ease); }
+.bk--light { --tx: #2a2622; box-shadow: inset 2px 0 0 rgba(255, 255, 255, .5), inset -2px 0 0 rgba(0, 0, 0, .08), inset 0 0 0 1px rgba(31, 36, 39, .08); }
+.bk__band { position: absolute; left: 0; right: 0; top: 9px; height: 3px; background: currentColor; opacity: .35; }
+/* название переносится в 2–3 колонки по ширине корешка, без многоточия */
+.bk__title { flex: 1; min-height: 0; max-width: calc(100% - 6px); overflow: hidden; margin-top: 8px; writing-mode: vertical-rl; transform: rotate(180deg); white-space: normal; overflow-wrap: break-word; font-size: 11.5px; line-height: 1.08; }
+.bk__author { margin-top: 6px; max-height: 50px; overflow: hidden; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 9px; letter-spacing: .04em; opacity: .75; white-space: nowrap; }
+.bk__mark { width: 8px; height: 8px; margin-top: 6px; border: 1px solid currentColor; border-radius: 50%; opacity: .5; flex: none; }
+.bk--serif .bk__title { font-family: var(--serif); font-size: 12px; }
+.bk--caps .bk__title { font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: 9.5px; }
+.bk--bold .bk__title { font-weight: 700; letter-spacing: -.01em; font-size: 12px; }
+.bk--sans .bk__title { font-weight: 500; }
+.bk--mono .bk__title { font-family: var(--mono); font-size: 11px; }
+.bk:hover { transform: translateY(-6px); }
+.bk:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.bk.is-open { transform: translateY(-16px); box-shadow: inset 2px 0 0 rgba(255, 255, 255, .12), inset -2px 0 0 rgba(0, 0, 0, .14), 0 10px 18px rgba(31, 36, 39, .18); }
+
+/* ---------- Открытая книга: под полкой, полка остаётся на месте ---------- */
+.lib__open { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 22px; align-items: start; min-height: 200px; margin-top: 2px; padding: 14px 20px; border-radius: 16px; background: #f5f6f7; }
+.lib__open:not(.has-book) { display: flex; align-items: center; justify-content: center; }
+.lib__open { transition: min-height .3s var(--ease); }
+.lib__open.is-in > * { animation: lib-open .36s var(--ease) backwards; }
+.lib__open.is-in > .lib__info { animation-delay: 40ms; }
+.lib__open.is-in .cover { animation-name: lib-cover; }
+@keyframes lib-open { from { opacity: 0; transform: translateY(4px); } }
+@keyframes lib-cover { from { opacity: 0; transform: translateY(-10px); } }
+.lib__empty { color: var(--soft); font-size: 14px; text-align: center; }
+.lib__empty b { display: block; margin-bottom: 4px; color: var(--muted); font-weight: 500; }
+.win__page[data-route="books"] { padding-bottom: 12px; }
+
+/* Обложка — типографская, в цветах корешка. Не копия настоящего издания */
+.cover { --tx: #f6f2ea; position: relative; display: flex; flex-direction: column; aspect-ratio: 2 / 3; padding: 14px 11px 11px; border-radius: 3px 6px 6px 3px; background: var(--c); color: var(--tx); overflow: hidden;
+  box-shadow: inset 6px 0 0 rgba(0, 0, 0, .12), 0 10px 22px rgba(31, 36, 39, .18); }
+.cover--light { --tx: #2a2622; box-shadow: inset 6px 0 0 rgba(0, 0, 0, .06), inset 0 0 0 1px rgba(31, 36, 39, .08), 0 10px 22px rgba(31, 36, 39, .14); }
+.cover__band { height: 3px; margin-bottom: 14px; background: currentColor; opacity: .35; }
+.cover__author { font-size: 9px; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
+.cover__title { margin-top: 8px; font-size: 14px; font-weight: 600; line-height: 1.12; overflow-wrap: normal; word-break: normal; hyphens: manual; }
+.cover__rule { width: 22px; height: 22px; margin-top: auto; border: 1.5px solid currentColor; border-radius: 50%; opacity: .45; }
+.cover--serif .cover__title { font-family: var(--serif); font-weight: 400; font-size: 15px; }
+.cover--caps .cover__title { text-transform: uppercase; letter-spacing: .02em; font-size: 10.5px; }
+.cover--bold .cover__title { font-weight: 700; font-size: 16px; letter-spacing: -.02em; }
+.cover--mono .cover__title { font-family: var(--mono); font-size: 13px; }
+
+.lib__meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--soft); font-size: 12px; }
+.lib__tag { padding: 2px 8px; border-radius: 999px; background: var(--blue-soft); color: var(--blue-ink); font-weight: 600; }
+.lib__title { margin-top: 8px; font-size: 21px; font-weight: 600; line-height: 1.15; letter-spacing: -.025em; }
+.lib__author { margin-top: 4px; color: var(--muted); font-size: 15px; }
+.lib__about { margin-top: 8px; color: #3f4649; font-size: 15px; line-height: 1.45; max-width: 560px; }
+.lib__note { margin-top: 20px; padding: 10px 14px; border-left: 3px solid var(--blue); border-radius: 0 10px 10px 0; background: #fff; font-size: 15px; line-height: 1.45; }
+.lib__groupnote { margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+.lib__groupnote b { color: var(--ink); font-weight: 600; }
+.lib__note small { display: block; margin-bottom: 2px; color: var(--soft); font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.lib__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.lib__nav { display: flex; flex: none; align-items: center; gap: 6px; color: var(--soft); font-size: 13px; }
+.lib__nav button { min-width: 28px; height: 28px; padding: 0 6px; border: 0; border-radius: 8px; background: none; color: var(--blue-ink); font: 600 15px inherit; font-family: inherit; cursor: pointer; }
+.lib__nav button:hover:not(:disabled) { background: #fff; }
+.lib__nav button:disabled { color: var(--soft); opacity: .5; cursor: default; }
+
+.lib__nav button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+.lib__nav .lib__close { margin-left: 8px; color: var(--muted); font-size: 14px; font-weight: 500; }
+
+/* ---------- Узкое окно и телефон ---------- */
+@media (max-width: 760px) {
+  .lib__shelf .lib__shelfnote { display: none; }
+  .lib__shelfnote--top { display: block; max-width: none; margin: 0 0 4px; padding: 0; }
+  .lib__tabs { margin: 0 -18px 12px; padding: 2px 18px; }
+  .lib__shelf { gap: 10px; min-height: 206px; padding: 12px 18px 0; margin: 0 -18px; scroll-snap-type: x proximity; }
+  .lib__grp { scroll-snap-align: start; }
+  .bk { width: var(--w); height: calc(var(--h) * .86); }
+  .bk__title { font-size: 10.5px !important; }
+  .bk--caps .bk__title { font-size: 9px !important; }
+  .bk__author { max-height: 40px; }
+  .lib__tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .lib__board, .lib__labels { margin-left: -14px; margin-right: -14px; }
+  .lib__tabs.is-more-right { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent); }
+  .lib__tabs.is-more-left { -webkit-mask-image: linear-gradient(to right, transparent, #000 40px); mask-image: linear-gradient(to right, transparent, #000 40px); }
+  .lib__tabs.is-more-left.is-more-right { -webkit-mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent); }
+  /* Карточка на телефоне — как страница книги в книжных приложениях: навигация сверху,
+     маленькая обложка рядом с названием, текст на всю ширину */
+  .lib__open { grid-template-columns: 84px minmax(0, 1fr); grid-template-areas: "top top" "cover head" "rest rest"; gap: 14px 14px; padding: 14px; scroll-margin-top: 150px; }
+  .lib__open.has-book .lib__info { display: contents; }
+  .lib__open .lib__top { grid-area: top; }
+  .lib__open .cover { grid-area: cover; padding: 8px 6px 7px; }
+  .lib__open .lib__head { grid-area: head; align-self: center; }
+  .lib__open .lib__head .lib__title { margin-top: 0; }
+  .lib__open .lib__about, .lib__open .lib__note, .lib__open .lib__groupnote { grid-column: 1 / -1; margin-top: 0; }
+  .lib__open .lib__note { margin-top: 6px; }
+  .lib__open .cover__author { display: none; }
+  .lib__open .cover__band { margin-bottom: 8px; }
+  .lib__open .cover__rule { width: 14px; height: 14px; }
+  .cover__title { font-size: 11px; }
+  .cover--serif .cover__title, .cover--bold .cover__title { font-size: 12px; }
+  .lib__title { font-size: 19px; }
+  .lib__top { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bk, .lib__tabs button { transition: none; }
+  .lib__shelf.is-in .bk, .lib__open.is-in > * { animation: none; }
+}
+
+/* Отдельная страница раздела: своя шапка. В окне Finder её заменяет общая шапка папки */
+.lib-page__head { padding: 32px 0 20px; }
+.lib-page__head h1 { margin: 0; font-size: 28px; letter-spacing: -.03em; }
+.lib-page__head p { margin: 6px 0 0; color: #5d6467; }
+.win__page .lib-page__head { display: none; }
+.lib-page { padding-bottom: 48px; }
+
+.lib__intro--more { margin-top: 0; padding-top: 0; border-top: 0; }
+
+/* дизайн-сайт: розовый акцент вместо синего */
+html .lib { --blue: #e58fd6; --blue-soft: #fde4f8; --blue-ink: #9a3489; }

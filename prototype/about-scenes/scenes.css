@@ -1,0 +1,188 @@
+/* «Обо мне» — прототип листов, вторая итерация.
+   Цвета, шрифт, меню разделов, ссылки и метки — те же, что в кейсах (widget-case.css: .wf-nav, .wf-tag, .wf-h2).
+   Геометрия машинки в единицах исходной картинки tw3 (1313×879):
+   лист проходит под направляющей x 305–1155, вход в машинку y≈195, прижимная планка y 11–58, направляющая y 167–261.
+   --u — один пиксель исходной картинки на экране. */
+
+.proto-badge { margin-left: 12px; padding: 2px 8px; border-radius: 999px; background: #111; color: #fff; font-size: 11px; }
+.win-nav a.proto-current { background: var(--accent-soft); }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.sc-scroller { container: sc / size; overflow-x: hidden; scroll-snap-type: y mandatory; outline: none; }
+.sc-scroller[data-mode="flow"] { container-type: inline-size; scroll-snap-type: none; }
+
+.sc {
+  --ink: #1f2427; --muted: #5d6467; --soft: #8a9195; --line: rgba(31, 36, 39, .12);
+  --blue: #1c7ef1; --blue-soft: #e8f2fe; --blue-ink: #1463c4; --paper: #fcfbf8; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --bar: 46px;
+  --mw: min(100cqw, 960px);                  /* машинка не шире окна */
+  --u: calc(var(--mw) / 1313);
+  --strip: calc(var(--u) * 215);             /* в листах 1–4 видны валик, прижимная планка и направляющая */
+  --mach-h: calc(var(--u) * 500);            /* в последнем листе машинка поднимается до клавиш */
+  --sheet-w: calc(var(--u) * 840);           /* лист по ширине направляющей */
+  position: relative; isolation: isolate; color: var(--ink); font-size: 15px; line-height: 1.5;
+}
+:where(.sc) :where(h1, h2, h3, p, ol, ul) { margin: 0; }
+.sc a { color: var(--blue-ink); font-weight: 600; text-decoration: none; }
+.sc a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Строка разделов: тот же приём, что меню разделов в кейсах ---------- */
+.sc-bar { position: sticky; top: 0; z-index: 6; height: 0; }
+.sc-bar__links, .sc-bar__step { position: absolute; top: 0; height: var(--bar); display: flex; align-items: center; }
+.sc-bar::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: var(--bar); background: #fff; border-bottom: 1px solid var(--line); }
+.sc-bar__links { left: clamp(20px, 3vw, 40px); right: 96px; gap: 4px; font-size: 14px; overflow-x: auto; scrollbar-width: none; }
+.sc-bar__links::-webkit-scrollbar { display: none; }
+.sc-bar__links a { padding: 3px 8px; border-radius: 8px; color: var(--muted); font-weight: 400; white-space: nowrap; transition: color .15s, background-color .15s; }
+.sc-bar__links a:hover { color: var(--ink); text-decoration: none; }
+.sc-bar__links a[aria-current] { background: var(--blue-soft); color: var(--blue-ink); font-weight: 500; }
+.sc-bar__links a:focus-visible, .sc-bar__step button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.sc-bar__step { right: clamp(14px, 2.4vw, 32px); gap: 2px; }
+.sc-bar__step button { display: grid; width: 30px; height: 30px; place-items: center; border: 0; border-radius: 8px; background: none; color: var(--muted); cursor: pointer; }
+.sc-bar__step button:hover:not(:disabled) { background: #f1f3f4; color: var(--ink); }
+.sc-bar__step button:disabled { opacity: .3; cursor: default; }
+.sc-bar__step svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sc-bar__progress { position: absolute; left: 0; right: 0; top: calc(var(--bar) - 2px); height: 2px; overflow: hidden; }
+.sc-bar__progress i { display: block; height: 100%; background: #147ff3; transform: scaleX(0); transform-origin: left; transition: transform .12s linear; }
+
+/* Подсказка при первом открытии: исчезает после первого действия */
+.sc-hint { position: absolute; right: calc(clamp(14px, 2.4vw, 32px) + 72px); top: 0; z-index: 7; display: flex; align-items: center; gap: 8px; height: var(--bar); color: var(--muted); font-size: 13px; white-space: nowrap; transition: opacity .3s; }
+.sc-hint::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 4px var(--blue-soft); }
+.sc-hint[hidden] { display: none; }
+@container sc (max-width: 880px) { .sc-hint { right: auto; left: 50%; top: calc(var(--bar) + 8px); height: auto; padding: 6px 12px; transform: translateX(-50%); border-radius: 999px; background: var(--ink); color: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.14); } .sc-hint::before { display: none; } }
+.sc-hint.is-gone { opacity: 0; }
+
+/* ---------- Сцены и лист ---------- */
+.sc-scene { position: relative; height: 100cqh; scroll-snap-align: start; scroll-snap-stop: always; }
+.sc-sheet {
+  position: absolute; z-index: 2; top: calc(var(--bar) + 14px); bottom: calc(var(--strip) - var(--u) * 201);
+  left: calc(50% - var(--sheet-w) / 2); width: var(--sheet-w);
+  padding: 24px 34px calc(var(--u) * 196);
+  background: var(--paper);
+  box-shadow: 0 0 0 1px rgba(31, 36, 39, .06), 0 8px 24px rgba(31, 36, 39, .07);
+  overflow: hidden;
+}
+/* Изгиб на валике: нижняя часть листа темнеет к машинке */
+.sc-sheet::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--u) * 200); pointer-events: none;
+  background: linear-gradient(to bottom, rgba(31, 36, 39, 0), rgba(31, 36, 39, .05) 45%, rgba(31, 36, 39, .16)); }
+.sc-body { position: relative; z-index: 1; height: 100%; overflow: hidden; }
+
+/* Уходящий лист чуть гаснет. Только там, где браузер умеет анимацию от прокрутки */
+@supports (animation-timeline: view()) {
+  .sc-scroller:not([data-mode="flow"]) .sc-scene:not(.sc-scene--facts) .sc-sheet { animation: sc-leave linear both; animation-timeline: view(); animation-range: exit 0% exit 70%; }
+}
+@keyframes sc-leave { to { opacity: .25; } }
+
+/* ---------- Машинка: два слоя, приклеены к низу окна, в последнем листе встают на место ---------- */
+.sc-mach {
+  position: sticky; bottom: calc(var(--strip) - var(--mach-h));
+  height: var(--mach-h); width: calc(var(--u) * 1313);
+  margin-top: calc(var(--mach-h) * -1); margin-left: calc(50% - var(--u) * 730);
+  overflow: hidden; pointer-events: none;
+}
+.sc-mach--back { z-index: 1; }
+.sc-mach--front { z-index: 3; }
+.sc-mach img { position: absolute; left: 0; top: 0; width: 100%; height: auto; user-select: none; }
+.sc-mach img.cut { clip-path: inset(22.75% 0 0 0); }   /* низ корпуса закрывает лист ниже входа (200/879) */
+
+/* ---------- Типографика листов: как в кейсах ---------- */
+.sc-kicker { color: var(--soft); font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.sc h1 { margin-top: 10px; font-size: clamp(28px, 3.2vw, 36px); font-weight: 600; line-height: 1.05; letter-spacing: -.035em; }
+.sc-h2 { font-size: clamp(22px, 2.4vw, 26px); font-weight: 600; line-height: 1.14; letter-spacing: -.028em; }
+.sc-lead { margin-top: 14px; color: #3f4649; font-size: 16px; line-height: 1.5; }
+.sc-text { margin-top: 12px; color: #3f4649; font-size: 15px; line-height: 1.55; }
+.sc-note { margin-top: 6px; color: var(--soft); font-size: 13px; }
+.sc-tag { display: inline-block; margin-right: 8px; padding: 2px 8px; border-radius: 999px; background: var(--blue-soft); color: var(--blue-ink); font-size: 12px; font-weight: 600; vertical-align: 1px; }
+
+/* 01 Знакомство: портрет без рамки стоит на листе и уходит в машинку вместе с бумагой */
+.sc-hello { max-width: 50%; }
+.sc-portrait { position: absolute; z-index: 0; right: 3%; bottom: 0; height: 72%; width: auto; max-width: 52%; object-fit: contain; object-position: bottom right; }
+
+/* 02 Путь: шкала лет, параллельные периоды на отдельных дорожках */
+.tl { margin-top: 18px; }
+.tl__inner { position: relative; padding: 0 2px; }
+.tl__lanes { position: relative; height: 132px; }
+.tl__stage { position: absolute; height: 40px; padding: 0; border: 0; background: none; text-align: left; font: inherit; cursor: pointer; }
+.tl__stage span { position: absolute; left: 0; top: 0; color: var(--muted); font-size: 13px; line-height: 1.2; white-space: nowrap; transition: color .15s; }
+.tl__stage i { position: absolute; left: 0; right: 0; top: 20px; height: 10px; border-radius: 999px; background: #d4d8dc; transition: background-color .15s; }
+.tl__stage:hover span { color: var(--ink); }
+.tl__stage:hover i { background: #a9b0b6; }
+.tl__stage[aria-selected="true"] span { color: var(--blue-ink); font-weight: 600; }
+.tl__stage[aria-selected="true"] i { background: var(--blue); }
+.tl__stage:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+.tl__axis { position: relative; height: 26px; border-top: 1px solid var(--line); }
+.tl__axis b { position: absolute; top: 0; height: 6px; border-left: 1px solid var(--soft); }
+.tl__axis b span { position: absolute; top: 8px; left: 0; transform: translateX(-50%); color: var(--soft); font: 11px var(--mono); }
+.tl__axis b:first-child span { transform: none; }
+.tl__axis em { position: absolute; top: -9px; color: var(--soft); font: 13px var(--mono); font-style: normal; background: var(--paper); padding: 0 3px; }
+.tl__card { margin-top: 16px; padding: 14px 16px; border-left: 3px solid var(--blue); border-radius: 0 12px 12px 0; background: #f4f6f8; }
+.tl__card small { display: block; color: var(--soft); font-size: 12px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; }
+.tl__card b { display: block; margin-top: 4px; font-size: 17px; font-weight: 600; letter-spacing: -.015em; }
+.tl__card em { display: block; color: var(--muted); font-size: 14px; font-style: normal; }
+.tl__card p { margin-top: 6px; color: #3f4649; font-size: 15px; line-height: 1.5; }
+
+/* 03 Подход: принципы слева, объяснение подхода и пример справа, AI строкой ниже */
+.sc-approach__grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 24px; margin-top: 8px; }
+.sc-rules { padding: 0; list-style: none; counter-reset: r; }
+.sc-rules li { counter-increment: r; padding: 6px 0 6px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; line-height: 1.4; }
+.sc-rules li::before { content: "0" counter(r); display: block; color: var(--blue-ink); font-size: 12px; font-weight: 600; }
+.sc-rules b { display: block; margin: 1px 0 2px; color: var(--ink); font-size: 15px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3; }
+.sc-idea h3 { padding-top: 8px; font-size: 17px; font-weight: 600; letter-spacing: -.015em; }
+.sc-idea > p { margin-top: 6px; color: #3f4649; font-size: 14px; line-height: 1.45; }
+.sc-example { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: #f4f6f8; }
+.sc-example p { margin-top: 4px; color: #3f4649; font-size: 13px; line-height: 1.45; }
+.sc-ai { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--line); color: #3f4649; font-size: 13px; line-height: 1.45; }
+
+/* 04 Вне работы: контактный лист на бумаге */
+.sc-text--short { margin-top: 6px; color: var(--soft); font-size: 13px; }
+.sc-contact { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 12px; margin-top: 14px; padding: 0; list-style: none; color: var(--muted); font-size: 12px; }
+.sc-contact i { display: block; aspect-ratio: 1; margin-bottom: 6px; border-radius: 4px; background: #eceff1; box-shadow: inset 0 0 0 1px rgba(31, 36, 39, .05); }
+.sc-contact span { margin-right: 6px; color: var(--soft); font-family: var(--mono); font-size: 11px; }
+
+/* 05 Факты: строки печатаются в «окне» между прижимной планкой и направляющей */
+/* лист подан ровно настолько, чтобы были видны шапка, прошлые строки и строка печати */
+.sc-scene--facts .sc-sheet { top: max(calc(var(--bar) + 14px), calc(100cqh - var(--mach-h) - 128px)); bottom: calc(var(--mach-h) - var(--u) * 201); padding: 16px 26px 0; }
+.sc-facts__head { position: relative; z-index: 2; display: flex; align-items: center; gap: 12px; }
+.sc-facts__head .sc-kicker { margin-right: auto; }
+.sc-count { color: var(--soft); font: 12px var(--mono); }
+.sc-btn { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 14px; border: 1px solid rgba(20, 99, 196, .35); border-radius: 999px; background: #fff; color: var(--blue-ink); font: 600 14px inherit; font-family: inherit; cursor: pointer; transition: background-color .15s, border-color .15s; }
+.sc-btn:hover { background: var(--blue-soft); border-color: rgba(20, 99, 196, .55); }
+.sc-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.sc-btn:active { transform: translateY(1px); }
+.sc-roll { --roll-b: calc(var(--u) * 44); --roll-gap: calc(var(--u) * 104);   /* шаг подачи: прошлая строка уходит выше прижимной планки */
+  position: absolute; left: 26px; right: 26px; bottom: var(--roll-b); display: flex; flex-direction: column; justify-content: flex-end; gap: var(--roll-gap); }
+.sc-roll.is-feeding { transition: transform .22s cubic-bezier(.2, .7, .2, 1); }
+.sc-roll p { color: #23272a; font: clamp(13px, calc(var(--u) * 20), 15px)/1.45 var(--mono); transition: opacity .22s; }
+.sc-roll p.is-prev { opacity: .38; }
+.sc-roll p.is-old { opacity: 0; }
+.sc-roll .w { opacity: 0; }
+.sc-roll .w.on { opacity: 1; }   /* не visibility: она пробивает скрытое окно */
+.sc-roll p.is-typing::after { content: "▍"; margin-left: 1px; color: var(--blue-ink); animation: sc-caret .6s steps(1) infinite; }
+@keyframes sc-caret { 50% { opacity: 0; } }
+
+/* ---------- Обычная прокрутка: узкое или низкое окно, или лист не поместился ---------- */
+[data-mode="flow"] .sc-scene { height: auto; padding: 14px 14px 6px; }
+[data-mode="flow"] .sc-scene:first-of-type { padding-top: calc(var(--bar) + 14px); }
+[data-mode="flow"] .sc-sheet { position: relative; top: auto; bottom: auto; left: auto; width: auto; max-width: 640px; margin: 0 auto; padding: 22px 20px 24px; }
+[data-mode="flow"] .sc-sheet::after { display: none; }
+[data-mode="flow"] .sc-body { height: auto; }
+[data-mode="flow"] .sc-hello { max-width: none; }
+[data-mode="flow"] .sc-portrait { position: relative; right: auto; display: block; height: auto; width: 62%; max-width: 260px; margin: 18px 0 -24px auto; }
+[data-mode="flow"] .sc-sheet--hello { padding-bottom: 24px; }
+[data-mode="flow"] .tl__scroll { overflow-x: auto; margin: 0 -20px; padding: 0 20px 4px; scrollbar-width: thin; }
+[data-mode="flow"] .tl__inner { min-width: 560px; }
+[data-mode="flow"] .sc-approach__grid { grid-template-columns: 1fr; gap: 16px; }
+[data-mode="flow"] .sc-contact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+[data-mode="flow"] .sc-mach { position: relative; bottom: auto; }
+/* Факты в обычной прокрутке: лист с машинкой, строка печатается над прижимной планкой */
+[data-mode="flow"] .sc-scene--facts { height: calc(var(--mach-h) + 230px); padding: 0; }
+[data-mode="flow"] .sc { --mw: min(150cqw, 960px); }   /* на телефоне машинка крупнее экрана, края обрезаны, лист читаемой ширины */
+[data-mode="flow"] .sc-scene--facts .sc-sheet { position: absolute; top: 18px; bottom: calc(var(--mach-h) - var(--u) * 201); left: calc(50% - var(--sheet-w) / 2); width: var(--sheet-w); max-width: none; margin: 0; padding: 14px 16px 0; }
+[data-mode="flow"] .sc-roll { --roll-b: calc(var(--u) * 200); --roll-gap: 14px; left: 16px; right: 16px; }
+[data-mode="flow"] .sc-roll p { font-size: 13px; }
+[data-mode="flow"] .sc-hint { top: calc(var(--bar) + 8px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-sheet { animation: none !important; }
+  .sc-roll.is-feeding, .sc-roll p, .sc-hint, .sc-bar__links a, .sc-bar__progress i { transition: none !important; }
+  .sc-roll p.is-typing::after { animation: none; }
+}

@@ -1,0 +1,240 @@
+/* Окно раздела, направление A (ближе к Finder), поверх живого рабочего стола workspace-a.
+   Окно — отдельный слой: открытие, закрытие, сворачивание и разворот меняют только его состояние,
+   рабочий стол, шапка и Dock не перестраиваются. Анимации окна — Web Animations в finder-window.js. */
+
+:root {
+  --accent: #e2589a;
+  --accent-soft: rgba(226, 88, 154, .15);
+  --folder: #4fb0e6;
+  --win-ink: #1f2427;
+  --win-muted: #858b90;
+  --hairline: rgba(0, 0, 0, .09);
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dock-space: 98px;
+}
+
+/* Окно */
+.win {
+  --win-top: calc(var(--system-header-height, 45px) + 20px);
+  --win-w: min(1180px, calc(100vw - 80px));
+  --win-h: min(800px, calc(100svh - var(--system-header-height, 45px) - 20px - var(--dock-space)));
+  --win-left: calc((100vw - var(--win-w)) / 2);
+  position: fixed;
+  z-index: 30;
+  top: var(--win-top);
+  left: var(--win-left);
+  display: grid;
+  width: var(--win-w);
+  height: var(--win-h);
+  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-rows: 52px minmax(0, 1fr) 28px;
+  grid-template-areas: "side tool" "side main" "side status";
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(238, 240, 242, .74);
+  box-shadow: 0 0 0 .5px rgba(0, 0, 0, .28), inset 0 0 0 1px rgba(255, 255, 255, .5), 0 28px 70px rgba(18, 32, 40, .3), 0 6px 18px rgba(18, 32, 40, .12);
+  backdrop-filter: blur(40px) saturate(1.6);
+  -webkit-backdrop-filter: blur(40px) saturate(1.6);
+  color: var(--win-ink);
+  outline: none;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+.win.is-closed { visibility: hidden; pointer-events: none; }
+.win.no-status { grid-template-rows: 52px minmax(0, 1fr) 0; }
+.win.no-status .win__status { visibility: hidden; border: 0; }
+/* закрыто: окно остаётся в DOM (сохраняет прокрутку), но не видно и не кликается */
+.is-zoomed .win {
+  --win-top: calc(var(--system-header-height, 45px) + 8px);
+  --win-w: calc(100vw - 16px);
+  --win-h: calc(100svh - var(--system-header-height, 45px) - 8px - var(--dock-space));
+}
+/* Разворот: окно плавно меняет геометрию, содержимое просто перетекает */
+.win.is-resizing { transition: top 300ms var(--ease-out), left 300ms var(--ease-out), width 300ms var(--ease-out), height 300ms var(--ease-out), border-radius 300ms var(--ease-out); }
+
+/* Сайдбар: та же поверхность окна, светофор наверху */
+.win__sidebar { grid-area: side; display: flex; flex-direction: column; min-height: 0; padding: 0 10px 12px; }
+.win__lights { display: flex; height: 52px; flex: 0 0 52px; align-items: center; gap: 8px; padding-left: 8px; }
+.light {
+  position: relative;
+  display: block;
+  width: 12px; height: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 .5px rgba(0, 0, 0, .2);
+  cursor: default;
+  appearance: none;
+}
+.light::before { position: absolute; inset: 0; border-radius: 50%; background: center / 8px 8px no-repeat; opacity: 0; content: ""; transition: opacity 120ms ease; }
+.light::after { position: absolute; inset: -5px -4px; content: ""; }
+.light--close { background: #ff5f57; }
+.light--minimize { background: #febc2e; }
+.light--zoom { background: #28c840; }
+.light--close::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.8 1.8l4.4 4.4M6.2 1.8L1.8 6.2' stroke='%234d0000' stroke-width='1.15' stroke-linecap='round'/%3E%3C/svg%3E"); }
+.light--minimize::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.4 4h5.2' stroke='%23995700' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
+.light--zoom::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M2 2h3L2 5zM6 6H3l3-3z' fill='%23006500'/%3E%3C/svg%3E"); }
+.win__lights:hover .light::before, .win__lights:focus-within .light::before { opacity: 1; }
+.light:active { filter: brightness(.82); }
+.light:focus-visible { outline: 2px solid rgba(0, 110, 255, .55); outline-offset: 2px; }
+
+.win-nav { position: relative; display: grid; gap: 1px; padding-top: 6px; }
+.win-nav__indicator { position: absolute; top: 0; right: 0; left: 0; z-index: 0; border-radius: 7px; background: var(--accent-soft); opacity: 0; pointer-events: none; transition: transform 220ms var(--ease-out), height 220ms var(--ease-out), opacity 150ms ease; }
+.win-nav__indicator.is-instant { transition: none; }
+.win-nav a { position: relative; z-index: 1; display: flex; height: 30px; align-items: center; gap: 9px; padding: 0 10px; border-radius: 7px; color: #2c3134; font-size: 13px; text-decoration: none; transition: background-color 120ms ease, color 120ms ease; }
+.win-nav a:hover { background: rgba(0, 0, 0, .05); }
+.win-nav a[aria-current="page"] { font-weight: 500; }
+.win-nav a[aria-current="page"]:hover { background: transparent; }
+.win-nav a:focus-visible { outline: 2px solid rgba(226, 88, 154, .55); outline-offset: -2px; }
+.win-nav svg { width: 17px; height: 17px; flex: 0 0 17px; fill: none; stroke: #5f676c; stroke-width: 1.5; stroke-linecap: round; }
+.win-nav__label { margin: 14px 10px 4px; color: var(--win-muted); font-size: 11px; font-weight: 600; }
+
+/* Иконка папки — та же форма, что на рабочем столе */
+.icon-folder { position: relative; display: block; width: 17px; height: 13px; flex: 0 0 17px; margin-top: 2px; border-radius: 3px; background: var(--folder); transition: background-color 180ms ease; }
+.icon-folder::before { position: absolute; top: -2.5px; left: 0; width: 7px; height: 4px; border-radius: 2px 2px 0 0; background: inherit; filter: brightness(.92); content: ""; }
+.win-nav a[aria-current="page"] .icon-folder { background: var(--accent); }
+
+/* Toolbar и содержимое — одна белая колонка */
+.win__toolbar, .win__content, .win__status { background: #fff; }
+.win__toolbar { position: relative; z-index: 10; grid-area: tool; display: flex; align-items: center; gap: 14px; padding: 0 16px; border-bottom: 1px solid transparent; transition: border-color 160ms ease, box-shadow 160ms ease; }
+.win__toolbar.is-scrolled { border-color: var(--hairline); box-shadow: 0 1px 10px rgba(0, 0, 0, .04); }
+/* Назад / вперёд — капсула как в тулбаре macOS: две кнопки, тонкий разделитель между ними */
+.win__history { position: relative; display: flex; align-items: center; height: 32px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 .5px rgba(0, 0, 0, .1), 0 1px 2px rgba(0, 0, 0, .05), 0 4px 12px rgba(0, 0, 0, .05); }
+.win__history::before { content: ""; position: absolute; top: 8px; bottom: 8px; left: 50%; width: 1px; background: rgba(0, 0, 0, .1); transform: translateX(-.5px); pointer-events: none; }
+/* Кнопка кликается всей половиной капсулы, а подсветка — компактная, с отступом от края и разделителя (как в macOS) */
+.tool-button { position: relative; display: grid; width: 38px; height: 32px; place-items: center; border: 0; border-radius: 999px; background: transparent; padding: 0; color: #3a3f42; transition: color 120ms ease; }
+.tool-button::before { content: ""; position: absolute; top: 3px; bottom: 3px; left: 50%; width: 30px; border-radius: 999px; background: transparent; transform: translateX(-50%); transition: background-color 120ms ease; }
+.tool-button[data-win="back"]::before { left: calc(50% + 1px); }
+.tool-button[data-win="forward"]::before { left: calc(50% - 1px); }
+.tool-button:hover::before { background: rgba(0, 0, 0, .06); }
+.tool-button:active::before { background: rgba(0, 0, 0, .1); }
+.tool-button svg { position: relative; }
+.tool-button.is-disabled, .tool-button:disabled { color: rgba(60, 64, 67, .28); cursor: default; }
+.tool-button:disabled::before { background: transparent !important; }
+.tool-button:focus-visible { outline: none; }
+.tool-button:focus-visible::before { box-shadow: 0 0 0 2px rgba(10, 132, 255, .55); }
+.tool-button svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.win__title { margin: 0; font-size: 14px; font-weight: 600; letter-spacing: -.005em; }
+.win__title-button, .win-menu { display: none; }
+
+.win__content { position: relative; z-index: 1; isolation: isolate; grid-area: main; min-height: 0; overflow: auto; overscroll-behavior: contain; }
+.win__page { min-height: 100%; padding: 26px clamp(28px, 4vw, 48px) 40px; transition: opacity 180ms ease, transform 240ms var(--ease-out); }
+.win__page.is-out { opacity: 0; transform: translateY(5px); transition-duration: 120ms, 140ms; }
+.win__page.is-in { opacity: 0; transform: translateY(5px); transition: none; }
+/* Стрелки: лист уходит в сторону движения — понятно, «вперёд» это или «назад» */
+.win__page.is-out[data-dir="forward"] { transform: translateX(-10px); }
+.win__page.is-out[data-dir="back"] { transform: translateX(10px); }
+.win__page.is-in[data-dir="forward"] { transform: translateX(10px); }
+.win__page.is-in[data-dir="back"] { transform: translateX(-10px); }
+.win__title, [data-win-title-mobile] { transition: opacity 140ms ease; }
+.win__title.is-swapping, .is-title-swapping [data-win-title-mobile] { opacity: 0; }
+.win__error { color: var(--win-muted); }
+
+/* Шапка папки — одинаковая во всех разделах, как строка папки в Finder:
+   название слева, короткое пояснение справа, тонкая линия снизу */
+.win-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin: 0 0 28px; padding-bottom: 14px; border-bottom: 1px solid rgba(31, 36, 39, .12); }
+.win-head h1 { flex: none; margin: 0; color: var(--win-ink); font-size: 22px; font-weight: 600; line-height: 1.2; letter-spacing: -.03em; }
+.win-head p { max-width: 560px; margin: 0; color: #5d6467; font-size: 14px; line-height: 1.45; text-align: right; }
+/* То, что теперь показано в шапке, внутри раздела не повторяем */
+.win__page[data-route="about"] .about-workbench__intro .workspace-kicker,
+.win__page[data-route="books"] .library-intro > div,
+.win__page[data-route="design"] .page-intro .eyebrow,
+.win__page[data-route="design"] .page-intro .page-title { display: none; }
+.win__page[data-route="books"] .library-intro { padding-top: 0; }
+.win__page[data-route="design"] .page-intro { padding-top: 0; }
+@media (max-width: 760px) {
+  .win-head { display: block; margin-bottom: 22px; padding-bottom: 12px; }
+  .win-head p { margin-top: 4px; text-align: left; }
+}
+
+/* Содержимое разделов внутри окна: те же разметка и стили, что на их страницах,
+   только без отступов страницы и без привязки к высоте экрана */
+.win__page .container { width: 100%; max-width: 1080px; }
+.win__page .open-folder__content { padding: 0; }
+.win__page .page-intro { padding: 6px 0 40px; }
+.win__page .section { padding: 36px 0; }
+.win__page .section--soft { margin: 0 calc(-1 * clamp(28px, 4vw, 48px)); padding-inline: clamp(28px, 4vw, 48px); }
+.win__page .case-hero { padding-top: 6px; }
+.win__page .about-workbench { min-height: 620px; padding-top: 6px; padding-bottom: 32px; }
+.win__page .profile-typewriter { right: 0; bottom: 24px; width: min(600px, 50%); }
+.win__page .about-notes { position: relative; top: auto; width: min(420px, 44%); margin-top: 36px; }
+.win__page .library-intro { grid-template-columns: 1fr; gap: 16px; padding-top: 6px; padding-bottom: 36px; }
+.win__page .library-intro > p { max-width: 520px; }
+.win__page .library-room { padding-bottom: 20px; }
+.win__status { grid-area: status; display: grid; place-items: center; border-top: 1px solid var(--hairline); color: var(--win-muted); font-size: 11px; }
+
+
+/* Dock: элемент открытого окна — та же разметка и стили, что в workspace-a.
+   Появляется и исчезает плавно, чтобы Dock не прыгал при закрытии окна. */
+.workspace-dock .workspace-dock__separator,
+.workspace-dock .workspace-dock__current { transition: transform 170ms ease, filter 170ms ease, opacity 200ms ease, width 260ms var(--ease-out), margin 260ms var(--ease-out); }
+.workspace-dock.is-window-closed .workspace-dock__separator,
+.workspace-dock.is-window-closed .workspace-dock__current { width: 0; margin-left: -10px; opacity: 0; pointer-events: none; }
+.workspace-dock.is-window-closed .workspace-dock__current { visibility: hidden; transition: opacity 160ms ease, width 260ms var(--ease-out) 60ms, margin 260ms var(--ease-out) 60ms, visibility 0s linear 320ms; }
+.workspace-dock__current.is-minimized::after { background: rgba(33, 40, 43, .72); }
+.workspace-dock__current.is-minimized .workspace-dock__window { opacity: .72; }
+.workspace-dock__current.is-arriving .workspace-dock__window { animation: dock-arrive 360ms var(--ease-out); }
+/* старт страницы: Dock сразу в нужном состоянии, без анимации */
+.workspace-dock.is-instant, .workspace-dock.is-instant * { transition: none !important; }
+@keyframes dock-arrive { 40% { transform: translateY(-5px) scale(1.06); } }
+
+/* Окно без сайдбара: на телефоне и на узком экране до 1024px. Сайдбар в узком окне отъедал треть ширины, и разделы верстались в колонку шириной 450px */
+@media (max-width: 1024px) {
+  .win { --win-top: calc(var(--system-header-height, 51px)); --win-left: 0px; --win-w: 100vw; --win-h: calc(100svh - var(--system-header-height, 51px) - 82px); grid-template-columns: 1fr; grid-template-rows: 52px minmax(0, 1fr); grid-template-areas: "tool" "main"; border-radius: 0 0 18px 18px; }
+  .is-zoomed .win { --win-top: calc(var(--system-header-height, 51px)); --win-left: 0px; --win-w: 100vw; --win-h: calc(100svh - var(--system-header-height, 51px) - 82px); }
+  .win__sidebar, .win__status, .win__title { display: none; }
+  .win__toolbar { justify-content: center; padding: 0 8px; }
+  .win__history { position: absolute; left: 8px; height: 38px; }
+  .win__history::before { top: 10px; bottom: 10px; }
+  .tool-button { width: 44px; height: 38px; }
+  .tool-button::before { width: 36px; top: 4px; bottom: 4px; }
+  .win__title-button { display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 0 10px; border: 0; border-radius: 10px; background: transparent; color: var(--win-ink); font-size: 15px; font-weight: 600; }
+  .win__title-button svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; transition: transform 200ms var(--ease-out); }
+  .win__title-button:active { background: rgba(0, 0, 0, .06); }
+  .is-menu-open .win__title-button svg { transform: rotate(180deg); }
+  .win-menu { position: absolute; top: 48px; left: 50%; display: grid; width: min(240px, calc(100% - 32px)); padding: 6px; border-radius: 14px; background: rgba(250, 251, 251, .92); box-shadow: 0 0 0 .5px rgba(0, 0, 0, .16), 0 18px 40px rgba(0, 0, 0, .18); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); opacity: 0; visibility: hidden; transform: translateX(-50%) translateY(-6px) scale(.97); transform-origin: 50% 0; transition: opacity 160ms ease, transform 220ms var(--ease-out), visibility 0s linear 220ms; }
+  .is-menu-open .win-menu { opacity: 1; visibility: visible; transform: translateX(-50%); transition-delay: 0s; }
+  .win-menu a { display: flex; min-height: 44px; align-items: center; justify-content: space-between; padding: 0 12px; border-radius: 9px; font-size: 15px; text-decoration: none; }
+  .win-menu a:active { background: rgba(0, 0, 0, .06); }
+  .win-menu a[aria-current="page"] { color: var(--accent); font-weight: 600; }
+  .win-menu a[aria-current="page"]::after { width: 7px; height: 12px; margin-right: 3px; border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg) translateY(-2px); content: ""; }
+  .win-menu a:first-child { margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid var(--hairline); border-radius: 9px 9px 0 0; }
+  .win__page { padding: 24px 32px 36px; }
+  .win__page .section--soft { margin: 0 -32px; padding-inline: 32px; }
+}
+/* Узкий экран, не телефон: окно с полями и скруглением, высота с учётом Dock */
+@media (min-width: 761px) and (max-width: 1024px) {
+  .win, .is-zoomed .win { --win-top: calc(var(--system-header-height, 51px) + 12px); --win-left: 16px; --win-w: calc(100vw - 32px); --win-h: calc(100svh - var(--system-header-height, 51px) - 12px - var(--dock-space)); border-radius: 12px; }
+}
+@media (max-width: 760px) {
+  .win__page { padding: 20px 18px 28px; }
+  .win__page .about-workbench { min-height: 0; padding-bottom: 20px; }
+  .win__page .profile-typewriter { width: 100%; }
+  .win__page .about-notes { width: 100%; margin-top: 12px; }
+  .win__page .section--soft { margin: 0 -18px; padding-inline: 18px; }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .win.is-resizing, .win-nav__indicator, .win-menu, .light::before,
+  .workspace-dock .workspace-dock__separator, .workspace-dock .workspace-dock__current { transition: none !important; }
+  .workspace-dock__current.is-arriving .workspace-dock__window { animation: none; }
+}
+
+/* Dock на телефоне: у скрытого окна отрицательный отступ равен зазору Dock (5px), иначе контейнер ужимается и CV вылезает за край */
+@media (max-width: 640px) {
+  .workspace-dock.is-window-closed .workspace-dock__separator,
+  .workspace-dock.is-window-closed .workspace-dock__current { margin-left: -5px; }
+}
+
+/* Телефон боком: окно почти на весь экран и поверх Dock, иначе от окна оставалась полоска.
+   Закрыть и перейти в другой раздел можно через меню под названием окна */
+@media (max-height: 500px), (pointer: coarse) and (max-height: 640px) and (min-aspect-ratio: 4/3) {
+  .win, .is-zoomed .win { z-index: 70; --win-top: calc(var(--system-header-height, 51px) + 6px); --win-left: 12px; --win-w: calc(100vw - 24px); --win-h: calc(100svh - var(--system-header-height, 51px) - 12px); border-radius: 12px; }
+}
+
+/* дизайн-сайт: жёлтые папки, текущая — розовая */
+.icon-folder { background: #f6cf66; }
+.win-nav a[aria-current="page"] .icon-folder, .dock__thumb .icon-folder { background: #f39fe3; }
+.workspace-dock__current svg { fill: #f6cf66; stroke: rgba(150,110,20,.36); }
+.workspace-dock__current--projects svg { fill: #f39fe3; stroke: rgba(150,50,130,.36); }

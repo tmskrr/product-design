@@ -1,0 +1,292 @@
+/* Корова на рабочем столе прототипа (вместо /product-design/css/workspace-scene.css).
+   Motion: только opacity и transform. Пар идёт всегда, при prefers-reduced-motion — стоит на месте. */
+
+/* Папки всегда выше зоны коровы: на телефоне корова частично под ними, и тап по папке должен открывать папку */
+.desktop-folders { z-index: 5; }
+
+.cow-scene { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; transition: opacity 600ms ease; }
+.cow-scene.is-ready { opacity: 1; }
+.cow-scene > * { position: absolute; display: block; }
+
+/* 1. Пар над кофе: три струйки со сдвигом по времени, поэтому над стаканом всегда есть пар */
+.cow-scene__steam {
+  -webkit-mask-image: linear-gradient(to top, #000 30%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 30%, transparent 100%);
+}
+.cow-scene__steam svg { width: 100%; height: 100%; overflow: visible; }
+.cow-scene__steam path {
+  fill: none;
+  stroke: rgba(255, 255, 255, .9);
+  stroke-width: 2.3;
+  stroke-linecap: round;
+  opacity: 0;
+  filter: blur(1.2px);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: cow-steam 5.4s cubic-bezier(.33, 0, .2, 1) infinite;
+}
+.cow-scene__steam path:nth-child(2) { stroke-width: 1.9; animation-delay: -1.8s; }
+.cow-scene__steam path:nth-child(3) { stroke-width: 1.6; animation-delay: -3.6s; }
+@keyframes cow-steam {
+  0% { opacity: 0; transform: translateY(6px) scaleY(.86); }
+  18% { opacity: .6; }
+  62% { opacity: .34; transform: translateY(-5px) scaleY(1); }
+  100% { opacity: 0; transform: translateY(-13px) scaleY(1.06); }
+}
+
+/* 2. «Работа»: экран подсвечивает корову, сердце на крышке загорается, ноги стучат по клавишам */
+.cow-scene__glow {
+  background: radial-gradient(ellipse 46% 80% at 50% 100%, rgba(214, 232, 255, .34), rgba(214, 232, 255, .12) 55%, rgba(214, 232, 255, 0) 100%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+.cow-scene__heart {
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 214, 233, .85), rgba(255, 170, 210, .25) 45%, rgba(255, 170, 210, 0) 70%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: scale(.8);
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+.cow-scene__arm {
+  background-repeat: no-repeat;
+  -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 56%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 62% 58% at 50% 56%, #000 55%, transparent 100%);
+  opacity: 0;
+  transition: transform 70ms ease-out;
+}
+.cow-scene.is-working .cow-scene__arm { opacity: 1; }
+.cow-scene__arm.is-down { transform: translateY(1px); }
+.cow-scene.is-working .cow-scene__glow { opacity: 1; }
+.cow-scene.is-working .cow-scene__heart { opacity: .55; transform: scale(1); }
+/* тык: сердце на ноутбуке коротко вспыхивает */
+.cow-scene.is-love .cow-scene__heart { animation: cow-heart-pulse 700ms cubic-bezier(.2, .7, .2, 1); }
+@keyframes cow-heart-pulse { 0% { opacity: .3; transform: scale(.8); } 40% { opacity: 1; transform: scale(1.25); } 100% { opacity: .55; transform: scale(1); } }
+
+.cow-scene__typing {
+  display: flex; align-items: center; justify-content: center; gap: 3px;
+  border-radius: 99px;
+  background: rgba(34, 40, 43, .42);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28);
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+.cow-scene__typing i { width: 3px; height: 3px; border-radius: 50%; background: rgba(255, 255, 255, .92); opacity: .4; }
+.cow-scene.is-working .cow-scene__typing { opacity: 1; transform: translateY(0); }
+.cow-scene.is-working .cow-scene__typing i { animation: cow-scene-dot 1.1s ease-in-out infinite; }
+.cow-scene.is-working .cow-scene__typing i:nth-child(2) { animation-delay: .15s; }
+.cow-scene.is-working .cow-scene__typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes cow-scene-dot { 0%, 60%, 100% { opacity: .35; } 30% { opacity: 1; } }
+
+/* 3. Блик по розовым очкам */
+.cow-scene__glint { overflow: hidden; border-radius: 40%; mix-blend-mode: screen; }
+.cow-scene__glint::before {
+  content: ""; position: absolute; top: -40%; bottom: -40%; left: 0; width: 34%;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .85) 50%, rgba(255, 255, 255, 0));
+  transform: translateX(-120%) skewX(-18deg);
+  opacity: 0;
+}
+.cow-scene.is-glint .cow-scene__glint::before { animation: cow-glint 650ms cubic-bezier(.4, 0, .2, 1); }
+@keyframes cow-glint { 0% { opacity: 0; transform: translateX(-120%) skewX(-18deg); } 15% { opacity: 1; } 100% { opacity: 0; transform: translateX(330%) skewX(-18deg); } }
+
+/* ---------- Подсказка, облачко и реакции — в стеклянном стиле окон сайта ---------- */
+.cow-hint, .cow-pop, .cow-say { font-family: "IBM Plex Sans", Arial, sans-serif; }
+
+.cow-hint {
+  position: absolute; z-index: 6;
+  padding: 6px 11px;
+  border: 1px solid rgba(255, 255, 255, .78);
+  border-radius: 99px;
+  background: rgba(250, 251, 251, .86);
+  box-shadow: 0 10px 24px rgba(28, 39, 43, .18), inset 0 1px rgba(255, 255, 255, .95);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  color: #24292b; font-size: 13px; font-weight: 500; line-height: 1.2; white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 300ms ease, transform 420ms cubic-bezier(.2, .7, .2, 1);
+}
+.cow-hint::after {   /* хвостик к голове коровы: вниз, вправо или влево — смотря где метка */
+  content: ""; position: absolute; left: var(--tail, 50%); bottom: -5px; width: 9px; height: 9px; margin-left: -5px;
+  border-right: 1px solid rgba(255, 255, 255, .78); border-bottom: 1px solid rgba(255, 255, 255, .78);
+  background: rgba(250, 251, 251, .95);
+  transform: rotate(45deg);
+}
+.cow-hint[data-side="left"]::after { left: auto; right: -5px; bottom: auto; top: var(--tail, 50%); margin: -5px 0 0; transform: rotate(-45deg); }
+.cow-hint[data-side="right"]::after { left: -5px; bottom: auto; top: var(--tail, 50%); margin: -5px 0 0; transform: rotate(135deg); }
+.cow-hint.is-on { opacity: 1; transform: none; animation: cow-hint-bob 2.4s ease-in-out 600ms 2; }
+@keyframes cow-hint-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+.cow-pop {
+  position: absolute; z-index: 6;
+  padding: 5px 11px;
+  border: 1px solid rgba(255, 255, 255, .78);
+  border-radius: 99px;
+  background: rgba(250, 251, 251, .9);
+  box-shadow: 0 10px 24px rgba(28, 39, 43, .16);
+  color: #24292b; font-size: 14px; font-weight: 600; line-height: 1.2; white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px) scale(.9);
+}
+.cow-pop--heart { padding: 2px 9px 4px; color: #e5528f; font-size: 20px; }
+.cow-pop--tired { font-weight: 500; font-size: 13px; }
+.cow-pop.is-on { animation: cow-pop 1.5s cubic-bezier(.2, .7, .2, 1) forwards; }
+.cow-pop--tired.is-on { animation-duration: 2.6s; }
+@keyframes cow-pop {
+  0% { opacity: 0; transform: translateY(8px) scale(.9); }
+  14% { opacity: 1; transform: translateY(0) scale(1); }
+  75% { opacity: 1; transform: translateY(-4px) scale(1); }
+  100% { opacity: 0; transform: translateY(-12px) scale(.98); }
+}
+
+.cow-say {
+  position: absolute; z-index: 6;
+  width: 264px;
+  padding: 12px 15px 13px;
+  border: 1px solid rgba(255, 255, 255, .78);
+  border-radius: 14px;
+  background: rgba(250, 251, 251, .88);
+  box-shadow: 0 16px 36px rgba(28, 39, 43, .2), inset 0 1px rgba(255, 255, 255, .95);
+  backdrop-filter: blur(20px) saturate(1.2); -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  color: #1b1f21;
+  font-size: 15px;
+  line-height: 1.4;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(6px, 6px, 0) scale(.97);
+  transform-origin: 100% 100%;
+  transition: opacity 240ms ease, transform 300ms cubic-bezier(.2, .7, .2, 1), visibility 0s linear 300ms;
+  user-select: text;
+}
+.cow-say.is-open { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.cow-say p { margin: 0; }
+.cow-say__text { min-height: 2.8em; font-weight: 500; }
+.cow-say__caret { display: inline-block; width: 1.5px; height: 1.05em; margin-left: 1px; background: #cf3f7d; vertical-align: -.16em; opacity: 0; }
+.cow-say.is-typing .cow-say__caret { opacity: 1; animation: cow-caret 900ms steps(1, end) infinite; }
+@keyframes cow-caret { 50% { opacity: 0; } }
+.cow-say__link {
+  display: inline-block; margin-top: 8px;
+  color: #b8326c; font-size: 13.5px; font-weight: 500; text-decoration: none;
+  opacity: 0; transform: translateY(3px);
+  transition: opacity 260ms ease, transform 260ms ease, color 150ms ease;
+  visibility: hidden;
+}
+.cow-say.is-done .cow-say__link { opacity: 1; transform: none; visibility: visible; }
+.cow-say__link:hover { color: #8f2252; }
+.cow-say__link:hover span { display: inline-block; transform: translateX(2px); transition: transform 150ms ease; }
+.cow-say__link:focus-visible { outline: 2px solid #cf3f7d; outline-offset: 3px; border-radius: 4px; }
+
+.cow-status { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@media (max-width: 700px) {
+  .cow-say { width: min(264px, calc(100% - 24px)); padding: 10px 13px 11px; font-size: 14px; }
+  .cow-hint { font-size: 12px; padding: 5px 10px; }
+  .cow-scene__typing { transform: scale(.9); }
+}
+
+/* Без движения: пар стоит на месте (не пропадает), печати и бликов нет, тексты появляются сразу */
+@media (prefers-reduced-motion: reduce) {
+  .cow-scene__steam path { animation: none; opacity: .38; }
+  .cow-scene__steam path:nth-child(3) { opacity: 0; }
+  .cow-scene__arm, .cow-scene__glint { display: none; }
+  .cow-scene__typing i { animation: none !important; opacity: .8; }
+  .cow-scene, .cow-scene *, .cow-say, .cow-say__link, .cow-hint { transition: none !important; }
+  .cow-hint.is-on { animation: none; }
+  .cow-pop.is-on { animation: none; opacity: 1; transform: none; }
+  .cow-scene.is-love .cow-scene__heart { animation: none; }
+  .cow-say { transform: none; }
+}
+.cow-scene.is-still .cow-scene__arm { display: none; }
+
+/* ---------- Двойник: вылезает из-за спины коровы и прячется обратно ---------- */
+.cow-scene__twin, .cow-scene__front { background-size: 100% 100%; background-repeat: no-repeat; opacity: 0; }
+.cow-scene__twin {
+  --rise: -46%;
+  transform-origin: 50% 100%;
+  transform: scaleX(-1);
+  -webkit-mask-image: linear-gradient(to top, transparent, #000 22%);
+  mask-image: linear-gradient(to top, transparent, #000 22%);
+}
+.cow-scene.is-twin .cow-scene__front { opacity: 1; }
+.cow-scene.is-twin .cow-scene__twin { animation: cow-twin 3.2s cubic-bezier(.3, .7, .3, 1) both; }
+/* Пока вылезает вторая корова, сцена поднимается над папками: иначе на телефоне её закрывают папки */
+.cow-scene.is-twin { z-index: 6; }
+@keyframes cow-twin {
+  0% { opacity: 0; transform: translateY(0) scaleX(-1); }
+  6% { opacity: 1; }
+  24% { transform: translateY(var(--rise)) scaleX(-1) rotate(0deg); }
+  38% { transform: translateY(var(--rise)) scaleX(-1) rotate(-4deg); }
+  52% { transform: translateY(var(--rise)) scaleX(-1) rotate(3deg); }
+  70% { transform: translateY(var(--rise)) scaleX(-1) rotate(0deg); }
+  92% { opacity: 1; transform: translateY(0) scaleX(-1); }
+  100% { opacity: 0; transform: translateY(0) scaleX(-1); }
+}
+@media (max-width: 700px) { .cow-scene__twin { --rise: -34%; } }
+
+/* ---------- Крестики-нолики ---------- */
+.cow-game {
+  position: absolute; z-index: 7;
+  width: 216px;
+  padding: 10px 12px 12px;
+  border: 1px solid rgba(255, 255, 255, .78);
+  border-radius: 14px;
+  background: rgba(250, 251, 251, .9);
+  box-shadow: 0 16px 36px rgba(28, 39, 43, .22), inset 0 1px rgba(255, 255, 255, .95);
+  backdrop-filter: blur(20px) saturate(1.2); -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  color: #1b1f21; font-family: "IBM Plex Sans", Arial, sans-serif;
+  opacity: 0; visibility: hidden; transform: scale(.96);
+  transition: opacity 220ms ease, transform 280ms cubic-bezier(.2, .7, .2, 1), visibility 0s linear 280ms;
+}
+.cow-game.is-open { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.cow-game p { margin: 0; }
+.cow-game__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.cow-game__title { font-size: 13px; font-weight: 600; }
+.cow-game__close { width: 24px; height: 24px; padding: 0; border: 0; border-radius: 6px; background: none; color: #6a7074; font-size: 18px; line-height: 1; cursor: pointer; }
+.cow-game__close:hover { background: rgba(31, 36, 39, .06); color: #24292b; }
+.cow-game__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+.cow-game__grid button {
+  aspect-ratio: 1; padding: 0; border: 0; border-radius: 9px;
+  background: rgba(31, 36, 39, .06);
+  color: #24292b; font: 600 30px/1 "IBM Plex Sans", Arial, sans-serif;
+  cursor: pointer; transition: background-color 150ms ease;
+}
+.cow-game__grid button:hover:not(:disabled) { background: rgba(31, 36, 39, .11); }
+.cow-game__grid button:disabled { cursor: default; }
+.cow-game__grid button.is-o { color: #cf3f7d; }
+.cow-game__grid button.is-x, .cow-game__grid button.is-o { animation: cow-mark 220ms cubic-bezier(.2, .7, .2, 1); }
+.cow-game__grid button.is-win { background: rgba(207, 63, 125, .14); }
+@keyframes cow-mark { from { transform: scale(.6); opacity: 0; } }
+.cow-game__status { min-height: 1.4em; margin-top: 8px !important; color: #4a5054; font-size: 13px; }
+.cow-game__again { margin-top: 6px; padding: 5px 10px; border: 0; border-radius: 8px; background: #cf3f7d; color: #fff; font: 500 13px "IBM Plex Sans", Arial, sans-serif; cursor: pointer; }
+.cow-game__again:hover { background: #b8326c; }
+.cow-game button:focus-visible { outline: 2px solid #cf3f7d; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .cow-game { transition: none; transform: none; }
+  .cow-game__grid button.is-x, .cow-game__grid button.is-o { animation: none; }
+}
+
+/* ---------- Танцующая корова из-за горизонта ----------
+   Контейнер — кусок неба над линией, где кончается поле. Обрезка идёт ровно по этой линии,
+   поэтому корова появляется из-за холма, а не из воздуха */
+.cow-scene__horizon { overflow: hidden; clip-path: polygon(0% 0%, 100% 0%, 100.0% 96.7%, 91.7% 96.2%, 83.3% 95.7%, 72.2% 94.8%, 63.9% 94.3%, 55.6% 95.7%, 44.4% 95.7%, 33.3% 96.2%, 22.2% 96.7%, 11.1% 96.2%, 0.0% 95.2%); }
+.cow-scene__dancer {
+  position: absolute; top: 100%; left: 40.5%;
+  width: 19%; height: auto;
+  transform-origin: 50% 100%;
+  transform: translateY(0);
+  visibility: hidden;
+}
+.cow-scene.is-dance .cow-scene__dancer { visibility: visible; animation: cow-dance 3.2s cubic-bezier(.4, 0, .2, 1) both; }
+@keyframes cow-dance {   /* вылезла, постояла, залезла обратно — без покачиваний */
+  0% { transform: translateY(0); }
+  25%, 70% { transform: translateY(-100%); }
+  100% { transform: translateY(0); }
+}
+
+.cow-work-trigger.is-pointer:focus-visible::after { display: none; }
+
+/* «жмите» на крышке ноутбука: как гравировка на алюминии, без рамок и облачков */
+.cow-scene__press { position: absolute; display: grid; place-items: center; color: rgba(255, 255, 255, .82); font-family: "IBM Plex Sans", Arial, sans-serif; font-weight: 400; letter-spacing: .06em; line-height: 1; text-shadow: 0 1px 0 rgba(60, 64, 68, .22); pointer-events: none; white-space: nowrap; }

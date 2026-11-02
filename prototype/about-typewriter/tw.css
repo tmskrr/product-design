@@ -1,0 +1,201 @@
+/* «Обо мне» — листы и машинка.
+   Компьютер: слева фото, имя и стопка листов у нижнего края, справа машинка целиком. Всё в одном экране.
+   Телефон и узкое окно: обычная прокрутка — фото и имя, машинка во всю ширину, листы стопкой, лист раскрывается на месте.
+   Геометрия tw3 (1313×879): лист идёт под направляющей x 318–1142, вход в машинку на y≈200 (22.75% высоты),
+   прижимная планка y 11–58, направляющая y 167–261. --u — один пиксель исходной картинки на экране. */
+
+.tw {
+  --ink: #1f2427; --muted: #5d6467; --soft: #8a9195; --line: rgba(31, 36, 39, .12);
+  --blue: #1c7ef1; --blue-soft: #e8f2fe; --blue-ink: #1463c4; --paper: #fcfbf8;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  position: relative; flex: 1; min-height: 0; overflow: hidden;
+  display: grid; grid-template-columns: minmax(280px, 1fr) minmax(0, 1.15fr); gap: clamp(16px, 2.6vw, 36px);
+  color: var(--ink); font-size: 15px; line-height: 1.5;
+}
+:where(.tw) :where(p, ul, figure) { margin: 0; padding: 0; }
+.tw .visually-hidden, .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Шапка — типовая, как у остальных папок. Под ней раздел занимает всю оставшуюся высоту окна */
+.tw-page { display: flex; flex-direction: column; height: 100%; }
+.win__content > .tw-page { box-sizing: border-box; padding: 26px clamp(28px, 4vw, 48px) 0; }
+[data-win-page] .tw-page__head { display: none; }
+[data-win-page][data-route="about"] { display: flex; flex-direction: column; height: 100%; min-height: 0; padding-bottom: 0; box-sizing: border-box; }
+[data-win-page][data-route="about"] > .tw-page { flex: 1; min-height: 0; height: auto; }
+.tw-page .win-head { flex: none; margin-bottom: 18px; }
+
+/* ---------- Слева: кто это ---------- */
+.tw__left { container-type: size; position: relative; min-height: 0; }
+.tw__intro { display: flex; align-items: center; gap: 18px; }
+.tw__photo { flex: none; width: min(clamp(110px, 38cqw, 210px), 30cqh); padding: 5px; background: #fff; box-shadow: 0 1px 2px rgba(31, 36, 39, .08), 0 8px 20px rgba(31, 36, 39, .12); transform: rotate(-2deg); }
+.tw__photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; background: #d9d9d9; }
+.tw__name { font-size: 19px; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; }
+.tw__who p:not(.tw__name) { color: var(--muted); font-size: 14px; }
+
+/* ---------- Стопка листов ----------
+   Листы стоят у нижнего края, каждый выглядывает на свою высоту (--peek): видны заголовки и обрывки текста.
+   Открытый лист встаёт над стопкой. Высоту и подъём открытого листа считает скрипт по длине текста:
+   короткий лист не закрывает заголовки остальных, длинный может подняться выше и шире — чтобы текст читался целиком */
+.tw__tray { position: absolute; inset: 0; pointer-events: none; }
+.tw-card {
+  --W: min(300px, 64cqw);
+  --lift: 186px;
+  --H: min(100cqh - var(--lift) - 4px, 460px);
+  --step: calc((100cqw - var(--W)) / 4);
+  --peek: calc(50px + (4 - var(--i)) * var(--peek-step, 30px));
+  --rest: calc(var(--H) - var(--peek));
+  --drag: 0px;
+  position: absolute; z-index: calc(1 + var(--i)); left: calc(var(--i) * var(--step)); bottom: 0;
+  display: flex; flex-direction: column;
+  width: var(--W); height: var(--H); box-sizing: border-box;
+  padding: 9px 18px 16px;
+  background: var(--paper);
+  box-shadow: 0 0 0 1px rgba(31, 36, 39, .07), 0 -2px 10px rgba(31, 36, 39, .06), 0 10px 26px rgba(31, 36, 39, .08);
+  pointer-events: auto; touch-action: none; cursor: grab; user-select: none;
+  transform: translateY(calc(var(--rest) - var(--drag))) rotate(var(--r));
+  transition: transform .42s var(--ease), box-shadow .3s, height .42s var(--ease);
+}
+.tw-card:hover:not(.is-open):not(.is-dragging) { --drag: 10px; }
+.tw-card.is-dragging { transition: none; cursor: grabbing; }
+.tw-card.is-open {
+  --open-w: min(100cqw, 480px);   /* открытый лист не шире своей колонки: не закрывает лист в машинке */
+  left: 0; width: var(--open-w); height: var(--open-h, var(--H)); z-index: 20;
+  transform: translateY(calc(var(--drag-open, 0px) - var(--open-lift, var(--lift)))) rotate(0deg);
+  box-shadow: 0 0 0 1px rgba(31, 36, 39, .07), 0 18px 40px rgba(31, 36, 39, .16);
+}
+.tw-card__head {
+  flex: none; display: flex; align-items: baseline; gap: 10px; width: 100%; padding: 0; border: 0; background: none;
+  color: var(--ink); font: 600 14px/1.3 var(--mono); text-align: left; cursor: inherit;
+}
+.tw-card__head span { color: var(--soft); font-weight: 500; font-size: 12px; }
+.tw-card__head:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; border-radius: 3px; }
+.tw-card__body { flex: 1; min-height: 0; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); overflow: hidden; color: #2b3033; font-size: 14.5px; line-height: 1.55; }
+.tw-card.is-open .tw-card__body { touch-action: pan-y; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding-right: 4px; }
+.tw-card.is-open .tw-card__body.is-more { -webkit-mask-image: linear-gradient(#000 calc(100% - 28px), transparent); mask-image: linear-gradient(#000 calc(100% - 28px), transparent); }   /* текст продолжается ниже */
+.tw-card__body p + p { margin-top: .7em; }
+.tw-card__body h3 { margin: 16px 0 3px; font: 600 13px/1.35 var(--mono); }
+.tw-card__body h3:first-child { margin-top: 0; }
+.tw-card__body a { color: var(--blue-ink); font-weight: 600; text-decoration: none; }
+.tw-card__body a:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* закрытые листы: текст виден обрывками, как на настоящих листах в стопке */
+.tw-card:not(.is-open) .tw-card__body { opacity: .45; }
+/* где работала: даты моноширинным, роль и суть строкой ниже */
+.tw-jobs { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.tw-jobs li { display: grid; grid-template-columns: 78px minmax(0, 1fr); column-gap: 10px; }
+.tw-jobs span { grid-row: span 2; color: var(--soft); font: 12px/1.7 var(--mono); }
+.tw-jobs b { font-weight: 600; }
+.tw-jobs em { color: var(--muted); font-size: 13.5px; font-style: normal; line-height: 1.45; }
+.tw-jobs__more { margin-top: 14px !important; color: var(--muted); font-size: 13.5px; }
+
+/* ---------- Справа: машинка печатает факты ----------
+   Машинка стоит на нижнем крае и видна целиком. Над ней торчит лист с верхним краем — не бесконечная бумага до потолка.
+   Лист — примерно половина ширины машинки: в нём помещается самый длинный факт над прижимной планкой */
+.tw__right { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.tw__stage { container-type: size; position: relative; flex: 1; min-height: 0; }
+.tw__stage > * {
+  --mw: min(100cqw, 560px, (100cqh - 8px) / 1.19);
+  --u: calc(var(--mw) / 1313);
+  --mh: calc(var(--mw) * 879 / 1313);
+  --gap: 8px;
+  --sheet: min(100cqh - var(--gap) - var(--mh), var(--mw) * .58);   /* часть листа над машинкой */
+}
+.tw__mach { position: absolute; z-index: 1; left: 50%; bottom: var(--gap); width: var(--mw); aspect-ratio: 1313 / 879; margin-left: calc(var(--mw) / -2); pointer-events: none; }
+.tw__mach--front { z-index: 3; }
+.tw__mach img { position: absolute; left: 0; top: 0; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+.tw__mach:not(.tw__mach--front)::after { content: ""; position: absolute; z-index: -1; left: 12%; right: 10%; bottom: -2%; height: 9%; border-radius: 50%; background: radial-gradient(ellipse, rgba(31, 36, 39, .2), rgba(31, 36, 39, 0) 70%); }
+/* Клавиши: при печати нажимается настоящая клавиша с картинки (вырезка из tw3-keys.webp опускается на пару пикселей).
+   Один-два маленьких элемента на слово, живут 90 мс — на скорость сайта не влияет */
+.tw__keys { position: absolute; inset: 0; z-index: 1; }
+.tw-k { position: absolute; }
+.tw-k i { position: absolute; inset: 0; background-repeat: no-repeat; }
+.tw-k .hole { background-color: #1b1a17; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+.tw-k .cap { transform: translateY(calc(var(--u) * 5)) scaleY(.97); filter: brightness(.92); }
+/* табличка на корпусе, между корзиной рычагов и клавишами: по ней печатается следующий факт */
+.tw__plate {
+  position: absolute; z-index: 4; left: 50%; bottom: calc(var(--gap) + var(--mh) * (1 - 418 / 879));
+  transform: translate(-50%, 50%);
+  padding: calc(var(--u) * 7) calc(var(--u) * 20); border: 0; border-radius: 4px;
+  background: #23272a; color: #f4ecd6; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 1px 2px rgba(0, 0, 0, .25);
+  font: 600 clamp(10px, calc(var(--u) * 24), 13px)/1.2 var(--mono); letter-spacing: .04em; white-space: nowrap; cursor: pointer;
+  transition: background-color .15s, transform .12s;
+}
+.tw__plate:hover { background: #111416; }
+.tw__plate:active { transform: translate(-50%, calc(50% + 1px)); }
+.tw__plate:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+/* лист: от верхнего края до входа в машинку */
+.tw__paper {
+  position: absolute; z-index: 2; left: calc(50% - var(--mw) / 2 + var(--u) * 318); width: calc(var(--u) * 824);
+  bottom: calc(var(--gap) + var(--mh) * .7725);
+  height: calc(var(--sheet) + var(--mh) * .2275);
+  overflow: hidden; background: var(--paper);
+  box-shadow: 0 0 0 1px rgba(31, 36, 39, .07), 0 -4px 14px rgba(31, 36, 39, .05);
+  cursor: pointer;
+}
+.tw__paper::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--u) * 210); background: linear-gradient(to bottom, rgba(31, 36, 39, 0), rgba(31, 36, 39, .05) 45%, rgba(31, 36, 39, .17)); pointer-events: none; }
+/* строка печатается между прижимной планкой и направляющей. Допечатала — бумага поднимается, и весь факт над планкой */
+.tw__roll { position: absolute; left: calc(var(--u) * 40); right: calc(var(--u) * 40); bottom: calc(var(--u) * 60); display: grid; gap: calc(var(--u) * 90); }
+.tw__roll.is-feeding { transition: transform .22s var(--ease); }
+.tw__roll.is-up { transition: transform .45s var(--ease); transform: translateY(calc(var(--u) * -132)); }
+.tw__roll p { color: #23272a; font: clamp(12px, calc(var(--u) * 27), 15px)/1.45 var(--mono); transition: opacity .25s; }
+.tw__roll p.is-prev { opacity: .38; }
+.tw__roll p.is-old { opacity: 0; }
+/* буквы проявляются через opacity: visibility: visible пробивала бы скрытое окно и оставляла текст на рабочем столе */
+.tw__roll .w { opacity: 0; }
+.tw__roll .w.on { opacity: 1; }
+.tw__roll p.is-typing::after { content: "▍"; margin-left: 1px; color: var(--blue-ink); animation: tw-caret .6s steps(1) infinite; }
+@keyframes tw-caret { 50% { opacity: 0; } }
+/* Подсказка под допечатанным фактом: мелко и бледно, машинописью. Появляется, когда факт допечатан */
+.tw__roll p.is-last::after {
+  content: "нажмите, чтобы напечатать ещё"; display: block; margin-top: calc(var(--u) * 26);
+  color: var(--soft); font-size: .78em; letter-spacing: .02em; opacity: 0; transition: opacity .4s ease .2s;
+}
+.tw__roll p.is-last.is-done::after { opacity: .85; }
+.tw__paper:hover .tw__roll p.is-last.is-done::after { color: var(--blue-ink); }
+.tw__paper:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+/* Открыт лист — факт на машинке почти исчезает, машинка остаётся как есть. Закрыли лист — факт возвращается */
+.tw__roll, .tw__stage .tw__mach, .tw__paper { transition: opacity .35s ease, filter .35s ease; }
+.tw.is-reading .tw__roll { opacity: .12; }
+
+
+/* ---------- Телефон и узкое окно: обычная вертикальная прокрутка ---------- */
+@media (max-width: 920px) {
+  .win__content > .tw-page { padding: 16px 14px 24px; }
+  [data-win-page][data-route="about"] { display: block; height: auto; padding-bottom: 24px; }
+  .tw-page { height: auto; }
+  .tw-page .win-head { margin-bottom: 14px; }
+  .tw { container-type: inline-size; display: flex; flex-direction: column; gap: 18px; overflow: visible; }
+  .tw__left { display: contents; }
+  .tw__intro { order: 1; }
+  .tw__photo { width: 92px; padding: 4px; }
+  .tw__name { font-size: 17px; }
+  /* машинка во всю ширину, лист над ней по тем же пропорциям */
+  .tw__right { order: 2; }
+  .tw__stage { flex: none; height: calc(min(100cqw, 460px) * 1.25 + 8px); }
+  .tw__stage > * { --mw: min(100cqw, 460px); --sheet: calc(var(--mw) * .58); }
+  /* листы: стопка в потоке, лист раскрывается на месте, весь текст без внутренней прокрутки */
+  .tw__tray { order: 3; position: relative; inset: auto; display: grid; pointer-events: auto; padding-bottom: 6px; }
+  .tw-card {
+    position: relative; left: auto; bottom: auto; z-index: auto;
+    width: 100%; height: auto; max-height: 112px; overflow: hidden;
+    margin-top: -14px;
+    transform: rotate(calc(var(--r) * .5)); touch-action: auto; cursor: pointer;
+    transition: max-height .45s var(--ease), box-shadow .3s;
+  }
+  .tw-card:first-child { margin-top: 0; }
+  .tw-card:hover:not(.is-open) { --drag: 0px; }
+  .tw-card__body { overflow: visible; }
+  .tw-card:not(.is-open) .tw-card__body { -webkit-mask-image: linear-gradient(#000 20%, transparent 85%); mask-image: linear-gradient(#000 20%, transparent 85%); }
+  .tw-card.is-open { z-index: 2; left: auto; width: 100%; height: auto; max-height: 1400px; transform: none; }
+  .tw-card.is-open .tw-card__body { overflow: visible; padding-right: 0; }
+  .tw-card.is-open .tw-card__body.is-more { -webkit-mask-image: none; mask-image: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tw-card, .tw__roll.is-feeding, .tw__roll.is-up, .tw__roll p { transition: none; }
+  .tw__roll p.is-typing::after { animation: none; }
+}
+
+/* строка про дизайн-портфолио под ролью */
+.tw__who .tw__also { margin-top: 10px; color: var(--muted); font-size: 14px; }
+.tw__also a { color: #1463c4; text-decoration: underline; text-decoration-color: rgba(20,99,196,.35); text-underline-offset: 3px; }
+.tw__also a:hover { text-decoration-color: currentColor; }

@@ -1,0 +1,299 @@
+/* Дизайн-сайт: рабочий стол — холст с раскраской. Поле, гусь, солнце, верёвка нарисованы контуром.
+   Палитра как в Figma: выбрал цвет, тыкнул в область. Раскрашенный гусь оживает */
+
+.dz-scene {
+  background-color: #f4f4f2;
+  background-image: radial-gradient(circle, rgba(31, 36, 39, .12) 1px, transparent 1.2px);
+  background-size: var(--mg-t, 12px) var(--mg-t, 12px);
+  background-position: 0 0;   /* сетка совпадает с точками гуся в design-goose.js */
+}
+
+.cl {
+  --w: min(43vw, 640px, calc((100svh - 230px) * 640 / 440));
+  position: absolute; z-index: 4; right: 3%; bottom: 13%;
+  width: var(--w); aspect-ratio: 640 / 440;
+}
+.cl-art { display: block; width: 100%; height: 100%; overflow: visible; }
+
+/* Области раскраски: бумага с контуром */
+.cl-r { fill: #fbfaf6; stroke: #1f2427; stroke-width: 2.2; stroke-linejoin: round; cursor: pointer; transition: fill .25s ease; -webkit-tap-highlight-color: transparent; }
+.cl-line { fill: none; stroke: #1f2427; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.cl-legs { stroke-width: 2.2; }
+.cl-eye { fill: #1f2427; pointer-events: none; }
+.cl-pin { fill: #d9a868; stroke: #1f2427; stroke-width: 1.4; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  .cl-r:hover { stroke-width: 3.4; }
+}
+.cl-r:focus { outline: none; }
+.cl-r:focus-visible { outline: none; stroke: #0d99ff; stroke-width: 3.4; }
+
+/* Корова: фото на прищепках, ссылка на сайт редактуры */
+.cl-cow { cursor: pointer; }
+.cl-cow image { transform-box: fill-box; transform-origin: 50% 0; transition: transform .2s ease; }
+.cl-cow:hover image, .cl-cow:focus-visible image { transform: rotate(-3deg); }
+.cl-cow__label { fill: #1f2427; font: 600 13px "IBM Plex Sans", Arial, sans-serif; text-anchor: middle; opacity: 0; transition: opacity .2s ease; }
+.cl-cow:hover .cl-cow__label, .cl-cow:focus-visible .cl-cow__label { opacity: 1; }
+.cl-cow:focus-visible { outline: none; }
+.cl-cow:focus-visible image { filter: drop-shadow(0 0 0 #0d99ff) drop-shadow(0 0 2px #0d99ff); }
+
+/* Гусь ожил: кивает */
+.cl-goose { transform-box: fill-box; transform-origin: 50% 100%; }
+.cl.is-alive .cl-goose { animation: cl-nod .9s cubic-bezier(.3, .7, .3, 1); }
+@keyframes cl-nod { 30% { transform: translate(-6px, -10px) rotate(-3deg); } 60% { transform: translate(-6px, -2px) rotate(1.5deg); } }
+
+/* Палитра, как плавающая панель Figma */
+.cl-bar {
+  position: absolute; bottom: 100%; left: 0; display: flex; align-items: center; gap: 6px;
+  margin-bottom: 14px; padding: 6px 8px; border-radius: 12px; background: #fff;
+  box-shadow: 0 0 0 .5px rgba(0, 0, 0, .14), 0 8px 22px rgba(0, 0, 0, .1);
+}
+.cl-sw { width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .16); cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
+.cl-sw.is-on { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .16), 0 0 0 2px #fff, 0 0 0 4px #0d99ff; }
+.cl-sw:hover { transform: scale(1.08); }
+.cl-bar__sep { width: 1px; height: 20px; margin: 0 2px; background: rgba(0, 0, 0, .12); }
+.cl-reset { display: grid; width: 28px; height: 28px; padding: 0; place-items: center; border: 0; border-radius: 7px; background: none; color: #5d6467; cursor: pointer; }
+.cl-reset:hover { background: rgba(0, 0, 0, .06); color: #1f2427; }
+.cl-reset svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.cl-sw:focus-visible, .cl-reset:focus-visible { outline: 2px solid #0d99ff; outline-offset: 2px; }
+
+/* Подсказка и реплика */
+.cl-hint { position: absolute; bottom: 100%; left: 0; margin: 0 0 66px; color: #5d6467; font: 13px/1.3 "IBM Plex Sans", Arial, sans-serif; transition: opacity .3s ease; }
+.cl.is-started .cl-hint { opacity: 0; }
+.cl-say { position: absolute; top: -2%; left: 30%; padding: 6px 11px; border-radius: 14px 14px 14px 4px; background: #1f2427; color: #fff; font: 500 14px/1.2 "IBM Plex Sans", Arial, sans-serif; white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity .2s ease, transform .2s ease; pointer-events: none; }
+.cl-say.is-on { opacity: 1; transform: none; }
+
+/* Подписи папок на светлом холсте тёмные */
+.dz-scene .desktop-folder { color: #202527; text-shadow: none; }
+.dz-scene .desktop-folder strong { font-weight: 500; text-shadow: none; }   /* тень под подписями нужна только на траве у редактуры */
+
+/* Ссылка на сайт редактуры в шапке */
+.dz-header-link { margin-left: auto; color: #3d4447; font-size: 13px; font-weight: 500; text-decoration: none; white-space: nowrap; }
+.dz-header-link:hover { color: #cf3f7d; }
+.dz-header-link + * { margin-left: 18px; }
+
+/* Проект, который скоро появится: виден в папке, но не открывается */
+.project-file.is-soon { cursor: default; opacity: .72; }
+.project-file.is-soon:hover { transform: none; }
+.soon-section { display: grid; min-height: 260px; place-items: center; padding: 40px 0; }
+.soon-section__text { max-width: 420px; margin: 0; color: #5d6467; font-size: 16px; line-height: 1.5; text-align: center; }
+
+@media (max-width: 1000px) { .cl { --w: min(40vw, calc((100svh - 300px) * 640 / 440)); right: 2%; bottom: max(14%, 110px); } }
+/* Телефон: раскраска во всю ширину под папками, палитра над ней */
+@media (max-width: 700px) {
+  .cl { --w: min(94vw, calc((100svh - 580px) * 640 / 440)); right: 3%; bottom: 96px; }
+  .cl-bar { gap: 4px; margin-bottom: 8px; padding: 5px 6px; }
+  .cl-sw { width: 22px; height: 22px; }
+  .cl-hint { display: none; }
+}
+@media (max-width: 700px) and (max-height: 700px) { .cl { display: none; } }
+/* Невысокое окно на компьютере: раскраска меньше и ниже, подсказку прячем */
+@media (min-width: 701px) and (max-height: 680px) { .cl { --w: min(34vw, calc((100svh - 380px) * 640 / 440)); bottom: 4%; } .cl-hint { display: none; } }
+@media (min-width: 701px) and (max-width: 960px) and (max-height: 680px) { .cl { bottom: 100px; --w: min(32vw, calc((100svh - 400px) * 640 / 440)); } }
+@media (prefers-reduced-motion: reduce) { .cl.is-alive .cl-goose { animation: none; } .cl-r { transition: none; } }
+/* в шапке дизайна рядом ещё «Редактура ↗»: на самых узких телефонах дата не помещается, оставляем время */
+@media (max-width: 374px) { .site-nav { padding-right: 52px; } .system-status__date { display: none; } }
+/* На дизайн-сайте четыре папки (добавились «Книги»): делаем их компактнее, чтобы ряд не заезжал на гуся */
+@media (min-width: 701px) {
+  .dz-scene .desktop-folders { grid-template-columns: repeat(4, 104px); gap: 14px; }
+  .dz-scene .desktop-folder__icon { width: 96px; height: 61px; }
+  .dz-scene .desktop-folder__icon::before { top: -10px; width: 40px; height: 16px; }
+  .dz-scene .desktop-folder__icon::after { top: 5px; right: 6px; left: 6px; height: 5px; }
+  .dz-scene .desktop-folder:first-child strong, .dz-scene .desktop-folder strong { font-size: 14px; }
+}
+@media (min-width: 701px) and (max-width: 860px) {
+  .dz-scene .desktop-folders { grid-template-columns: repeat(4, 80px); gap: 6px; }
+  .dz-scene .desktop-folder__icon { width: 72px; height: 46px; }
+  .dz-scene .desktop-folder__icon::before { top: -8px; width: 30px; height: 12px; }
+  .dz-scene .desktop-folder:first-child strong, .dz-scene .desktop-folder strong { font-size: 13px; }
+}
+
+/* ---------- Гусь из точек на холсте (design-goose.js) ---------- */
+.mg { position: absolute; z-index: 0; top: 0; left: 0; pointer-events: none; }
+.mg[hidden], .mg-hit[hidden] { display: none; }
+.mg-hit { position: absolute; z-index: 2; padding: 0; border: 0; border-radius: 40%; background: none; cursor: pointer; z-index: 1; -webkit-tap-highlight-color: transparent; }
+.mg-hit:focus-visible { outline: 2px solid #0d99ff; outline-offset: 2px; }
+.mg-say { position: absolute; bottom: 96%; left: 50%; padding: 6px 11px 7px; border-radius: 12px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 8px 20px rgba(31,36,39,.14); color: #1f2427; font: 600 14px/1 "IBM Plex Sans", Arial, sans-serif; white-space: nowrap; opacity: 0; transform: translate(-50%, 6px) scale(.9); pointer-events: none; }
+.mg-say.is-on { animation: mg-say 1.2s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes mg-say { 0% { opacity: 0; transform: translate(-50%, 6px) scale(.9); } 15%, 70% { opacity: 1; transform: translate(-50%, 0) scale(1); } 100% { opacity: 0; transform: translate(-50%, -8px) scale(1); } }
+.vx { position: absolute; z-index: 1; pointer-events: none; }
+.vx[hidden] { display: none; }
+.cg { image-rendering: pixelated; image-rendering: crisp-edges; }
+
+/* Фото-варианты главной: кадр на весь стол, гусь справа, слева место под текст (как у коровы) */
+.dz-scene.dz-photo { background-color: #eef1f4; background-image: var(--dz-photo); background-size: cover; background-position: 72% 60%; background-repeat: no-repeat; }
+@media (max-width: 700px) { .dz-scene.dz-photo { background-position: 86% 100%; background-size: auto 62%; } }
+.dz-scene.dz-photo--studio { background-color: #e3dcdc; }
+.dz-scene.dz-photo--meadow { background-color: #8fb4dd; }
+
+/* ---------- Оживление фото-гуся (design-photo.js) ---------- */
+.gp-screen { position: absolute; z-index: 1; top: 0; left: 0; transform-origin: 0 0; overflow: hidden; border-radius: 2px; cursor: pointer; }
+.gp-ui { position: absolute; inset: 0; display: grid; grid-template-columns: 56px 1fr; grid-template-rows: 22px 1fr; background: #eef1f6; }
+.gp-ui__bar { grid-column: 1 / -1; display: flex; align-items: center; gap: 5px; padding: 0 9px; background: #e3e7ee; }
+.gp-ui__bar i { width: 7px; height: 7px; border-radius: 50%; background: #ff5f57; }
+.gp-ui__bar i:nth-child(2) { background: #febc2e; } .gp-ui__bar i:nth-child(3) { background: #28c840; }
+.gp-ui__bar span { width: 46%; height: 8px; margin-left: 14px; border-radius: 4px; background: #d3d9e2; }
+.gp-ui__side { display: flex; flex-direction: column; gap: 8px; padding: 12px 9px; background: #e7ebf1; }
+.gp-ui__side b { height: 6px; border-radius: 3px; background: #c9d0da; }
+.gp-ui__side b:nth-child(2) { width: 70%; } .gp-ui__side b:nth-child(4) { width: 80%; background: #9fb6dc; }
+.gp-ui__canvas { position: relative; padding: 14px; background-image: radial-gradient(circle, rgba(31,36,39,.08) 1px, transparent 1.2px); background-size: 12px 12px; }
+.gp-f { position: absolute; border-radius: 6px; background: #fff; box-shadow: 0 1px 3px rgba(31,36,39,.12); opacity: 0; transform: translateY(6px); animation: gp-f 9s ease-in-out infinite; }
+.gp-f i { display: block; height: 6px; margin: 8px; border-radius: 3px; background: #d7dce4; }
+.gp-f i:nth-child(2) { width: 60%; } .gp-f em { display: block; width: 46%; height: 14px; margin: 10px 8px; border-radius: 7px; background: #0d99ff; }
+.gp-f--1 { top: 14px; left: 14px; width: 104px; height: 80px; }
+.gp-f--2 { top: 14px; left: 130px; width: 104px; height: 80px; animation-delay: 1.2s; }
+.gp-f--3 { top: 106px; left: 14px; width: 220px; height: 82px; animation-delay: 2.4s; }
+@keyframes gp-f { 0% { opacity: 0; transform: translateY(6px); } 8%, 80% { opacity: 1; transform: none; } 92%, 100% { opacity: 0; transform: none; } }
+.gp-cursor { position: absolute; top: 60px; left: 120px; width: 0; height: 0; border-left: 7px solid #1f2427; border-top: 4px solid transparent; border-bottom: 4px solid transparent; transform: rotate(-60deg); animation: gp-cur 9s ease-in-out infinite; }
+@keyframes gp-cur { 0% { top: 150px; left: 60px; } 15% { top: 60px; left: 100px; } 30% { top: 58px; left: 210px; } 45% { top: 150px; left: 250px; } 60% { top: 170px; left: 120px; } 80% { top: 120px; left: 220px; } 100% { top: 150px; left: 60px; } }
+.gp-screen:hover .gp-ui { filter: brightness(1.03); }
+.gp-phones { position: absolute; z-index: 1; border-radius: 50%; cursor: pointer; }
+.gp-notes { position: absolute; z-index: 1; width: 0; height: 0; pointer-events: none; }
+.gp-notes span { position: absolute; left: 0; top: 0; color: #f2a7c3; font: 700 calc(22px * var(--gp-k, 1) * 1.6)/1 Arial, sans-serif; text-shadow: 0 1px 2px rgba(31,36,39,.15); animation: gp-note 3.2s ease-out forwards; }
+@keyframes gp-note { 0% { opacity: 0; transform: translate(0, 0) rotate(0); } 15% { opacity: 1; } 100% { opacity: 0; transform: translate(calc(var(--dx) - 30px), -120px) rotate(var(--rot)); } }
+.gp-steam { position: absolute; z-index: 1; pointer-events: none; opacity: .55; }
+.gp-steam svg { width: 100%; height: 100%; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; }
+.gp-steam path { stroke-dasharray: 60; animation: gp-steam 3.4s ease-in-out infinite; }
+.gp-steam path:nth-child(2) { animation-delay: 1.2s; }
+@keyframes gp-steam { 0% { stroke-dashoffset: 60; opacity: 0; } 30% { opacity: 1; } 100% { stroke-dashoffset: -60; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .gp-f, .gp-cursor, .gp-steam path { animation: none; opacity: 1; } }
+
+/* переключатель цвета фона: маленькие кружки в правом верхнем углу стола */
+.dz-themes { position: absolute; z-index: 4; top: 18px; right: max(24px, calc((100vw - var(--content, 1120px)) / 2)); display: flex; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(255,255,255,.55); box-shadow: 0 1px 2px rgba(31,36,39,.08); backdrop-filter: blur(10px); }
+.dz-themes button { width: 18px; height: 18px; padding: 0; border: 1.5px solid rgba(31,36,39,.18); border-radius: 50%; background: var(--c); cursor: pointer; transition: transform .15s ease; }
+.dz-themes button:hover { transform: scale(1.12); }
+.dz-themes button[aria-pressed="true"] { border-color: #1f2427; box-shadow: 0 0 0 2px #fff inset; }
+.dz-themes button:focus-visible { outline: 2px solid #0d99ff; outline-offset: 2px; }
+@media (max-width: 700px) { .dz-themes { top: auto; bottom: 104px; right: 12px; } }
+/* наложенный экран выглядел приклеенным: пока прячем макет, монитор остаётся кликабельным */
+.gp-screen .gp-ui { display: none; }
+
+/* Пара кадров: «смотрит в экран» — фон, «смотрит на нас» — слой сверху, плавно проявляется */
+.dz-look { position: absolute; inset: 0; z-index: 0; background-size: inherit; background-position: inherit; background-repeat: no-repeat; opacity: 0; transition: opacity .3s ease; pointer-events: none; }
+.dz-look.is-on { opacity: 1; }
+.dz-head { position: absolute; z-index: 3; padding: 0; border: 0; border-radius: 45%; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.dz-head:focus-visible { outline: 2px solid #0d99ff; outline-offset: 2px; }
+.dz-head .mg-say { bottom: 100%; left: 30%; }
+@media (prefers-reduced-motion: reduce) { .dz-look { transition: none; } }
+@media (max-width: 700px) {
+  /* на телефоне кадр начинается ниже середины: прячем шов между цветом фона и верхом фото */
+  .dz-photo--pair::before { position: absolute; z-index: 1; top: 38%; right: 0; left: 0; height: 90px; background: linear-gradient(var(--dz-bg), transparent); content: ""; pointer-events: none; }
+}
+
+/* ---------- Гусь-видео (design-video.js) ---------- */
+.dz-scene.dz-video { transition: background-color .4s ease; }
+.gv-stage { position: absolute; z-index: 1; pointer-events: none; }
+.gv-stage[hidden] { display: none; }
+.gv-poster, .gv-layer { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* зона наведения — гусь, правая треть сцены */
+.gv-hit { position: absolute; top: 4%; right: 0; width: 46%; height: 80%; padding: 0; border: 0; background: none; cursor: pointer; pointer-events: auto; -webkit-tap-highlight-color: transparent; }
+.gv-hit:focus-visible { outline: 2px solid #0d99ff; outline-offset: 2px; border-radius: 24px; }
+.gv-hit .mg-say { bottom: auto; top: -2%; left: 18%; }
+.gv-hit .mg-say.is-shown { opacity: 1; transform: translate(-50%, 0) scale(1); transition: opacity .25s ease, transform .25s ease; }
+/* телефон: кружки цвета слева над сценой, не поверх гуся и папок */
+@media (max-width: 700px) { .dz-scene.dz-video .dz-themes { bottom: auto; right: auto; left: 12px; } }
+
+/* ---------- Мини-игра «Гусь бежит» (design-runner.js) ---------- */
+.gr { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 16px; background: rgba(31,36,39,.28); opacity: 0; transition: opacity .2s ease; }
+.gr.is-open { opacity: 1; }
+.gr__win { width: min(760px, 100%); overflow: hidden; border-radius: 14px; background: #fff; box-shadow: 0 30px 80px rgba(31,36,39,.3); transform: translateY(8px) scale(.98); transition: transform .25s cubic-bezier(.2,.7,.2,1); }
+.gr.is-open .gr__win { transform: none; }
+.gr__bar { display: flex; height: 34px; align-items: center; gap: 7px; padding: 0 12px; border-bottom: 1px solid rgba(31,36,39,.08); background: #f6f6f5; }
+.gr__bar i, .gr__dot { width: 12px; height: 12px; padding: 0; border: 0; border-radius: 50%; background: #febc2e; }
+.gr__dot { background: #ff5f57; cursor: pointer; }
+.gr__bar i:last-of-type { background: #28c840; }
+.gr__bar span { margin-left: 8px; color: #5d6467; font: 600 13px/1 "IBM Plex Sans", Arial, sans-serif; }
+.gr__stage { position: relative; width: 100%; height: clamp(230px, 40vw, 320px); background: #fbfbfa; touch-action: manipulation; user-select: none; -webkit-user-select: none; cursor: pointer; }
+.gr__cv { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gr__hud { position: absolute; top: 12px; right: 14px; display: flex; gap: 14px; color: #1f2427; font: 600 13px/1 "IBM Plex Mono", ui-monospace, monospace; }
+.gr__best { color: #8b9399; }
+.gr__msg { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; background: rgba(251,251,250,.82); }
+.gr__msg[hidden] { display: none; }
+.gr__msg b { color: #1f2427; font: 700 22px/1.1 "IBM Plex Sans", Arial, sans-serif; }
+.gr__msg span { max-width: 340px; color: #5d6467; font: 400 14px/1.4 "IBM Plex Sans", Arial, sans-serif; }
+.gr__msg button { height: 40px; margin-top: 6px; padding: 0 20px; border: 0; border-radius: 999px; background: #1f2427; color: #fff; font: 600 14px/1 "IBM Plex Sans", Arial, sans-serif; cursor: pointer; }
+.gr__msg button:focus-visible, .gr__dot:focus-visible { outline: 2px solid #0d99ff; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .gr, .gr__win { transition: none; } }
+
+/* ---------- Фон-облако из точек, ?bg=pixel (design-bg.js) ---------- */
+.dz-scene.dz-bg-pixel { isolation: isolate; }
+.gv-bg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+/* переключатель фона только на компьютере */
+@media (max-width: 700px) { .dz-scene.dz-video .dz-themes { display: none; } }
+html:has(.dz-scene.dz-video) .site-header.workspace-header { background: color-mix(in srgb, var(--dz-bg, #f4f4f2) 86%, transparent); }
+
+/* ---------- Небо, ?bg=sky (design-bg.js) ---------- */
+.dz-scene.dz-bg-sky { background: #cfe1fb url(/product-design/assets/video/sky-1.webp?v=1) right bottom / cover no-repeat !important; }
+.dz-bg-sky .gv-fg { position: absolute; left: -12%; right: -12%; bottom: -7%; aspect-ratio: 970 / 283; pointer-events: none; background: url(/product-design/assets/video/sky-1-fg.webp?v=5) center / 100% 100% no-repeat; }
+.dz-bg-sky .dz-themes { display: none; }
+/* в небе гусь со столом чуть утоплен, чтобы ножки ушли в облака */
+.dz-bg-sky .gv-stage { transform: translateY(9%); }
+
+/* ---------- День и ночь в небе ---------- */
+.dz-daynight { display: inline-grid; place-items: center; width: 30px; height: 30px; margin: 0 -6px 0 10px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; transition: background-color .2s ease; }
+.dz-daynight:hover { background: rgba(31,36,39,.08); }
+.dz-daynight:focus-visible { outline: 2px solid #0d99ff; outline-offset: 2px; }
+.dz-daynight svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 700px) { .dz-daynight { margin: 0 -4px 0 6px; width: 28px; height: 28px; } }
+
+.dz-scene.dz-bg-sky { transition: background-image .5s ease; }
+html.dz-night .dz-scene.dz-bg-sky { background: #101b4a url(/product-design/assets/video/sky-night.webp?v=1) right bottom / cover no-repeat !important; }
+html.dz-night .dz-bg-sky .gv-fg { background-image: url(/product-design/assets/video/sky-night-fg.webp?v=2); }
+/* дневной гусь ночью чуть приглушён, чтобы не светился как вырезка */
+html.dz-night .dz-bg-sky .gv-layer, html.dz-night .dz-bg-sky .gv-poster, html.dz-night .dz-bg-sky .gv-daisies { filter: brightness(.84) saturate(.9); }
+html.dz-night .site-header.workspace-header { background: rgba(12, 20, 56, .72); border-color: rgba(255,255,255,.08); }
+html.dz-night .site-header .site-brand, html.dz-night .site-header .dz-header-link, html.dz-night .site-header .system-status, html.dz-night .dz-daynight { color: rgba(240, 242, 252, .92); }
+html.dz-night .dz-daynight:hover { background: rgba(255,255,255,.12); }
+html.dz-night .dz-bg-sky .workspace-intro h1 { color: #f5f6fc; text-shadow: none; }
+html.dz-night .dz-bg-sky .workspace-intro p:not(.workspace-kicker), html.dz-night .dz-bg-sky .workspace-intro dd { color: rgba(226, 230, 247, .82); }
+html.dz-night .dz-bg-sky .workspace-intro dt, html.dz-night .dz-bg-sky .workspace-intro dl div { color: #eef0fb; }
+html.dz-night .dz-bg-sky .workspace-intro dl div { border-color: rgba(255,255,255,.22); }
+html.dz-night .dz-bg-sky .workspace-kicker { color: #feb0f0; }
+html.dz-night .dz-bg-sky .desktop-folder, html.dz-night .dz-bg-sky .desktop-folder strong { color: #f3f4fb; text-shadow: 0 1px 6px rgba(6, 10, 34, .6); }
+html.dz-night .dz-bg-sky .workspace-intro *, html.dz-night .dz-bg-sky .workspace-intro h1 { text-shadow: none; }
+/* падающая звезда: светлая голова, хвост тянется назад по направлению полёта */
+.dz-star { position: absolute; z-index: 0; width: 150px; height: 2px; margin-left: -150px; border-radius: 2px; pointer-events: none; transform-origin: 100% 50%;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(220,225,255,.55) 70%, #fff); filter: drop-shadow(0 0 4px rgba(210,215,255,.9)); }
+.dz-star::after { content: ''; position: absolute; right: -2px; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%; background: #fff; box-shadow: 0 0 8px 2px rgba(225,230,255,.95); }
+
+/* ---------- Цвет папок, превью вариантов: ?fc=lilac|cloud|powder|butter ---------- */
+html[data-fc] .dz-scene .desktop-folder__icon { border-color: var(--fb); background: linear-gradient(180deg, var(--ft) 0%, var(--fm) 12%, var(--fd) 100%); box-shadow: inset 0 1px 1px rgba(255,255,255,.9), inset 0 -2px 2px rgba(40,30,80,.1), 0 10px 18px var(--fs); }
+html[data-fc] .dz-scene .desktop-folder__icon::before { background: linear-gradient(180deg, var(--ft), var(--fm)); }
+html[data-fc] .dz-scene .desktop-folder:first-child .desktop-folder__icon { --ft: #ffc6e2; --fm: #f38fc4; --fd: #ea7ab6; --fb: rgba(170,60,120,.4); --fs: rgba(150,50,110,.28); }
+html[data-fc="lilac"] .dz-scene .desktop-folder__icon { --ft: #ddd2ff; --fm: #b8a5f4; --fd: #a994ee; --fb: rgba(90,70,170,.38); --fs: rgba(70,55,150,.26); }
+html[data-fc="cloud"] .dz-scene .desktop-folder__icon { --ft: #ffffff; --fm: #f6f7fc; --fd: #e8ebf6; --fb: rgba(80,95,140,.22); --fs: rgba(50,70,130,.22); }
+html[data-fc="powder"] .dz-scene .desktop-folder__icon { --ft: #ffe6f1; --fm: #f9cfe2; --fd: #f3bfd6; --fb: rgba(170,90,130,.3); --fs: rgba(150,70,110,.2); }
+html[data-fc="butter"] .dz-scene .desktop-folder__icon { --ft: #fff3c4; --fm: #ffe08a; --fd: #f8d36e; --fb: rgba(160,120,30,.35); --fs: rgba(130,100,30,.22); }
+html[data-fc="butter"] .dz-scene .desktop-folder:first-child .desktop-folder__icon { --ft: #ffd9f8; --fm: #feb0f0; --fd: #f7a1e6; --fb: rgba(170,70,150,.34); --fs: rgba(150,60,140,.24); }
+html[data-fc="beige"] .dz-scene .desktop-folder__icon, html[data-fc="beigelilac"] .dz-scene .desktop-folder__icon { --ft: #fffcea; --fm: #faf4cd; --fd: #f1e8b4; --fb: rgba(150,130,60,.3); --fs: rgba(60,70,120,.2); }
+html[data-fc="beige"] .dz-scene .desktop-folder:first-child .desktop-folder__icon { --ft: #ffd9f8; --fm: #feb0f0; --fd: #f7a1e6; --fb: rgba(170,70,150,.34); --fs: rgba(150,60,140,.24); }
+html[data-fc="beigelilac"] .dz-scene .desktop-folder:first-child .desktop-folder__icon { --ft: #f5e2ff; --fm: #e7bef8; --fd: #dbaaf2; --fb: rgba(130,70,170,.32); --fs: rgba(110,60,150,.24); }
+/* надзаголовок в тон розовой папке «Проекты» (#FEB0F0): днём тот же оттенок темнее, чтобы читался на небе */
+.dz-bg-sky .workspace-kicker { color: #b23ea0; }
+/* подсказка «Тыкни»: облачко чуть покачивается, пока гусь зовёт */
+.gv-hit.is-calling .mg-say.is-shown { animation: gv-call 1.3s ease-in-out 2; }
+@keyframes gv-call { 0%, 100% { transform: translate(-50%, 0) scale(1); } 50% { transform: translate(-50%, -4px) scale(1.04); } }
+@media (prefers-reduced-motion: reduce) { .gv-hit.is-calling .mg-say.is-shown { animation: none; } }
+/* шапка: дата прижата вправо, кнопка дня и ночи — после неё */
+html:has(.dz-bg-sky) .site-nav { padding-right: 0; }
+html:has(.dz-bg-sky) .site-nav .system-status { position: static; width: auto; margin-left: auto; transform: none; }
+
+/* ромашки: слой 140..372 × 240..422 сцены 1100×1020, качаются от горлышка вазы (283, 418) */
+.gv-daisies { position: absolute; z-index: 1; left: 12.727%; top: 23.529%; width: 21.091%; height: auto; transform-origin: 61.6% 97.8%; animation: gv-breeze 7s ease-in-out infinite; will-change: transform; }
+@keyframes gv-breeze { 0%, 100% { transform: rotate(-0.7deg) skewX(0.4deg); } 35% { transform: rotate(0.9deg) skewX(-0.5deg); } 60% { transform: rotate(0.2deg) skewX(0.2deg); } 80% { transform: rotate(1.1deg) skewX(-0.6deg); } }
+.gv-stage .gv-fg { z-index: 2; }
+.gv-stage .gv-hit { z-index: 3; }
+/* ноты из наушников (72.7%, 14.7% сцены) */
+.gv-notes { position: absolute; z-index: 2; left: 68%; top: 18%; width: 0; height: 0; pointer-events: none; }
+.gv-notes span { position: absolute; left: 0; top: 0; color: #d77ccb; font-size: clamp(20px, 2.4vw, 32px); font-weight: 600; text-shadow: 0 1px 0 rgba(255,255,255,.9), 0 0 8px rgba(255,255,255,.7); opacity: 0; animation: gv-note 3.4s ease-out forwards; }
+html.dz-night .gv-notes span { color: #feb0f0; text-shadow: 0 0 8px rgba(254,176,240,.55); }
+@keyframes gv-note { 0% { opacity: 0; transform: translate(0, 0) rotate(0deg) scale(.7); } 15% { opacity: 1; } 100% { opacity: 0; transform: translate(calc(var(--dx) - 30px), -120px) rotate(var(--rot)) scale(1.05); } }
+@media (prefers-reduced-motion: reduce) { .gv-daisies { animation: none; } }
+/* облака перед лапами повыше: лапы и пальцы не выглядывают ни в одном кадре */
+.dz-bg-sky .gv-fg { transform-origin: 50% 100%; transform: translateY(12%); }
+html.dz-night .dz-bg-sky .gv-fg { transform: scaleY(1.27); }
+/* пауза в игре: справа в шапке окна */
+.gr__pause { display: grid; place-items: center; width: 26px; height: 26px; margin-left: auto; padding: 0; border: 0; border-radius: 8px; background: transparent; color: #5d6467; cursor: pointer; }
+.gr__pause[hidden] { display: none; }
+.gr__pause:hover { background: rgba(31,36,39,.08); color: #1f2427; }
+.gr__pause:focus-visible { outline: 2px solid #0d99ff; outline-offset: 1px; }
+.gr__pause svg { width: 14px; height: 14px; fill: currentColor; }

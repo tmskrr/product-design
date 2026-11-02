@@ -1,0 +1,161 @@
+/* Прототип: три способа показать проекты в папке «Проекты».
+   Подключается в окне / и действует только внутри .pl */
+
+.pl { --pl-ink: #1f2427; --pl-muted: #6a7073; --pl-line: rgba(31, 36, 39, .12); --ease: cubic-bezier(.2, .7, .2, 1); }
+.pl-accent--blue { --accent: #35a9dd; --accent-ink: #1479ad; --accent-soft: #e8f5fb; }
+.pl-accent--pink { --accent: #e96fa6; --accent-ink: #b8407a; --accent-soft: #fcedf4; }
+.pl-accent--yellow { --accent: #d7b532; --accent-ink: #8f7410; --accent-soft: #fbf5dc; }
+
+/* Переключатель вариантов — только для сравнения, не часть дизайна */
+.pl-switch { display: flex; align-items: center; gap: 4px; width: max-content; margin: 0 0 28px auto; padding: 3px; border-radius: 999px; background: #f1f2f2; font-size: 12px; }
+.pl-switch > span { padding: 0 8px 0 10px; color: var(--pl-muted); }
+.pl-switch a { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; color: #3a3f42; text-decoration: none; transition: background-color 120ms ease; }
+.pl-switch a:hover { background: rgba(0, 0, 0, .05); }
+.pl-switch a[aria-current] { background: #fff; color: var(--pl-ink); font-weight: 600; box-shadow: 0 0 0 .5px rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .08); }
+.pl-switch b { color: var(--pl-muted); font-weight: 500; }
+
+.pl .project-file { min-width: 0; text-decoration: none; color: inherit; }
+.pl .project-file:focus-visible { outline: 2px solid rgba(10, 132, 255, .55); outline-offset: 4px; }
+
+/* ───────── 1. Документы: титульный лист отчёта ───────── */
+.pl1-files { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(18px, 3vw, 36px); }
+.pl .pl1-file { display: grid; grid-template-rows: auto auto auto 1fr; padding: 12px 10px 16px; border-radius: 12px; transition: background-color 180ms ease; }
+.pl .pl1-file:hover, .pl .pl1-file:focus-visible { background: rgba(217, 223, 226, .38); transform: none; }
+.pl1-doc { position: relative; display: block; width: min(100%, 236px); aspect-ratio: .74; margin: 6px auto 22px; }
+.pl1-doc__sheet { position: absolute; inset: 0; border: 1px solid rgba(48, 55, 58, .16); border-radius: 4px 16px 4px 4px; background: #fff; transition: transform 260ms var(--ease); }
+.pl1-doc__sheet--back { transform: translate(10px, 8px) rotate(3deg); background: #f4f5f5; }
+.pl1-doc__sheet--mid { transform: translate(5px, 4px) rotate(1.4deg); background: #fafafa; }
+.pl1-doc__page { display: flex; flex-direction: column; overflow: hidden; padding: 0 18px 16px 24px; box-shadow: 0 16px 30px rgba(32, 39, 42, .14); }
+.pl1-doc__page::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 7px; background: var(--accent); }
+.pl1-doc__page::after { content: ""; position: absolute; top: -1px; right: -1px; width: 30px; height: 30px; border-bottom: 1px solid rgba(48, 55, 58, .14); border-left: 1px solid rgba(48, 55, 58, .14); border-radius: 0 0 0 4px; background: linear-gradient(225deg, #fff 0 49%, #e9ecee 50%); }
+.pl1-doc__head { display: flex; gap: 8px; align-items: center; margin: 18px 30px 0 0; color: var(--pl-muted); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+.pl1-doc__head b { padding: 2px 5px; border-radius: 3px; background: var(--accent-soft); color: var(--accent-ink); font-weight: 600; }
+.pl1-doc__title { margin-top: auto; color: var(--pl-ink); font-size: clamp(22px, 2.4vw, 30px); font-weight: 600; line-height: 1; letter-spacing: -.035em; }
+.pl1-doc__kind { margin-top: 6px; color: var(--accent-ink); font-size: 11px; line-height: 1.3; }
+.pl1-doc__toc { margin: 14px 0 0; padding: 10px 0 0; border-top: 1px solid var(--pl-line); list-style: none; }
+.pl1-doc__toc li { display: flex; gap: 8px; padding: 2px 0; color: #4b5154; font-size: 10px; line-height: 1.35; }
+.pl1-doc__toc li span { color: #a3a9ac; font-variant-numeric: tabular-nums; }
+.pl1-doc__role { margin-top: 12px; color: var(--pl-muted); font-size: 9px; line-height: 1.3; }
+.pl .pl1-file:hover .pl1-doc__page, .pl .pl1-file:focus-visible .pl1-doc__page { transform: translateY(-6px) rotate(-1.2deg); }
+.pl .pl1-file:hover .pl1-doc__sheet--mid { transform: translate(8px, 2px) rotate(2.6deg); }
+.pl .pl1-file:hover .pl1-doc__sheet--back { transform: translate(14px, 6px) rotate(5deg); }
+.pl .pl1-file > strong { font-size: 16px; font-weight: 600; text-align: center; }
+.pl .pl1-file > small { margin-top: 3px; color: var(--pl-muted); font-size: 10px; text-align: center; text-transform: uppercase; }
+.pl .pl1-file > p { margin: 10px 0 0; color: #4b5154; font-size: 13px; line-height: 1.42; text-align: center; }
+
+/* ───────── 2. Карточки с превью проекта ───────── */
+.pl2-cards { display: grid; gap: 18px; }
+.pl .pl2-card { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(220px, 1fr); gap: 0; overflow: hidden; padding: 0; border: 1px solid var(--pl-line); border-radius: 16px; background: #fff; transition: box-shadow 200ms ease, border-color 200ms ease; }
+.pl .pl2-card:hover, .pl .pl2-card:focus-visible { border-color: rgba(31, 36, 39, .2); background: #fff; box-shadow: 0 14px 34px rgba(32, 39, 42, .1); transform: none; }
+.pl2-card__media { position: relative; display: block; overflow: hidden; aspect-ratio: 16 / 9; background: #15191c; }
+.pl2-card__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; transition: transform 500ms var(--ease); }
+.pl .pl2-card:hover .pl2-card__media img { transform: scale(1.025); }
+.pl2-card.pl-accent--pink .pl2-card__media img { object-position: 0 50%; transform-origin: 0 50%; }
+.pl2-card__body { display: flex; flex-direction: column; align-items: flex-start; padding: clamp(18px, 2.4vw, 28px); }
+.pl2-card__tags { display: flex; gap: 6px; }
+.pl2-card__tags i { padding: 3px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-ink); font-size: 11px; font-style: normal; font-weight: 500; letter-spacing: .02em; }
+.pl .pl2-card strong { margin-top: 14px; color: var(--pl-ink); font-size: clamp(22px, 2.2vw, 28px); font-weight: 600; line-height: 1.05; letter-spacing: -.03em; }
+.pl .pl2-card p { margin: 10px 0 0; color: #4b5154; font-size: 14px; line-height: 1.45; text-align: left; }
+.pl .pl2-card small { margin-top: 14px; color: var(--pl-muted); font-size: 12px; text-transform: none; text-align: left; }
+.pl2-card__more { display: inline-flex; align-items: center; gap: 2px; margin-top: auto; padding-top: 18px; color: var(--pl-ink); font-size: 13px; font-weight: 600; }
+.pl2-card__more svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform 200ms var(--ease); }
+.pl .pl2-card:hover .pl2-card__more svg { transform: translateX(3px); }
+
+/* ───────── 3. Гибрид: один формат файла для всех проектов ─────────
+   Лист одной пропорции: тип продукта сверху, ниже — обложка проекта (одна система для всех).
+   Под листом — имя файла и одна строка о моей работе. */
+.pl3-intro { margin-bottom: 36px; }
+.pl3-files { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); align-items: start; }
+.pl .pl3-file { display: grid; grid-template-rows: none; justify-items: center; gap: 14px; padding: 8px 6px 12px; border-radius: 12px; text-align: center; transform: none; }
+.pl .pl3-file:hover, .pl .pl3-file:focus-visible { background: transparent; transform: none; }
+
+.pl3-doc { position: relative; display: flex; flex-direction: column; width: min(100%, 256px); aspect-ratio: .76; padding: 12px 12px 14px 18px; overflow: hidden; border: 1px solid rgba(48, 55, 58, .16); border-radius: 4px 16px 4px 4px; background: #fff; box-shadow: 0 1px 2px rgba(32, 39, 42, .06), 0 14px 30px rgba(32, 39, 42, .12); text-align: left; transition: transform 240ms var(--ease), box-shadow 240ms ease; }
+.pl3-doc::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 6px; background: var(--accent); }
+.pl3-doc::after { content: ""; position: absolute; top: -1px; right: -1px; width: 26px; height: 26px; border-bottom: 1px solid rgba(48, 55, 58, .14); border-left: 1px solid rgba(48, 55, 58, .14); border-radius: 0 0 0 4px; background: linear-gradient(225deg, #fff 0 49%, #eceeef 50%); }
+.pl3-doc__head { display: flex; min-height: 20px; padding-right: 26px; }
+.pl3-doc__head i { padding: 3px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-ink); font-size: 10px; font-style: normal; font-weight: 600; letter-spacing: .03em; line-height: 1.2; }
+.pl3-doc__shot { position: relative; display: block; flex: 1 1 auto; min-height: 0; overflow: hidden; margin-top: 10px; margin-bottom: 14px; border-radius: 7px; background: #1b1b1b; }
+.pl3-cover { position: absolute; inset: 0; width: 100%; height: 100%; transition: transform 500ms var(--ease); }
+.pl3-doc__type { position: absolute; right: 12px; bottom: 3px; color: #a3a9ac; font-size: 8px; font-weight: 600; letter-spacing: .08em; }
+.pl .pl3-file:hover .pl3-doc, .pl .pl3-file:focus-visible .pl3-doc { transform: translateY(-5px); box-shadow: 0 1px 2px rgba(32, 39, 42, .06), 0 22px 40px rgba(32, 39, 42, .16); }
+.pl .pl3-file:hover .pl3-cover { transform: scale(1.03); }
+
+/* Подпись под файлом: имя (как в Finder) и одна строка о моей работе */
+.pl3-file__text { display: grid; justify-items: center; gap: 6px; max-width: 100%; }
+.pl3-file__name { max-width: 100%; padding: 2px 8px; border-radius: 6px; color: var(--pl-ink); font-size: 15px; font-weight: 600; transition: background-color 140ms ease, color 140ms ease; }
+.pl .pl3-file:hover .pl3-file__name, .pl .pl3-file:focus-visible .pl3-file__name { background: #2f7cf6; color: #fff; }
+.pl3-file__desc { max-width: 250px; color: #4b5154; font-size: 13px; line-height: 1.42; }
+
+/* Варианты верхней части папки (сравнение) */
+.pl-head h1, .pl-head p { margin: 0; }
+.pl-head h1 { color: var(--pl-ink); font-weight: 600; letter-spacing: -.03em; }
+.pl-head p { color: #5d6467; }
+/* A — заголовок и строка пояснения под ним */
+.pl-head--a { margin-bottom: 30px; }
+.pl-head--a h1 { font-size: 30px; line-height: 1.1; }
+.pl-head--a p { margin-top: 6px; font-size: 15px; line-height: 1.45; }
+/* B — одна строка, как шапка папки в Finder: название слева, пояснение справа, тонкая линия */
+.pl-head--b { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--pl-line); }
+.pl-head--b h1 { font-size: 22px; line-height: 1.2; }
+.pl-head--b p { font-size: 14px; text-align: right; }
+/* C — заголовок и прежний абзац, мельче и в одну колонку */
+.pl-head--c { margin-bottom: 32px; }
+.pl-head--c h1 { font-size: 34px; line-height: 1.1; }
+.pl-head--c p { max-width: 560px; margin-top: 10px; font-size: 15px; line-height: 1.5; }
+@media (max-width: 760px) {
+  .pl-head--a h1, .pl-head--c h1 { font-size: 26px; }
+  .pl-head--b { display: block; }
+  .pl-head--b p { margin-top: 4px; text-align: left; }
+}
+
+/* ───────── Средняя ширина окна ───────── */
+@media (max-width: 1100px) and (min-width: 761px) {
+  .pl .pl2-card { grid-template-columns: 1fr; }
+}
+
+/* ───────── Mobile ───────── */
+@media (max-width: 760px) {
+  .pl-switch { margin: 0 0 20px; }
+  .pl-switch > span { display: none; }
+  /* 1: список документов — лист слева, описание справа */
+  .pl1-files { grid-template-columns: 1fr; gap: 6px; }
+  .pl .pl1-file { grid-template-columns: 112px 1fr; grid-template-rows: auto auto 1fr; column-gap: 16px; padding: 12px 6px; text-align: left; }
+  .pl1-doc { grid-row: 1 / 4; width: 100%; margin: 0; }
+  .pl1-doc__page { padding: 0 9px 9px 13px; }
+  .pl1-doc__page::after { width: 18px; height: 18px; }
+  .pl1-doc__head { margin: 10px 18px 0 0; font-size: 7px; }
+  .pl1-doc__head span { display: none; }
+  .pl1-doc__title { font-size: 15px; }
+  .pl1-doc__kind { font-size: 8px; }
+  .pl1-doc__toc { margin-top: 8px; padding-top: 6px; }
+  .pl1-doc__toc li { padding: 0; font-size: 6.5px; }
+  .pl1-doc__role { display: none; }
+  .pl .pl1-file > strong, .pl .pl1-file > small, .pl .pl1-file > p { text-align: left; }
+  .pl .pl1-file > strong { align-self: end; }
+  .pl .pl1-file > p { margin-top: 6px; }
+  /* 2: карточки стопкой */
+  .pl .pl2-card { grid-template-columns: 1fr; border-radius: 14px; }
+  .pl2-card__body { padding: 16px 16px 18px; }
+  .pl2-card__more { padding-top: 14px; }
+  /* 3: тот же файл, списком — лист слева, подпись справа */
+  .pl3-intro { margin-bottom: 24px; }
+  .pl3-files { grid-template-columns: 1fr; gap: 4px; }
+  .pl .pl3-file { grid-template-columns: 118px minmax(0, 1fr); align-items: center; gap: 16px; padding: 10px 4px; text-align: left; justify-items: stretch; }
+  .pl3-doc { width: 100%; padding: 7px 7px 9px 11px; border-radius: 3px 10px 3px 3px; }
+  .pl3-doc::before { width: 4px; }
+  .pl3-doc::after { width: 16px; height: 16px; }
+  .pl3-doc__head { min-height: 14px; padding-right: 14px; }
+  .pl3-doc__head i { padding: 2px 5px; font-size: 7px; }
+  .pl3-doc__shot { margin: 6px 0 0; border-radius: 4px; }
+  .pl3-doc__type { display: none; }
+  .pl3-file__text { justify-items: start; gap: 4px; }
+  .pl3-file__name { margin-left: -6px; padding: 1px 6px; font-size: 15px; }
+  .pl3-file__desc { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pl1-doc__sheet, .pl2-card__media img, .pl3-doc, .pl3-cover, .pl2-card__more svg { transition: none !important; }
+}
+
+/* дизайн-сайт: выделение файла розовым */
+.pl .pl3-file:hover .pl3-file__name, .pl .pl3-file:focus-visible .pl3-file__name { background: #feb0f0; color: #1f2427; }
