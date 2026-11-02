@@ -297,3 +297,5 @@ html.dz-night .dz-bg-sky .gv-fg { transform: scaleY(1.27); }
 .gr__pause:hover { background: rgba(31,36,39,.08); color: #1f2427; }
 .gr__pause:focus-visible { outline: 2px solid #0d99ff; outline-offset: 1px; }
 .gr__pause svg { width: 14px; height: 14px; fill: currentColor; }
+/* знак МТ в шапке — розовый, как фавикон дизайн-сайта */
+.site-brand::before { background: #feb0f0 !important; color: #1f2427 !important; }
