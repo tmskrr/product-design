@@ -1,0 +1,113 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  block-size: 100%;
+  inline-size: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  background: var(--page-bg);
+  font-family: "JetBrains Mono", "Geist Mono", ui-monospace, monospace;
+  font-weight: 300;
+  font-synthesis: none;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+::selection {
+  color: var(--selection-text);
+  background: var(--selection-bg);
+}
+
+::-moz-selection {
+  color: var(--selection-text);
+  background: var(--selection-bg);
+}
+
+button::selection,
+button *::selection {
+  color: inherit;
+  background: transparent;
+}
+
+button::-moz-selection,
+button *::-moz-selection {
+  color: inherit;
+  background: transparent;
+}
+
+button,
+input,
+select,
+textarea {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  background: none;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea,
+[role="combobox"] {
+  touch-action: manipulation;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  box-shadow: none;
+}
+
+select:focus,
+select:focus-visible,
+select:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.converter__select-control {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+input[type="checkbox"] {
+  appearance: auto;
+  -webkit-appearance: checkbox;
+}

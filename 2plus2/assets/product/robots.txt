@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tmskrr.github.io/converteron/sitemap.xml

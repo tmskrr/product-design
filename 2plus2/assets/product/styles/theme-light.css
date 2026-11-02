@@ -1,0 +1,50 @@
+:root.theme-light {
+  background-color: #ffffff;
+  color: #111111;
+
+  --page-bg: #ffffff;
+
+  --form-bg: #f0f0f0;
+  --form-border: #cccccc;
+  --control-border: #8a8a8a;
+
+  --text-primary: #111111;
+  --text-defaulte: #707070;
+  --input-bg: #ffffff;
+
+  --accent-default: #007F45;
+  --green: var(--accent-default);
+  --gark-green: var(--accent-default);
+  --accent-hover: #00733F;
+  --dark-green-active: #006638;
+  --accent-disabled: #A9CDBA;
+  --accent-disabled-foreground: #3F5F50;
+  --accent-foreground: #ffffff;
+  --selection-bg: #CFEADF;
+  --selection-text: #123B2C;
+  --accent-icon-filter: none;
+
+  --grey-button: #dddbdb;
+  --text-button: #000;
+  --text-button-white: #fff;
+
+  --text-error: #b42318;
+  --border-color-error: #b42318;
+
+  --violet: #9747ff;
+  --focus: #009E55;
+  --text-muted: #707070;
+  --copy-icon: url("../images/copy-line.svg?v=71eca9a71049");
+  --swap-button-icon: url("../images/swap-dark.svg?v=71eca9a71049");
+  --clock-bg: #f7f7f7;
+  --clock-segment: #111111;
+  --clock-segment-off: #dfdfdf;
+}
+
+.theme-light .swap-btn {
+  background-image: url("../images/swap-dark.svg?v=71eca9a71049");
+}
+
+.theme-light .converter__select-control {
+  background-image: url("../images/down-dark.svg?v=71eca9a71049");
+}

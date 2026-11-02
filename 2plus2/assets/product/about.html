@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ru" class="theme-auto">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="о сервисе 2+2 и важных ограничениях калькулятора систем счисления" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://tmskrr.github.io/product-design/assets/og-image.jpg?v=1">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Маргарита Терешенкова, продуктовый дизайнер. Гусь в наушниках работает за компьютером в облаках">
+  <meta name="twitter:image" content="https://tmskrr.github.io/product-design/assets/og-image.jpg?v=1">
+  <meta property="og:title" content="о сервисе — 2+2" />
+    <meta property="og:description" content="о сервисе 2+2 и важных ограничениях калькулятора систем счисления" />
+    <link rel="canonical" href="https://tmskrr.github.io/converteron/about.html" />
+    <meta property="og:url" content="https://tmskrr.github.io/converteron/about.html" />
+    <title>о&nbsp;сервисе&nbsp;— 2+2</title>
+    <link rel="icon" href="./images/logo-favicon.svg?v=71eca9a71049" type="image/svg+xml" />
+    <link rel="stylesheet" href="./fonts/fonts.css?v=71eca9a71049" />
+    <link rel="stylesheet" href="./styles/globals.css?v=71eca9a71049" />
+    <link rel="stylesheet" href="./styles/style.css?v=71eca9a71049" />
+    <link rel="stylesheet" href="./styles/theme-light.css?v=71eca9a71049" />
+    <link rel="stylesheet" href="./styles/theme-dark.css?v=71eca9a71049" />
+  </head>
+  <body class="page" data-page="about">
+    <header class="header">
+      <a class="header__logo" id="home-link" href="./" aria-label="главная страница калькулятора"><img class="header__logo-image" src="./images/logo-dark.svg?v=71eca9a71049" alt="2 + 2" width="140" height="50" /></a>
+      <div class="header__status" aria-live="off"><div class="clock"><time class="clock__time" id="local-time"><span class="visually-hidden" id="local-time-text"></span><span class="clock__visual" id="clock-visual" aria-hidden="true"></span></time><span class="clock__date" id="local-date"></span><span class="clock__zone" id="local-zone"></span></div></div>
+      <div class="header__utilities">
+        <nav class="header__theme-menu" id="theme-menu" aria-label="цветовая тема">
+          <button type="button" class="theme-toggle" id="theme-toggle" data-theme-mode="auto" aria-label="автоматическая тема"><span class="theme-toggle__icon theme-toggle__icon--light" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"></path></svg></span><span class="theme-toggle__icon theme-toggle__icon--dark" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M20 15.2A8.2 8.2 0 0 1 8.8 4a8.2 8.2 0 1 0 11.2 11.2Z"></path></svg></span><span class="theme-toggle__icon theme-toggle__icon--auto" aria-hidden="true">A</span></button>
+        </nav>
+        <nav class="header__language-menu" id="language-menu" aria-label="язык интерфейса">
+          <button type="button" class="utility-button language-button" data-language="ru">ру</button><button type="button" class="utility-button language-button" data-language="en">en</button>
+        </nav>
+      </div>
+    </header>
+    <main class="app">
+      <article class="info">
+        <a class="info__back" href="./" data-i18n="back">← вернуться к&nbsp;калькулятору</a>
+        <section class="info__section" aria-labelledby="about-title">
+          <h1 class="info__title" id="about-title" data-i18n="aboutTitle">о&nbsp;сервисе</h1>
+          <p class="info__text" data-i18n="aboutLead">2+2&nbsp;— калькулятор для&nbsp;перевода значений между двоичной, восьмеричной, десятичной и&nbsp;шестнадцатеричной системами счисления</p>
+          <p class="info__text" data-i18n="aboutDetail">сервис показывает результат и&nbsp;шаги расчёта. вычисления выполняются прямо в&nbsp;браузере, регистрация не&nbsp;нужна</p>
+        </section>
+        <section class="info__section" aria-labelledby="important-title">
+          <h2 class="info__heading" id="important-title" data-i18n="importantTitle">важно</h2>
+          <p class="info__text" data-i18n="importantLead">2+2&nbsp;— вспомогательный инструмент для&nbsp;перевода значений между системами счисления</p>
+          <p class="info__text" data-i18n="importantCheck">перед использованием результата в&nbsp;учебных, рабочих или&nbsp;критичных задачах рекомендуется проверить расчёт самостоятельно или&nbsp;другим способом</p>
+          <p class="info__text" data-i18n="importantLiability">сервис не&nbsp;гарантирует абсолютную безошибочность результатов и&nbsp;не&nbsp;несёт ответственности за&nbsp;решения, принятые только на&nbsp;основании расчётов 2+2</p>
+        </section>
+      </article>
+    </main>
+    <footer class="footer" aria-label="информация о сервисе"><a class="footer__link" id="about-link" href="./about.html" aria-current="page">о&nbsp;сервисе</a><span class="footer__separator" aria-hidden="true">/</span><a class="footer__link" id="privacy-link" href="./privacy.html">конфиденциальность</a><span class="footer__separator" aria-hidden="true">/</span><a class="footer__link" id="bot-link" href="https://t.me/twoplus2_feedback_bot" target="_blank" rel="noopener">тг-бот</a></footer>
+    <script type="module" src="./js/info.js?v=71eca9a71049"></script>
+  </body>
+</html>

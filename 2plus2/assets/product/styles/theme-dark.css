@@ -1,0 +1,50 @@
+:root.theme-dark {
+  background-color: #000000;
+  color: #ffffff;
+
+  --page-bg: #000;
+
+  --form-bg: #000;
+  --form-border: #313030;
+  --control-border: #777777;
+
+  --text-primary: #ffffff;
+  --text-defaulte: #707070;
+  --input-bg: #313030;
+
+  --accent-default: #00B56E;
+  --green: var(--accent-default);
+  --gark-green: var(--accent-default);
+  --accent-hover: #00C878;
+  --dark-green-active: #009E60;
+  --accent-disabled: #315B49;
+  --accent-disabled-foreground: #9FB7AC;
+  --accent-foreground: #000000;
+  --selection-bg: #174C38;
+  --selection-text: #F2FFF9;
+  --accent-icon-filter: brightness(0);
+
+  --grey-button: #f0f0f0;
+  --text-button: #000;
+  --text-button-white: #fff;
+
+  --text-error: #ff6b6b;
+  --border-color-error: #ff6b6b;
+
+  --violet: #9747ff;
+  --focus: #00B56E;
+  --text-muted: #9a9a9a;
+  --copy-icon: url("../images/copy-line.svg?v=71eca9a71049");
+  --swap-button-icon: url("../images/swap-dark.svg?v=71eca9a71049");
+  --clock-bg: #111111;
+  --clock-segment: #ffffff;
+  --clock-segment-off: #292929;
+}
+
+.theme-dark .swap-btn {
+  background-image: url("../images/swap-light.svg?v=71eca9a71049");
+}
+
+.theme-dark .converter__select-control {
+  background-image: url("../images/down-light.svg?v=71eca9a71049");
+}
