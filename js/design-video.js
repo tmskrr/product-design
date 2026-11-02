@@ -57,11 +57,25 @@
     const dock = document.querySelector('.workspace-dock')?.getBoundingClientRect();
     const bottom = (dock ? dock.top - r.top : r.height) - (phone ? 4 : 0);
     let w; let h; let x; let y;
+    if (!phone && home.style.height) { home.style.height = ''; document.documentElement.classList.remove('dz-scroll'); }
     if (phone) {
       const top = (folders ? folders.bottom : intro.bottom) - r.top + 8;
-      h = Math.max(0, bottom - top); w = Math.min(r.width, h * W / H, (W / (window.devicePixelRatio || 1)) * 1.1); h = w * H / W; x = r.width - w;
+      // низкий экран (встроенный браузер Telegram, Instagram, маленький телефон): гусь не помещается между папками и доком.
+      // Тогда стол вытягивается вниз и страница прокручивается, а не прячет гуся
+      const need = Math.min(r.width * 0.72, 300) * H / W;
+      const dockH = dock ? innerHeight - dock.top : 0;
+      if (bottom - top < need) {
+        home.style.height = `${Math.ceil(top + need + dockH + 4)}px`;
+        document.documentElement.classList.add('dz-scroll');
+      } else if (document.documentElement.classList.contains('dz-scroll') && home.style.height) {
+        home.style.height = ''; document.documentElement.classList.remove('dz-scroll'); return layout();
+      }
+      const r2 = home.getBoundingClientRect(); const bottom2 = (dock ? r2.height - dockH : r2.height) - 4;
+      h = Math.max(0, bottom2 - top);
+      w = Math.min(r.width, h * W / H, (W / (window.devicePixelRatio || 1)) * 1.1); h = w * H / W; x = r.width - w;
+      h = w * H / W; const bottomUse = bottom2;
       // на высоких экранах гусь не прилипает ко дну: лишнее место делится, больше снизу
-      y = top + Math.max(0, bottom - top - h) * 0.3;
+      y = top + Math.max(0, bottomUse - top - h) * 0.3;
     } else {
       // гусь стоит внизу справа, размер не больше исходника, чтобы не мылилось
       const left = Math.max(folders ? folders.right : 0, intro ? intro.right : 0) - r.left + 40;

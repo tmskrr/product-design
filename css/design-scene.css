@@ -311,3 +311,7 @@ html.dz-night .dz-bg-sky .gv-fg { transform: scaleY(1.27); }
 @media (prefers-reduced-motion: reduce) { .gv-steam path { animation: none; opacity: .4; } .gv-steam path:nth-child(2) { opacity: 0; } }
 /* длинная реплика гуся — в две строки, чтобы не вылезала за экран телефона */
 .gv-hit .mg-say { white-space: pre; text-align: center; line-height: 1.2; }
+
+/* низкий телефон: рабочий стол длиннее экрана, страница прокручивается, док и окна остаются на месте */
+html.dz-scroll body.workspace-page { height: auto; min-height: 100%; overflow-y: auto; }
+html.dz-scroll .dz-scene { flex: none; }
