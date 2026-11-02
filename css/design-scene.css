@@ -301,13 +301,13 @@ html.dz-night .dz-bg-sky .gv-fg { transform: scaleY(1.27); }
 .site-brand::before { background: #feb0f0 !important; color: #1f2427 !important; }
 
 /* пар над кружкой гуся */
-.gv-steam { position: absolute; z-index: 2; left: 29.6%; top: 37.4%; width: 5%; height: 10%; pointer-events: none;
-  -webkit-mask-image: linear-gradient(to top, #000 35%, transparent 100%); mask-image: linear-gradient(to top, #000 35%, transparent 100%); }
+.gv-steam { position: absolute; z-index: 2; left: 29.3%; top: 37.6%; width: 5%; height: 10%; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to top, transparent 0, #000 14%, #000 35%, transparent 100%); mask-image: linear-gradient(to top, transparent 0, #000 14%, #000 35%, transparent 100%); }
 .gv-steam svg { width: 100%; height: 100%; overflow: visible; }
-.gv-steam path { fill: none; stroke: #fff; stroke-width: 3.2; stroke-linecap: round; opacity: 0; filter: blur(1px) drop-shadow(0 0 1.5px rgba(70,85,120,.45));
+.gv-steam path { fill: none; stroke: #fff; stroke-width: 3.2; stroke-linecap: round; opacity: 0; filter: blur(1.2px) drop-shadow(0 0 1px rgba(70,85,120,.22));
   transform-box: fill-box; transform-origin: 50% 100%; animation: gv-steam 7s cubic-bezier(.33,0,.2,1) .8s infinite; }
 .gv-steam path:nth-child(2) { stroke-width: 2.5; animation-delay: 2.6s; }
-@keyframes gv-steam { 0% { opacity: 0; transform: translateY(5px) scaleY(.85); } 14% { opacity: .95; } 34% { opacity: .6; transform: translateY(-4px) scaleY(1); } 50%, 100% { opacity: 0; transform: translateY(-12px) scaleY(1.06); } }
+@keyframes gv-steam { 0% { opacity: 0; transform: translateY(5px) scaleY(.85); } 14% { opacity: .7; } 34% { opacity: .42; transform: translateY(-4px) scaleY(1); } 50%, 100% { opacity: 0; transform: translateY(-12px) scaleY(1.06); } }
 @media (prefers-reduced-motion: reduce) { .gv-steam path { animation: none; opacity: .4; } .gv-steam path:nth-child(2) { opacity: 0; } }
 /* длинная реплика гуся — в две строки, чтобы не вылезала за экран телефона */
 .gv-hit .mg-say { white-space: pre; text-align: center; line-height: 1.2; }
