@@ -20,7 +20,7 @@
     turn: { src: 'goose-turn2.mp4', say: 'Шо такое?', from: 1.5, to: 3.3 },
   };
   // третий тык — «Ты пока поиграй, а я поработаю» и окно мини-игры (design-runner.js)
-  const play = () => { bubble('Ты пока поиграй, а я поработаю', 1700); setTimeout(() => window.dzRunner && window.dzRunner.open(), 1100); };
+  const play = () => { bubble('Ты пока поиграй,\nа я поработаю', 1900); setTimeout(() => window.dzRunner && window.dzRunner.open(), 1100); };
 
   home.classList.add('dz-video');
   const stage = document.createElement('div'); stage.className = 'gv-stage';
@@ -31,7 +31,10 @@
   // ромашки — отдельный слой поверх видео, их всё время чуть покачивает ветерок (в видео их нет)
   const daisies = new Image(); daisies.className = 'gv-daisies'; daisies.alt = ''; daisies.src = `${BASE}goose-daisies.webp${V}`;
   const notes = document.createElement('div'); notes.className = 'gv-notes'; notes.setAttribute('aria-hidden', 'true');
-  hit.append(say); stage.append(poster, daisies, notes, hit); home.append(stage);
+  // пар над кружкой, как у коровы: две струйки поднимаются и тают
+  const steam = document.createElement('span'); steam.className = 'gv-steam'; steam.setAttribute('aria-hidden', 'true');
+  steam.innerHTML = '<svg viewBox="0 0 40 62" preserveAspectRatio="none"><path d="M24 60 C 18 50, 28 42, 20 30 S 12 12, 16 2"/><path d="M31 60 C 36 51, 24 44, 28 33 S 24 16, 18 6"/></svg>';
+  hit.append(say); stage.append(poster, daisies, steam, notes, hit); home.append(stage);
 
   const sw = document.createElement('div'); sw.className = 'dz-themes'; sw.setAttribute('role', 'group'); sw.setAttribute('aria-label', 'Цвет фона');
   sw.innerHTML = Object.entries(THEMES).map(([n, c]) => `<button type="button" data-theme="${n}" style="--c:${c}" aria-label="Фон: ${NAMES[n]}" aria-pressed="false"></button>`).join('');

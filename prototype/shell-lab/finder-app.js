@@ -24,7 +24,7 @@
     'projects/technonicol': { src: '/product-design/prototype/projects-lab/design-technonicol/', pick: 'main', title: 'Технониколь', section: 'projects' },
     'projects/widget': { src: '/product-design/prototype/projects-lab/design-widget/', pick: 'main', title: 'Widget', section: 'projects' },
     'projects/converteron': { src: '/product-design/prototype/projects-lab/design-converteron/', pick: 'main', title: '2+2', section: 'projects' },
-    about: { src: '/product-design/prototype/about-v2/chat/?v=17', pick: 'main', title: 'Обо мне', section: 'about', note: 'Всё, что не\u00a0поместилось в\u00a0проекты и\u00a0резюме' },
+    about: { src: '/product-design/prototype/about-v2/chat/?v=18', pick: 'main', title: 'Обо мне', section: 'about', note: 'Всё, что не\u00a0поместилось в\u00a0проекты и\u00a0резюме' },
     books: { src: '/product-design/prototype/books-direction/', pick: 'main', title: 'Книги', section: 'books', note: 'Если не\u00a0знаете, что почитать\u00a0— заглядывайте на\u00a0мою полку', status: (root) => plural(Number(root.querySelector('[data-lib]')?.dataset.total || 0), ['книга', 'книги', 'книг']) },
     music: { src: '/product-design/prototype/music/?v=2', pick: 'main', title: 'Музыка', section: 'music', note: 'На\u00a0вкус и\u00a0цвет', status: () => '11 плейлистов' }
   };

@@ -54,7 +54,7 @@
   <template data-a="check"><p>Сначала проверяю, сходится ли&nbsp;логика: куда человек попадёт, что&nbsp;произойдёт после действия, где&nbsp;может ошибиться и&nbsp;как&nbsp;вернётся обратно</p><p>Потом смотрю на&nbsp;интерфейс целиком: состояния, тексты, адаптив, мелкие детали. Иногда открываю прототип или&nbsp;браузер и&nbsp;нахожу то, что&nbsp;в&nbsp;макете выглядело совершенно нормально</p></template>
 </section>
 <style>
-.ab-chat { display: grid; grid-template-columns: 240px minmax(0, 1fr); height: min(620px, calc(100vh - 340px)); min-height: 400px; margin: 0 calc(-1 * clamp(28px, 4vw, 48px)) -40px; border-top: 1px solid rgba(0,0,0,.08); }
+.ab-chat { display: grid; grid-template-columns: 240px minmax(0, 1fr); height: min(760px, calc(100vh - 340px)); min-height: 400px; margin: 0 calc(-1 * clamp(28px, 4vw, 48px)) -40px; border-top: 1px solid rgba(0,0,0,.08); }
 .ab-chats { display: flex; flex-direction: column; padding: 8px; border-right: 1px solid rgba(0,0,0,.08); background: #fff; }
 .ab-chats__item { display: flex; align-items: center; gap: 10px; padding: 8px; border: 0; border-radius: 10px; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .ab-chats__item:hover { background: #f3f4f5; }
@@ -101,15 +101,24 @@
 .ab-room__chips button.is-asked { border-color: rgba(0,0,0,.1); color: #8b9094; }
 .ab-room__chips .ab-all { border-color: #1f2427; background: #1f2427; color: #fff; }
 .ab-room__chips .ab-all:hover { border-color: #383f43; background: #383f43; }
+@media (max-width: 1100px) { .ab-chat { grid-template-columns: 200px minmax(0, 1fr); } }
 @media (max-width: 760px) {
   .ab-chat { grid-template-columns: 1fr; grid-template-rows: auto 1fr; height: calc(100svh - 330px); min-height: 360px; margin: 0 -18px -28px; }
+  /* заголовок окна дублирует название в панели: на телефоне убираем его, переписка занимает окно целиком */
+  .win__page:has(.ab-chat) .win-head { display: none; }
+  .win__page:has(.ab-chat) .ab-chat { height: calc(100svh - 186px); margin-top: -20px; }
   .ab-chats { flex-direction: row; gap: 4px; padding: 6px; border-right: 0; border-bottom: 1px solid rgba(0,0,0,.08); overflow-x: auto; }
   .ab-chats__item { flex: none; padding: 6px 10px 6px 6px; }
   .ab-chats__item i { display: none; }
   .ab-chats__item img, .ab-chats__item .ab-ava { width: 30px; height: 30px; font-size: 16px; }
   /* вопросы одной строкой с прокруткой вбок: иначе на телефоне они съедают место переписки */
-  .ab-room__chips { padding: 8px 12px 10px; }
-  .ab-room__chips button { white-space: nowrap; }
+  /* на телефоне место отдаём переписке: шапка чата дублирует вкладку, вопросы компактнее */
+  .ab-room { grid-template-rows: 1fr auto; }
+  .ab-room__head { display: none; }
+  .ab-room__log { padding: 12px; }
+  .ab-msg { max-width: 86%; font-size: 14.5px; }
+  .ab-room__chips { gap: 5px; padding: 8px 10px 10px; }
+  .ab-room__chips button { padding: 5px 10px; font-size: 12.5px; white-space: nowrap; }
 }
 @media (prefers-reduced-motion: reduce) { .ab-msg { animation: none; } }
 </style>
