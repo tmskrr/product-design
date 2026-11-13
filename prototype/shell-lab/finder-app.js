@@ -131,7 +131,7 @@
   // ---------- Dock: тот же элемент открытого окна, что в workspace-a ----------
   const dock = document.querySelector('.workspace-dock');
   // Резюме в доке рядом с контактами (прототип: добавляется здесь, общий portfolio-prototype.js не трогаем)
-  const CV_URL = '/product-design/prototype/resume/tereshenkova-cv.pdf?v=9abf9ec7';
+  const CV_URL = '/product-design/prototype/resume/tereshenkova-cv.pdf?v=424043e5';
   const dockApps = dock?.querySelector('.workspace-dock__apps');
   if (dockApps && !dockApps.querySelector('.workspace-dock__app--cv')) {
     dockApps.insertAdjacentHTML('beforeend', `<a class="workspace-dock__app workspace-dock__app--cv" href="${CV_URL}" target="_blank" rel="noopener" aria-label="Резюме (CV), PDF"><img src="/product-design/prototype/shell-lab/cv-icon.svg?v=5" alt=""><span class="workspace-dock__label">CV</span></a>`);
